@@ -1,0 +1,11 @@
+.ECommerce {
+    min-height: 100vh;
+}
+.sidebar-page-container{
+    display: flex;
+
+}
+
+.e-commerce-body-container{
+    min-width: 80vw;
+}

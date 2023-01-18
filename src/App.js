@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
 
+import { Routes, Route ,   BrowserRouter as Router, } from 'react-router-dom'
+import './App.css';
+import Login from '../src/components/Login/Login';
+import AdminDashboard from './components/AdminDashboard/AdminDashboard';
+import Protected from './services/ProtectedRoute/ProtectedRoute';
+import NotFound from './components/NotFound/NotFound';
+import ECommerce from './components/ECommerce/ECommerce';
+import BookingStatus from './components/BookingStatus/BookingStatus';
+import CabService from './components/CabService/CabService';
 function App() {
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+      <Routes>
+        <Route exact path='/' element={<Protected ><Login /> </Protected>}></Route>
+        <Route exact path ='/admin-dashboard' element={<Protected ><AdminDashboard /> </Protected>}></Route>
+        <Route exact path ='/e-commerce' element={<Protected ><ECommerce /> </Protected>}></Route>
+        <Route exact path ='/booking-status' element={<Protected ><BookingStatus /> </Protected>}></Route>
+        <Route exact path ='/cab-service' element={<Protected ><CabService /> </Protected>}></Route>
+        <Route path='*' element={<NotFound />}></Route>
+       
+        </Routes>
+      </Router>
+    
+
     </div>
   );
 }

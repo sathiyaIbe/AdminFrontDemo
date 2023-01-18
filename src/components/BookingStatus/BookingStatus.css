@@ -1,0 +1,12 @@
+.sidebar-page-container{
+    display: flex;
+
+}
+
+.booking-status-body-container{
+    min-width: 80vw;
+}
+
+.booking-status{
+    min-height: 100vh;
+}

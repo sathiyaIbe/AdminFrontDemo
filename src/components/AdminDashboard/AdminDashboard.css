@@ -1,0 +1,37 @@
+.AdminDashboard {
+   min-height: 100vh;
+   display: flex;
+   flex-direction: column;
+}
+
+.card-container{
+    display: flex;
+   min-width: 1000px;
+}
+
+
+.menu-btn{
+    height: 50px;
+    outline: none;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.menu-icon{
+    font-size: 24px;
+}
+
+.cancel-icon{
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.admin-dashboard-heading{
+    text-align: center;
+}
+
+.admin-dashboard-body-container{
+    width: 80vw;
+}

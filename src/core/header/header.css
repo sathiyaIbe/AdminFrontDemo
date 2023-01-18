@@ -1,0 +1,46 @@
+.logout-btn{
+    font-size: 24px;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    margin: 5px;
+}
+
+.logout-text{
+    font-size: 24px;
+}
+
+.logout-icon{
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.header-container{
+    display: flex;
+    justify-content: space-between;
+   
+}
+
+.header{
+    padding: 10px;
+}
+
+.menu-bar{
+    border: none;
+    background-color: transparent;
+}
+
+
+.avatar{
+    color: rgb(223, 34, 65);
+ 
+}
+
+.menu-container{
+    width: 200px;
+    border: 1px rgb(138, 134, 134) solid;
+    border-radius: 5px;
+    max-height: 450px;
+    margin-left: 80px;
+
+}
