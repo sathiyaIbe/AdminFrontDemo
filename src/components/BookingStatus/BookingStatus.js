@@ -5,28 +5,39 @@ import Header from '../../core/header/header';
 import Sidebar from '../../core/Sidebar/Sidebar';
 import { AiOutlineMenu } from 'react-icons/ai'
 import {RxCross1} from 'react-icons/rx'
+import DataTables from '../../core/DataTables/DataTables';
+import Context from '../../services/Context/Context';
 
 const BookingStatus = () => {
   const [sidebar, setSidebar]=useState(false)
 
-  const menuIcon= sidebar ?  <RxCross1 className='cancel-icon'/> :<AiOutlineMenu className='menu-icon'/>
+  const menuIcon= sidebar ?  <RxCross1 className='menu-icon'/> :<AiOutlineMenu className='menu-icon'/>
 
 
   return(
-  <div className="BookingStatus" data-testid="BookingStatus">
-   <Header />
-   <div className='sidebar-page-container'>
-   {sidebar && <Sidebar /> }
-   <button className='menu-btn' onClick={()=>(setSidebar(!sidebar))} type='button'> {menuIcon} </button>
+    <Context.Consumer>
+      {value=>{
+        const {sidebar}=value
+        return(
 
-   <div className='booking-status-body-container'>
+       
+  <div className="BookingStatus" data-testid="BookingStatus">
+    <div>
+    <Header sidebar={sidebar} />
+    <div className={`booking-status-body-container ${sidebar ?'sidebar-booking-status' :''}`}>
+
    <h1>Booking Status page</h1>
+ 
+   
    </div>
    </div>
    
   
   
   </div>
+   )
+  }}
+</Context.Consumer>
 )
   }
 

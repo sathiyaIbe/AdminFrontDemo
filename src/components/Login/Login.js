@@ -22,6 +22,7 @@ import {
   MDBInput
 }
 from 'mdb-react-ui-kit';
+import { render } from '@testing-library/react';
 
 
 function Login() {
@@ -35,6 +36,16 @@ function Login() {
 
 
   const navigate = useNavigate()
+   
+const token=localStorage.getItem('token')
+const checkToken=token===null
+
+ 
+ useEffect(()=>{
+  if (!checkToken){
+  return navigate('/admin-dashboard')
+} 
+},[checkToken])
 
 
 
@@ -60,7 +71,7 @@ function Login() {
     }
     Apilogin(user)
     .then(res=>{
-      console.log(res)
+      console.log(res.data.user)
       setUserDetails(res.data.user)
       localStorage.setItem("token", res.data.token)
       toast.success(res.data.message)
@@ -72,42 +83,28 @@ function Login() {
     })
 
 
+
+
   }
 }
- 
-const token=localStorage.getItem('token')
-const checkToken=token===null
-
- 
- useEffect(()=>{
-  if (!checkToken){
-  return navigate('/admin-dashboard')
-} 
-})
- 
-  
-
 
 
   return (
-    <MDBContainer className="my-5">
+    <div className='main-login-container' >
+    <MDBContainer   >
       <ToastContainer />
-
-      <MDBCard>
+<div className='login-container'>
+      <MDBCard className='logins' >
         <MDBRow className='g-0'>
 
           <MDBCol md='6'>
-            <MDBCardImage src='https://img.freepik.com/free-vector/access-control-system-abstract-concept_335657-3180.jpg' alt="login form" className='rounded-start w-100'/>
+            <MDBCardImage src='https://img.freepik.com/free-vector/access-control-system-abstract-concept_335657-12.jpg' alt="login form" className='rounded-start w-100'/>
           </MDBCol>
 
           <MDBCol md='6'>
-            <MDBCardBody className='d-flex flex-column'>
+            <MDBCardBody className='d-flex flex-column '>
 
-              <div className='d-flex flex-row mt-2'>
-                <MDBIcon fas icon="cubes fa-3x me-3" style={{ color: '#ff6219' }}/>
-                <span className="h1 fw-bold mb-0">Logo</span>
-              </div>
-
+            
               <h5 className="fw-normal my-4 pb-3" style={{letterSpacing: '1px'}}>Login into admin account</h5>
 
               { emailCheck&& <p style={{color:'red', textAlign:'left', margin:'0px'}}>*Required </p> }
@@ -120,18 +117,16 @@ const checkToken=token===null
 
               <MDBBtn className="mb-3 px-5" style={{height: '50px'}} color='dark' size='lg' onClick={onSubmit}>Login</MDBBtn>
 
-              <div className='d-flex flex-row justify-content-start'>
-                <a href="#!" className="small text-muted me-1">Terms of use.</a>
-                <a href="#!" className="small text-muted">Privacy policy</a>
-              </div>
+             
 
             </MDBCardBody>
           </MDBCol>
 
         </MDBRow>
       </MDBCard>
-
+      </div>
     </MDBContainer>
+    </div>
   );
 }
 

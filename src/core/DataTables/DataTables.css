@@ -1,59 +1,21 @@
-.sidebar-page-container{
+.datatable-crud-demo{
+    max-width: 90vw;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+   min-height: auto;
+   margin: 20px;
+  
+   /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
 }
 
 
-
-.booking-status-body-container{
-    max-width: 100vw;
-    margin-top: 75px;
-}
-.sidebar-booking-status{
-    margin-left: 400px;
-}
-
-.BookingStatus{
-    min-height: 100vh;
-    display: flex;
-
-}
-
-.menu-btn{
-    height: 50px;
-    outline: none;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    margin: 10px;
-}
-
-.menu-icon{
-    font-size: 24px;
-}
-
-
-.menu-btn{
-    margin-top: 10px;
-    background-color: rgb(255, 255, 255);
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-    border-radius: 100%;
-    width: 50px;
-}
-
-.menu-btn-cab:hover{
-    background-color: silver;
-}  
- 
-
-
-
-/* DataTableDemo.css */
 
 .datatable-crud-demo .table-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+   
+    
 }
 @media screen and (max-width: 960px) {
     .datatable-crud-demo .table-header {
@@ -88,4 +50,42 @@
         width: 100%;
     }
 }
-                 
+
+
+.status-active{
+    background-color: rgb(144, 216, 144);
+    color: rgb(14, 83, 14);
+    font-size: 18px;
+    padding: 10px;
+    font-weight: 500;
+}
+
+.status-inactive{
+    background-color: rgb(223, 156, 156);
+    color:rgb(145, 12, 12);
+    font-size: 18px;
+    padding: 10px;
+    font-weight: 500;
+}
+
+.toast-container{
+    z-index: 2 !important;
+}
+
+.cards{
+   width: 96vw;
+}
+
+.dark-bg{
+    /* background-color: black
+    background-color: black !important;
+    color: #ffffff !important;
+} */
+}
+
+.sidebar-table{
+    width: 80vw;
+}
+
+
+

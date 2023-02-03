@@ -6,15 +6,12 @@ import { Link } from 'react-router-dom';
 const Sidebar = () => (
   <div className="sidebar-container" data-testid="Sidebar">
     <div className='sidebar-items-container'>
-
-    
+      <h1>Logo</h1>
+      <Link className='sidebar-link  ' to ='/user'>User</Link>
       <Link className='sidebar-link ' to ='/cab-service'>Cab Service Clients</Link> 
-
-      
-      <Link className='sidebar-link ' to ='/e-commerce'>E Commerce Clients</Link> 
-
-     
+      <Link className='sidebar-link ' to ='/e-commerce'>E Commerce Clients</Link>  
       <Link className='sidebar-link  ' to ='/booking-status'>Booking Status</Link>
+
 
       </div>
         </div>

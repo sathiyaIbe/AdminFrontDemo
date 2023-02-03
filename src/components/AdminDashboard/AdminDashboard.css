@@ -1,16 +1,385 @@
+*{
+   
+    box-sizing: border-box;
+}
 .AdminDashboard {
    min-height: 100vh;
    display: flex;
-   flex-direction: column;
+   font-family: "Nunito", sans-serif !important;
+   margin: 0px;
 }
 
-.card-container{
+/* Sidebar Spacing  */
+
+ .sidebar-admin{
+    padding-left: 0px;
+}
+
+@media screen and (min-width:768px) {
+    .sidebar-admin{
+        padding-left: 300px;
+    }
+    
+}
+
+.admin-dashboard-heading{
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    margin-top: 20px;
+} 
+
+ .admin-dashboard-body-container{ 
+    margin-top: 65px;
+    background-color: #f6f9ff;
+    min-width: 99vw;
+} 
+
+/* 
+Admin body */
+
+.admin-dashboard-heading{
+    text-align: center;
+    color: #012970;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    padding-left: 25px;
+}
+
+
+@media screen and (min-width:768px) {
+    .admin-dashboard-heading{
+        text-align: left;
+        font-size: 32px;
+        font-weight: 500;
+        margin-bottom: 20px;
+        padding-top: 20px;
+        margin-left: 25px;
+    }
+}
+
+
+.card-main-container{
     display: flex;
-   min-width: 1000px;
+    flex-direction: column;
+    max-width: 98vw;
+}
+
+.sidebar-card-main-container {
+    max-width: 82vw;
+}
+
+@media screen and (max-width:768px) {
+    .sidebar-card-main-container{
+        max-width: 100vw;
+    }
+    
+}
+
+@media screen and (min-width:768px){
+    .card-main-container{
+        display: flex;
+        flex-direction: row;
+    }
+}
+
+.card-body-container{
+    width: 80%;
+    padding-left: 45px;
+}
+
+@media screen and (min-width:768px) {
+    .card-body-container{
+       max-width: 72%;
+    }
 }
 
 
-.menu-btn{
+/* individual Cards */
+
+/* Card */
+
+.dashboard-card-container{
+    display: flex;
+    flex-direction: column;
+    min-width: 100%;
+ }
+ 
+ @media screen and (min-width:768px) {
+     .dashboard-card-container{
+         display: flex;
+         flex-direction: row;
+         min-width: 100%;
+     }
+ }
+
+ .card{
+    width: 90%;
+    text-align: left;
+    margin-right: 20px;
+    margin-bottom: 35px;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1) !important; 
+    border: none !important;
+    border-radius: 10px !important;
+    font-size: 32px;
+   
+}
+
+.card-description-container{
+   display: flex !important;
+   flex-direction: row !important;
+   margin-left: 10px;
+}
+
+@media screen and(min-width:768px) {
+    .card{
+        min-width: 40%;
+        margin-left: 0;
+        margin-bottom: 25px;
+    }
+}
+
+.card-title{
+    font-size: 23px ;
+    color: #012970;
+    font-family:  Arial;
+    margin-left: 0;
+    font-weight: 600;
+    margin-left: 20px;
+}
+
+@media screen and (min-width:768px) {
+    .card-title{
+        font-size: 32px;
+    }
+    
+}
+
+.icon-card{
+    font-size: 52px;
+    border-radius: 100%;
+    width: 70px;
+    height: 70px;
+    padding: 10px;
+}
+
+.user{
+    color: #4154f1;
+    background: #e6e6ff;
+}
+
+.card-subtitle{
+    font-family: "Roboto";
+    font-size: 20px;
+    margin-left: 20px;
+}
+
+.subtitle{
+    color: #165c31;
+    font-weight: 700;
+}
+
+.booking{
+    color: #ff771d;
+    background: #ffecdf;
+}
+
+.revenue{
+    color: #2eca6a;
+    background: #e0f8e9;
+}
+
+/* Chart */
+
+@media screen and (min-width:768px) {
+    .card-charts-dashboard{
+       min-width: 100%;
+       margin-right: 20px ;
+   } 
+   }
+   
+   .card-charts-dashboard{
+       min-width: 90%;
+       background-color: #ffffff;
+       border-radius: 10px;
+       box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+       margin-bottom: 35px;
+       padding: 20px;
+       height: fit-content;
+   } 
+
+   .charts{
+    width: fit-content;
+    height: 400px;
+   
+ }
+ 
+ @media screen and (min-width:768px) {
+     .charts{
+         width: auto;
+     }
+     
+ }
+
+   /* Static table */
+
+    .static-table-cotainer{
+        background-color: #ffffff;
+        box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+        border-radius: 10px;
+        padding: 20px;
+        min-width: 100%;
+        margin-bottom: 35px;
+        height: fit-content;
+    }
+
+    @media screen and (min-width:768px) {
+        .static-table-cotainer{
+            min-width: 90%;
+            margin-right: 20px ;
+        }
+    }
+
+    .table{
+    min-width: 100%;
+    }
+
+  /* Bar table */
+
+  .card-bar-table-dashboard{
+    min-width: 90%;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+    margin-bottom: 25px;
+    padding: 20px;
+    height: fit-content;
+}
+
+@media screen and (min-width:768px) {
+    .card-bar-table-dashboard{
+       min-width: 90%;
+       margin-right: 20px ;
+   } 
+   }
+
+/* Pie Radar Dashboard */
+.pie-radar-container{
+    min-width: 30%;
+
+}
+
+/* Pie dashboard */
+
+.card-pie-dashboard{
+    width:90%;
+    height: 280px;
+    text-align: center;
+    margin-bottom: 35px;
+    background-color: #ffffff;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+    border-radius: 10px;
+    
+}
+
+@media screen and (min-width:768px) {
+    .card-pie-dashboard{
+       width: 97%;
+       height: 400px;
+       margin-top: 0;
+       text-align: center;
+    }
+    
+}
+.pie-dashboard{
+    width: 280px!important;
+    padding: 10px;
+}
+
+.position-container{
+    display: flex;
+    justify-content: center;
+  
+}
+
+@media screen and (min-width:768px) {
+    .pie-dashboard{
+        width: 350px !important;
+        text-align: center !important;
+    }
+    
+}
+
+
+/* Radar Dashboard */
+.radar-dashboard{
+    width: 300px;
+}
+
+@media screen and (min-width:768px) {
+    .radar-dashboard{
+        width: 400px;
+        padding-left: 50px;
+       
+    }
+    
+}
+
+.card-radar-dashboard{
+    width: 97%;
+    margin-top: 10px;
+    margin-bottom: 35px;
+    background-color: #ffffff;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+@media screen and(max-width:768px) {
+    .card-radar-dashboard{
+        width:90%  ;
+        margin-top: 10px;
+        padding: 20px;
+    }
+}
+/* 
+Heading */
+.card-main-heading{
+    text-align: left;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: #012970;
+    padding-left: 20px;
+    padding-top: 20px;
+} 
+
+/* Chrono Dashboard */
+
+.card-chrono-dashboard{
+    width: 90%;
+    background-color: #ffffff;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+    
+}
+
+@media screen and (min-width:768px) {
+    .card-chrono-dashboard{
+        width:97% ;
+      
+        padding: 20px;
+        margin-right: 0;
+        margin-bottom: 0;
+
+    }
+}
+
+
+/* .menu-btn{
     height: 50px;
     outline: none;
     background-color: transparent;
@@ -23,15 +392,402 @@
     font-size: 24px;
 }
 
-.cancel-icon{
-    font-size: 24px;
-    margin-bottom: 15px;
+.menu-btn{
+    margin-top: 10px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    border-radius: 100%;
+    width: 50px;
 }
 
 .admin-dashboard-heading{
     text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
-.admin-dashboard-body-container{
-    width: 80vw;
+@media screen and (min-width:768px) {
+    .admin-dashboard-heading{
+        text-align: left;
+        font-size: 32px;
+        font-weight: 500;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        margin-left: 25px;
+    }
 }
+
+
+.admin-dashboard-body-container{
+    min-height: 90vh; 
+    min-width: 90vw;
+    margin-top: 84px;
+    background-color: #f6f9ff;
+}
+
+.sidebar-admin{
+    padding-left: 0px;
+}
+
+@media screen and (min-width:768px) {
+    .sidebar-admin{
+        padding-left: 280px;
+    }
+    
+}
+
+.sidebar-page-container{
+    display: flex;
+   
+}
+
+.card-container-dashboard{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+
+@media screen and (min-width:768px) {
+    .card-container-dashboard{
+        display: flex;
+        flex-direction: row;
+        margin-left: 0px;
+        padding: 10px;
+       
+    }
+    
+}
+
+.card-body-container{
+    min-width: 100%;
+    max-width: 100%;
+    padding-left: 40px;
+}
+
+@media screen and (min-width:768px) {
+    .card-body-container{
+        min-width: 70%;
+        max-width: 50%;
+    }
+}
+
+.dashboard-card-container{
+    display: flex;
+    flex-direction: column;
+    min-width: 100%;
+ }
+ 
+ @media screen and (min-width:768px) {
+     .dashboard-card-container{
+         display: flex;
+         flex-direction: row;
+         min-width: 100%;
+     }
+ }
+
+.card-heading{
+    font-size: 24px;
+}
+
+.card-main-heading{
+    font-size: 32px;
+   
+}
+
+
+@media screen and (min-width:768px) {
+ .card-charts-dashboard{
+    min-width: 100%;
+    margin-right: 20px ;
+} 
+}
+
+.card-charts-dashboard{
+    min-width: 90%;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+    margin-bottom: 25px;
+    padding: 20px;
+    height: fit-content;
+} 
+
+.chart-heading{
+    font-size: 14px;
+    font-weight: 500;
+}
+
+@media screen and(min-width:768px) {
+    .chart-heading{
+        font-size: 24px;
+    }
+    
+}
+
+.charts{
+   width: fit-content;
+   height: 400px;
+  
+}
+
+@media screen and (min-width:768px) {
+    .charts{
+        width: auto;
+    }
+    
+}
+
+.card-bar-table-dashboard{
+    min-width: 90%;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+   
+    margin-bottom: 25px;
+    padding: 20px;
+    height: 422px;
+}
+
+@media screen and (min-width:768px) {
+    .card-bar-table-dashboard{
+       min-width: 90%;
+       margin-right: 20px ;
+   } 
+   }
+   
+
+.card-pie-dashboard{
+    width:90%;
+    height: 280px;
+    text-align: center;
+    margin-bottom: 35px;
+    background-color: #ffffff;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+    border-radius: 10px;
+    
+}
+
+@media screen and (min-width:768px) {
+    .card-pie-dashboard{
+       width: 90% !important;
+       height: 400px;
+       margin-top: 0;
+       text-align: center;
+    }
+    
+}
+.pie-dashboard{
+    width: 280px!important;
+    padding-left: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+@media screen and (min-width:768px) {
+    .pie-dashboard{
+        width: 400px !important;
+        padding-left: 50px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    
+}
+
+.radar-dashboard{
+    width: 300px;
+}
+
+@media screen and (min-width:768px) {
+    .radar-dashboard{
+        width: 400px;
+        padding-left: 50px;
+       
+    }
+    
+}
+
+
+.card-radar-dashboard{
+    width: 90%;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+@media screen and(min-width:768px) {
+    .card-radar-dashboard{
+        width:90% ;
+        margin-top: 0px;
+        padding: 20px;
+        margin-right: 0;
+        margin-bottom: 0;
+       
+    }
+    
+}
+.card-chrono-dashboard{
+    width: 90%;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+@media screen and (min-width:768px) {
+    .card-chrono-dashboard{
+        width:90% ;
+        margin-top: 0px;
+        padding: 20px;
+        margin-right: 0;
+        margin-bottom: 0;
+    }
+}
+
+.card-main-container{
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen and (min-width:768px){
+    .card-main-container{
+        display: flex;
+        flex-direction: row;
+    }
+}
+
+.pie-radar-container{
+    min-width: 30%;
+    margin-right: 40px;
+    padding-left: 20px;
+}
+
+.card-container{
+    display: flex;
+    flex-direction: column;
+    min-width: 100vw;
+}
+
+
+ Cards Css  
+
+.card{
+    width: 90%;
+    text-align: left;
+    margin-right: 20px;
+    margin-bottom: 35px;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1) !important; 
+    border: none !important;
+    border-radius: 10px !important;
+    font-size: 32px;
+   
+}
+
+.card-description-container{
+    display: flex !important;
+   flex-direction: row !important;
+   margin-left: 10px;
+}
+
+@media screen and(min-width:768px) {
+    .card{
+        width: 40%;
+        margin-left: 0;
+        margin-bottom: 25px;
+    }
+    
+}
+
+
+.card-title{
+    font-size: 23px ;
+    color: #012970;
+    font-family:  Arial;
+    margin-left: 0;
+    font-weight: 600;
+    margin-left: 20px;
+}
+
+@media screen and (min-width:768px) {
+    .card-title{
+        font-size: 32px;
+    }
+    
+}
+
+.icon-card{
+    font-size: 52px;
+    border-radius: 100%;
+    width: 70px;
+    height: 70px;
+    padding: 10px;
+}
+
+.user{
+    color: #4154f1;
+    background: #e6e6ff;
+}
+
+.card-subtitle{
+    font-family: "Roboto";
+    font-size: 20px;
+    margin-left: 20px;
+}
+
+.subtitle{
+    color: #165c31;
+    font-weight: 700;
+}
+
+.booking{
+    color: #ff771d;
+    background: #ffecdf;
+}
+
+.revenue{
+    color: #2eca6a;
+    background: #e0f8e9;
+}
+@media screen and (max-width:768px) {
+.static-table-cotainer{
+    background-color: #ffffff;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    margin-right: 40px;
+    width: 90%;
+    margin-bottom: 15px;
+}
+}
+
+@media screen and (min-width:768px) {
+    .static-table-cotainer{
+        background-color: #ffffff;
+        box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+        border-radius: 10px;
+        padding: 20px;
+        width: 98%;
+        margin-right: 5px !important;
+        margin-bottom: 20px;
+    }
+}
+
+.card-main-heading{
+    text-align: left;
+    margin-bottom: 0px;
+    font-weight: 700;
+    color: rgb(61, 61, 61);
+    line-height: 0;
+    font-size: 1.6rem;
+    margin-top: 10px;
+} 
+
+
+
+ */

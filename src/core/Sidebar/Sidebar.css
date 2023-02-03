@@ -1,7 +1,9 @@
 .sidebar-container {
     min-height: 100vh;
-    max-width: 300px ;
-    box-shadow: 15px 0px 10px -15px #111;   
+    min-width: 300px ;
+    box-shadow: 15px 0px 10px -15px #111; 
+  
+    margin-top: -10px;
 
 }
 

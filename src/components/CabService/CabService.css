@@ -3,5 +3,83 @@
 }
 
 .cab-service-body-container{
-    min-width: 80vw;
+    min-height: 50vh; 
+    min-width: 50vw !important;
+    margin-top: 80px;
+   
 }
+
+.sidebar-cab-service{
+    margin-left: 300px;
+}
+
+
+
+
+.sidebar-page-container-cab{
+    display: flex;
+    flex-direction: column;
+    min-width: 100vw;
+}
+
+.menu-btn-cab{
+    height: 50px;
+    outline: none;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    border-radius: 100%;
+    width: 50px;
+}
+
+.menu-icon-cab{
+    font-size: 24px;
+   
+}
+
+.menu-btn-cab:hover{
+    background-color: silver;
+}  
+.add-btn{
+    text-decoration: underline;
+    color: blue;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    text-align: left;
+    margin-left: 0 ;
+}
+
+
+.cab-body-container{
+    min-width: 100%;
+    max-width: 100%;
+}
+
+@media screen and (min-width:768px) {
+    .cab-body-container{
+        min-width: 70%;
+        max-width: 50%;
+       
+    }
+}
+
+.table-container-cab{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.cab-form{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    justify-content: center;
+    align-items: center;
+}
+
+.cab-form-container{
+    background-color: rgb(160, 111, 111);
+    width: 500px;
+}
+

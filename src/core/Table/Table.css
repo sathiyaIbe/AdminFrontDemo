@@ -1,0 +1,50 @@
+ .Table{
+    min-width: 100vw;
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 20px;
+
+   
+} 
+
+.table-conatainer{
+    min-width:1000px;
+   
+  
+    padding: 10px;
+   
+}
+
+.table-container-cab{
+    display: flex;
+    flex-direction: column;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    max-width: 1000px;
+    margin-left: 20px;
+}
+
+.cab-form{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    justify-content: center;
+    align-items: center;
+}
+
+.cab-form-container{
+    background-color: rgb(160, 111, 111);
+    width: 500px;
+   
+    
+}
+
+.add-btn{
+    text-decoration: underline;
+    color: blue;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    text-align: left;
+
+    margin-left: 20px ;
+}

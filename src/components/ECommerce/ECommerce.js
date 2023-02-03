@@ -5,25 +5,37 @@ import Sidebar from '../../core/Sidebar/Sidebar';
 import Header from '../../core/header/header';
 import { AiOutlineMenu } from 'react-icons/ai'
 import {RxCross1} from 'react-icons/rx'
+import Context from '../../services/Context/Context';
+
 
 const ECommerce = () =>{
-  const [sidebar, setSidebar]=useState(false)
+  
 
-  const menuIcon= sidebar ?  <RxCross1 className='cancel-icon'/> :<AiOutlineMenu className='menu-icon'/>
+  const menuIcon= true ?  <RxCross1 className='menu-icon'/> :<AiOutlineMenu className='menu-icon'/>
 
   return (
-  <div className="ECommerce" data-testid="ECommerce">
-   <Header />
+    <Context.Consumer>
+      {value=>{
+        const {sidebar}=value
+        return(
 
-   <div className='sidebar-page-container'>
-  {sidebar && <Sidebar /> }
-   <button className='menu-btn' onClick={()=>(setSidebar(!sidebar))} type='button'> {menuIcon} </button>  
-   <div className='e-commerce-body-container'>
-   <h1>ECommerce Page</h1>
+
+  <div className="ECommerce" data-testid="ECommerce">
+     
+  
+<div>
+   <Header />
+   <div  className={`e-commerce-body-container ${sidebar ?'sidebar-ecommerce' :''}`}>
+   <h1 className='e-commerce-heading'>E-Commerce Page</h1>
+
    </div>
+  
    </div>
    
   </div>
+          )
+        }}
+      </Context.Consumer>
 );
   }
 
