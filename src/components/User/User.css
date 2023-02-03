@@ -24,9 +24,26 @@
     border-radius: 10px;
 }
 
+
+@media screen and (max-width:768px) {
+    .table-user{
+        width: 100%;
+    }
+    
+}
+
+@media screen and (max-width:768px) {
+    .sidebar-user{
+        width: 100vw;
+    }
+    
+}
+
 .sidebar-user{
     width: 82vw;
 }
+
+
 
 .header-user-container{
     z-index: 1;

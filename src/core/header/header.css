@@ -25,7 +25,6 @@
     width: 200px;
     margin-top: 5px;
     margin-bottom: 5px;
-   
   }
   
 }
@@ -186,8 +185,8 @@
 
 @media screen and (max-width:768px) {
   .admin-link{
-    font-size: 14px;
-    margin-top: 20px;
+    font-size: 22px;
+    margin-top: 10px;
 
   }
   
@@ -374,4 +373,10 @@ bar-offcanvas
 .search-container{
   margin-left: 80px;
   display: flex;
+}
+
+@media screen and (max-width:768px) {
+  .search-container{
+    margin-left: 0px;
+  }
 }

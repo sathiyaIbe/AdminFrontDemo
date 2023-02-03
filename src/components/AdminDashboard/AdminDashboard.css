@@ -1,5 +1,4 @@
 *{
-   
     box-sizing: border-box;
 }
 .AdminDashboard {
@@ -22,18 +21,13 @@
     
 }
 
-.admin-dashboard-heading{
-    text-align: center;
-    font-size: 20px;
-    font-weight: 500;
-    margin-bottom: 20px;
-    margin-top: 20px;
-} 
+
 
  .admin-dashboard-body-container{ 
     margin-top: 65px;
     background-color: #f6f9ff;
-    min-width: 99vw;
+   min-width: 99vw;
+
 } 
 
 /* 
@@ -45,7 +39,7 @@ Admin body */
     font-size: 20px;
     font-weight: 500;
     margin-bottom: 20px;
-    margin-top: 20px;
+    padding-top: 20px;
     padding-left: 25px;
 }
 
@@ -87,13 +81,14 @@ Admin body */
 }
 
 .card-body-container{
-    width: 80%;
-    padding-left: 45px;
+    width: 100%;
+    padding-left: 35px;
 }
 
 @media screen and (min-width:768px) {
     .card-body-container{
        max-width: 72%;
+       padding-left: 45px;
     }
 }
 
@@ -117,14 +112,14 @@ Admin body */
  }
 
  .card{
-    width: 90%;
+    width: 92%;
     text-align: left;
-    margin-right: 20px;
     margin-bottom: 35px;
     box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1) !important; 
     border: none !important;
     border-radius: 10px !important;
     font-size: 32px;
+    margin-right: 35px;
    
 }
 
@@ -132,12 +127,13 @@ Admin body */
    display: flex !important;
    flex-direction: row !important;
    margin-left: 10px;
+   
 }
 
 @media screen and(min-width:768px) {
     .card{
         min-width: 40%;
-        margin-left: 0;
+        margin-right: 20px;
         margin-bottom: 25px;
     }
 }
@@ -149,6 +145,12 @@ Admin body */
     margin-left: 0;
     font-weight: 600;
     margin-left: 20px;
+}
+@media screen and (max-width:768px) {
+    .card-title{
+        font-size: 16px;
+    }
+    
 }
 
 @media screen and (min-width:768px) {
@@ -166,6 +168,15 @@ Admin body */
     padding: 10px;
 }
 
+@media screen and (max-width:768px) {
+    .icon-card{
+        font-size: 22px;
+        width: 50px;
+        height: 50px;
+    }
+    
+}
+
 .user{
     color: #4154f1;
     background: #e6e6ff;
@@ -175,6 +186,12 @@ Admin body */
     font-family: "Roboto";
     font-size: 20px;
     margin-left: 20px;
+}
+
+@media screen and (max-width:768px) {
+    .card-subtitle{
+        font-size: 16px;
+    }
 }
 
 .subtitle{
@@ -191,6 +208,9 @@ Admin body */
     color: #2eca6a;
     background: #e0f8e9;
 }
+.revenue-card{
+    margin-right: 30px;
+}
 
 /* Chart */
 
@@ -198,28 +218,31 @@ Admin body */
     .card-charts-dashboard{
        min-width: 100%;
        margin-right: 20px ;
+       margin-left: 0px;
    } 
-   }
+}
    
-   .card-charts-dashboard{
-       min-width: 90%;
-       background-color: #ffffff;
-       border-radius: 10px;
-       box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
-       margin-bottom: 35px;
-       padding: 20px;
-       height: fit-content;
-   } 
+.card-charts-dashboard{
+    min-width: 90%;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+    margin-bottom: 35px;
+    padding: 20px;
+    height: fit-content;
+    margin-right: 28px;
+    margin-left: 2px ;
+} 
 
-   .charts{
-    width: fit-content;
-    height: 400px;
-   
+.charts{
+    width: 100%;
+    height: 100%;
  }
  
  @media screen and (min-width:768px) {
      .charts{
          width: auto;
+         height:400px
      }
      
  }
@@ -231,23 +254,17 @@ Admin body */
         box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
         border-radius: 10px;
         padding: 20px;
-        min-width: 100%;
+        min-width: 90%;
         margin-bottom: 35px;
+        margin-right: 30px;
         height: fit-content;
     }
 
-    @media screen and (min-width:768px) {
-        .static-table-cotainer{
-            min-width: 90%;
-            margin-right: 20px ;
-        }
-    }
-
     .table{
-    min-width: 100%;
+        min-width: 85%;
     }
 
-  /* Bar table */
+     /* Bar table */
 
   .card-bar-table-dashboard{
     min-width: 90%;
@@ -272,30 +289,38 @@ Admin body */
 
 }
 
+@media screen and (max-width:768px) {
+    .pie-radar-container{
+        min-width: 100%;
+    }
+    
+}
+
 /* Pie dashboard */
 
 .card-pie-dashboard{
-    width:90%;
-    height: 280px;
+    min-width: 80%;
     text-align: center;
     margin-bottom: 35px;
     background-color: #ffffff;
     box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
     border-radius: 10px;
-    
+    margin-left: 35px;
+    margin-right: 30px;
 }
 
 @media screen and (min-width:768px) {
     .card-pie-dashboard{
-       width: 97%;
-       height: 400px;
        margin-top: 0;
+       margin-left: 10px;
+       margin-right: 20px;
        text-align: center;
     }
     
 }
 .pie-dashboard{
-    width: 280px!important;
+    max-width: 80%; 
+    max-height: 40%;
     padding: 10px;
 }
 
@@ -307,7 +332,7 @@ Admin body */
 
 @media screen and (min-width:768px) {
     .pie-dashboard{
-        width: 350px !important;
+        min-width: 80%;
         text-align: center !important;
     }
     
@@ -316,34 +341,56 @@ Admin body */
 
 /* Radar Dashboard */
 .radar-dashboard{
-    width: 300px;
+   max-width: 90%;
 }
 
 @media screen and (min-width:768px) {
     .radar-dashboard{
-        width: 400px;
-        padding-left: 50px;
-       
+        min-width: 90%;
+    }
+
+
+    .card-radar-dashboard{
+        margin-top: 10px;
+        padding: 20px;
+        margin-right: 20px !important ;
+        margin-left: 10px !important;
+        margin-top: 10px;
+        margin-bottom: 35px;
+        min-width: 100%;
     }
     
 }
 
+    .card-radar-dashboard{
+        margin-top: 10px;
+        margin-bottom: 35px;
+        padding: 10px;
+        border-radius: 10px;
+        margin-left: 40px;
+        margin-right: 70px;
+        min-width: 81%;
+        margin-top: 10px;
+        margin-bottom: 35px;
+        background-color: #ffffff;
+        box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+        border-radius: 10px;
+    }
+    
+@media screen and(min-width:768px) {
 .card-radar-dashboard{
-    width: 97%;
+    margin-top: 10px;
+    padding: 20px;
+    margin-right: 20px ;
+    margin-left: 10px;
     margin-top: 10px;
     margin-bottom: 35px;
     background-color: #ffffff;
     box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
-    padding: 10px;
     border-radius: 10px;
+    max-width: 90%;
 }
 
-@media screen and(max-width:768px) {
-    .card-radar-dashboard{
-        width:90%  ;
-        margin-top: 10px;
-        padding: 20px;
-    }
 }
 /* 
 Heading */
@@ -356,27 +403,40 @@ Heading */
     padding-top: 20px;
 } 
 
+@media screen and (max-width:768px) {
+    .card-main-heading{
+        font-size:16px;
+        text-align: center;
+        padding-left: 0;
+        padding-top: 0;
+    }
+    
+}
+
 /* Chrono Dashboard */
 
 .card-chrono-dashboard{
-    width: 90%;
+    width: 80%;
     background-color: #ffffff;
     box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
     padding: 10px;
     border-radius: 10px;
-    
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-bottom: 30px;
 }
 
 @media screen and (min-width:768px) {
     .card-chrono-dashboard{
-        width:97% ;
-      
+        min-width:95% ;
         padding: 20px;
-        margin-right: 0;
-        margin-bottom: 0;
-
+        margin-right: 20px !important;
+        margin-left: 10px;
+        margin-bottom: 0px;
     }
 }
+
+
 
 
 /* .menu-btn{

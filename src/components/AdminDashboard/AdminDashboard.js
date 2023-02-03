@@ -310,7 +310,7 @@ const [lightOptionss] = useState({
         </div>
         </div>
         </Card>
-        <Card  className='card' title="Revenue" >
+        <Card  className='card revenue-card' title="Revenue" >
            
             
         <div className='card-description-container'>
@@ -359,9 +359,9 @@ const [lightOptionss] = useState({
   </tbody>
 </table>
 </div>
-<div className="card-bar-table-dashboard">
+<div className="static-table-cotainer">
 <h3 className='card-main-heading'>User Status</h3>
-            <Chart type="bar" data={dataaaa} options={options} />
+            <Chart className='charts' type="bar" data={dataaaa} options={options} />
 </div>
         </div>
         <div className='pie-radar-container'>
@@ -381,7 +381,7 @@ const [lightOptionss] = useState({
     <div style={{ width: "90%", height: "745px" }}>
     <h3 className='card-main-heading side'>Recent Activity</h3>
   
-        <Chrono  items={chronoData} mode="VERTICAL_ALTERNATING" >
+        <Chrono classNames='chrono'  items={chronoData} mode="VERTICAL_ALTERNATING" >
        
             {chronoData.map(each=>(
                 <p>{each.contentText}</p>
