@@ -27,15 +27,7 @@ import { UpdateUserApi } from '../../services/UserService/UserService';
 import { elementAcceptingRef } from '@mui/utils';
 import Context from '../../services/Context/Context';
 
- 
-
-
-
-
 const DataTables = (props) => {
-
-
-
     let emptyProduct = {
         _id:'',
         username: '',
@@ -54,9 +46,6 @@ const DataTables = (props) => {
     const [globalFilter, setGlobalFilter] = useState(null);
     const toast = useRef(null);
     const dt = useRef(null);
-
-    
-
     useEffect(() => {
       GetUserDetailsApi().then(res=>{
        
@@ -106,7 +95,6 @@ const DataTables = (props) => {
         const createUId=(val)=>{
             console.log(val)
         let id = val+"-";
-            let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
             for (let i = 0; i < 5; i++) {
                 id += (Math.floor(Math.random() * 9));
                 if (id.length===8){
@@ -115,10 +103,8 @@ const DataTables = (props) => {
                 else if(id.length>8){
                     id=val
                 }
-            }
-           
+            }          
         }
-    
             let _products = [...products];
             let _product = {...product};
 
@@ -133,37 +119,26 @@ const DataTables = (props) => {
                         username: product.username,
                         email:product.email,
                         status:product.status,
-                       
                     }
+                    console.log(details)
                     
                     UserService(details).then(res=>{
                         const data=res.data
                         
                          const id=products.length + 1
-                       
-
-                        
-                        _products.push({...data,id});
-
+                         _products.push({...data,id});
                         setProducts(_products)
                         setProduct(emptyProduct);
                     })
-                     
-                   
-    
                     toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000, });
-                   
-                  
             }
             else {
-             
                 const data={
                     username:_product.username,
                     status: _product.status,
                     email:_product.email,
                 }
                 UpdateUserApi(_product).then(res=>{
-                    
                     const dataId=res.data._id
                     const id=products.findIndex(each=>{
                       
@@ -184,7 +159,6 @@ const DataTables = (props) => {
             }
                   setProductDialog(false);
     }
-
     const editProduct = (product) => {
       
         setProduct({...product});
@@ -333,14 +307,10 @@ const DataTables = (props) => {
             </React.Fragment>
         )
     }
-
-
-
     const statusBodyTemplate = (rowData) => {
       
         return <span className={`product-badge status-${rowData.status}`}>{rowData.status}</span>;
     }
-
     const actionBodyTemplate = (rowData) => {
         return (
             <React.Fragment>
@@ -349,7 +319,6 @@ const DataTables = (props) => {
             </React.Fragment>
         );
     }
-
     const header = (
         <div className="table-header dark-bg">
             <h5 className="mx-0 my-1">Manage Users</h5>
@@ -383,15 +352,8 @@ const DataTables = (props) => {
             {value=>{
            const  {sidebar}=value
            return(
-
-          
-
       load &&
         <div className="datatable-crud-demo " data-testid="DataTable">
-      
-       
-            
-
             <div className={`cards ${sidebar ?'sidebar-table' :''}`}>
                 <Toolbar   className="mb-4 dark-bg " left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
 
@@ -404,7 +366,7 @@ const DataTables = (props) => {
                     globalFilter={globalFilter} header={header} responsiveLayout="scroll" >
                         
                     { <Column   className="dark-bg" selectionMode="multiple" headerStyle={{ width: '3rem' }} exportable={false}></Column> }
-                    <Column  className="dark-bg" field="id" header="User Id" sortable style={{ minWidth: '12rem' }}></Column>
+                    <Column  className="dark-bg" field="userId" header="User Id" sortable style={{ minWidth: '12rem' }}></Column>
                     {/* //<Column field="createdAt" header="Date Created" sortable style={{ minWidth: '12rem' }}></Column> */}
  
                     <Column  className="dark-bg" field="username" header="Name" sortable style={{ minWidth: '16rem' }}></Column>
@@ -439,19 +401,7 @@ const DataTables = (props) => {
                       
                     </div>
                 </div>
-
-                {/* <div className="formgrid grid">
-                    <div className="field col">
-                        <label htmlFor="price">Price</label>
-                        <InputNumber id="price" value={product.price} onValueChange={(e) => onInputNumberChange(e, 'price')} mode="currency" currency="USD" locale="en-US" />
-                    </div>
-                    <div className="field col">
-                        <label htmlFor="quantity">Quantity</label>
-                        <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} integeronly />
-                    </div>
-                </div> */}
             </Dialog>
-
             <Dialog dark-bg visible={deleteProductDialog} style={{ width: '450px' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
                 <div className="confirmation-content">
                     <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem'}} />
