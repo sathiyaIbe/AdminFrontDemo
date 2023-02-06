@@ -35,6 +35,14 @@ export const CountUserApi=async()=>{
   return await axios.get('http://localhost:5000/user/api/usersCount')
 }
 
+export const ChartDataApi=async()=>{
+  return await axios.get('http://localhost:5000/admin/api/adminDatas')
+}
+
+export const TotalAdminData=async()=>{
+  return await axios.get('http://localhost:5000/admin/api/adminData/data')
+}
+
 UserService.propTypes = {};
 
 UserService.defaultProps = {};

@@ -261,7 +261,24 @@ Admin body */
     }
 
     .table{
-        min-width: 85%;
+       min-width: 86%;
+      
+    }
+
+    .status-active{
+        background-color: rgb(144, 216, 144);
+        color: rgb(14, 83, 14);
+        font-size: 18px;
+        padding: 10px;
+        font-weight: 500;
+    }
+    
+    .status-inactive{
+        background-color: rgb(223, 156, 156);
+        color:rgb(145, 12, 12);
+        font-size: 18px;
+        padding: 10px;
+        font-weight: 500;
     }
 
      /* Bar table */

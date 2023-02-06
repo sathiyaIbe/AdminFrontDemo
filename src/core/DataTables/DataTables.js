@@ -92,19 +92,7 @@ const DataTables = (props) => {
 
     const saveProduct = () => {
         setSubmitted(true);
-        const createUId=(val)=>{
-            console.log(val)
-        let id = val+"-";
-            for (let i = 0; i < 5; i++) {
-                id += (Math.floor(Math.random() * 9));
-                if (id.length===8){
-                    return id;
-                }
-                else if(id.length>8){
-                    id=val
-                }
-            }          
-        }
+       
             let _products = [...products];
             let _product = {...product};
 
@@ -112,8 +100,6 @@ const DataTables = (props) => {
 
                 _products[index] = _product;
               const isUpdated=products.filter(each=>each._id===_product._id)
-               const noid= createUId(product.username.substring(0,4))
-               console.log(noid)
                 if (isUpdated.length===0) {
                     const details={
                         username: product.username,

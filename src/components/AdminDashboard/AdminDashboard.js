@@ -21,16 +21,23 @@ import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 import { CChart } from '@coreui/react-chartjs'
 import {Chrono} from 'react-chrono'
-
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
 import { CountUserApi } from '../../services/UserService/UserService';
-
-
+import { ChartDataApi } from '../../services/UserService/UserService';
+import { TotalAdminData } from '../../services/UserService/UserService';
+import { GetUserDetailsApi } from '../../services/UserService/UserService';
 
 const AdminDashboard = () => {
   const [sidebar, setSidebar]=useState(true)
   const [userCount,setUserCount]=useState('')
- 
-    const [size, setSize] = useState([0, 0]);
+  const [totalRevenue, setTotalRevene]=useState('')
+  const [totalBooking, setTotalBooking]=useState('')
+  const [totalUser, setTotalUser]=useState('')
+  const [size, setSize] = useState([0, 0]);
+  const [adminChartData, setAdminChartData]=useState([])
+  const [userTableDetails,setUserTableDetails]=useState([])
+  
     useLayoutEffect(() => {
       function updateSize() {
         setSize([window.innerWidth, window.innerHeight]);
@@ -39,21 +46,71 @@ const AdminDashboard = () => {
       updateSize();
       return () => window.removeEventListener('resize', updateSize);
     }, []);
-   
+    
+    
     useEffect(()=>{
         CountUserApi().then(res=>{
-            console.log(res)
             setUserCount(res.data.count)
+        })
 
+        GetUserDetailsApi().then(res=>{
+            setUserTableDetails(res.data)
+        })
+
+        ChartDataApi().then(res=>{
+            setAdminChartData(res.data)
+         
+        })
+        TotalAdminData().then(res=>{
+           setTotalBooking(res.data.TotalBooking[0].TotalBooking)
+           setTotalRevene(res.data.Totalrevenue[0].Totalrevenue)
+           setTotalUser(res.data.TotalUser[0].TotalUser)
         })
     },[userCount])
-  
+    const tableUserData=userTableDetails.slice(-5)
+    function bookingNewData(){
+     
+      return  adminChartData.map((each)=>{
+            return each.booking
+    })
+     
+    }
+
+
+    function userNewData(){
+     
+        const datas=  adminChartData.map(each=>{
+              return each.user
+          })
+          return datas
+      }
+      function activeNewData(){
+     
+        const datas=  adminChartData.map(each=>{
+              return each.userActive
+          })
+          return datas
+      }
+      function inActiveNewData(){
+     
+        const datas=  adminChartData.map(each=>{
+              return each.userInActive
+          })
+          return datas
+      }
+const userDataCount=userNewData()
+const bookingDataCount=bookingNewData()
+const activeDataCount=activeNewData()
+const inActiveDataCount=inActiveNewData()
+
+//console.log(activeNewData())
   const navigate=useNavigate()
 
   const logoutHandler=()=>{
     localStorage.removeItem('token')
     navigate('/')
   }
+
 
   const chronoData = [
     {
@@ -88,19 +145,19 @@ const AdminDashboard = () => {
 ]
 
   const dataaaa = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    labels: ['January', 'February', 'March', 'April', 'May', 'June',],
     datasets: [
         {
             label: 'Active',
             backgroundColor: "#74b87e",
             borderColor: "green",
-            data: [65, 59, 80, 81, 56, 55, 40]
+            data: activeDataCount
         },
         {
             label: 'In Active',
             backgroundColor: '#db8074',
             borderColor: "red",
-            data: [28, 48, 40, 19, 86, 27, 90]
+            data: inActiveDataCount
         }
     ]
 };
@@ -139,7 +196,27 @@ const options = {
     }
 };
 
+const polarData={
+    labels: ['New User', 'Bookings', 'Revenue'],
+    datasets: [
+        {
+            data: [totalUser, totalBooking, totalRevenue /10],
+            backgroundColor: [
+                "#42A5F5",
+                "#66BB6A",
+                "#FFA726"
+            ],
+            hoverBackgroundColor: [
+                "#64B5F6",
+                "#81C784",
+                "#FFB74D"
+            ]
+        }
+    ]
+}
+
   const [chartData] = useState({
+   
     labels: ['New User', 'Bookings', 'Revenue'],
     datasets: [
         {
@@ -169,35 +246,29 @@ const [lightOptions] = useState({
     }
 });
 
+let newStylesData={
+    labels: ['January', 'February', 'March', 'April', 'May', 'June',],
+    datasets: [
+        {
+            label: 'Booking Data',
+            data: bookingNewData(),
+            fill: false,
+            tension: .4,
+            borderColor: '#42A5F5'
+        },
+        {
+            label: 'User Data',
+            data: userNewData(),
+            fill: true,
+            tension: .4,
+            borderColor: '#66BB6A'
+        },
 
-const [lineStylesData] = useState({
-  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-  datasets: [
-      {
-          label: 'First Dataset',
-          data: [65, 59, 80, 81, 56, 55, 40],
-          fill: false,
-          tension: .4,
-          borderColor: '#42A5F5'
-      },
-      {
-          label: 'Second Dataset',
-          data: [28, 48, 40, 19, 86, 27, 90],
-          fill: false,
-         
-          tension: .4,
-          borderColor: '#66BB6A'
-      },
-      {
-          label: 'Third Dataset',
-          data: [12, 51, 62, 33, 21, 62, 45],
-          fill: true,
-          borderColor: 'grey',
-          tension: .4,
-          
-      }
-  ]
-});
+    ]
+}
+
+
+
 let basicOptions = {
   maintainAspectRatio: false,
   aspectRatio: .6,
@@ -228,31 +299,36 @@ let basicOptions = {
   }
 };
 
-const [chartDatas] = useState({
-  labels: ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'],
-  datasets: [
-      {
-          label: 'My First dataset',
-          backgroundColor: 'rgba(179,181,198,0.2)',
-          borderColor: 'rgba(179,181,198,1)',
-          pointBackgroundColor: 'rgba(179,181,198,1)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgba(179,181,198,1)',
-          data: [65, 59, 90, 81, 56, 55, 40]
-      },
-      {
-          label: 'My Second dataset',
-          backgroundColor: 'rgba(255,99,132,0.2)',
-          borderColor: 'rgba(255,99,132,1)',
-          pointBackgroundColor: 'rgba(255,99,132,1)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgba(255,99,132,1)',
-          data: [28, 48, 40, 19, 96, 27, 100]
-      }
-  ]
-});
+console.log(activeDataCount[activeDataCount.length-1])
+
+const radarData={
+    labels: ['Active', 'InActive', 'Booking', 'User',],
+    datasets: [
+        {
+            label: 'First month dataset',
+            backgroundColor: 'rgba(179,181,198,0.2)',
+            borderColor: 'rgba(179,181,198,1)',
+            pointBackgroundColor: 'rgba(179,181,198,1)',
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: 'rgba(179,181,198,1)',
+            data: [activeDataCount[activeDataCount.length-1],inActiveDataCount[inActiveDataCount.length-1],bookingDataCount[bookingDataCount.length-1],userDataCount[bookingDataCount.length-1]]
+        },
+        {
+            label: 'Second month dataset',
+            backgroundColor: 'rgba(255,99,132,0.2)',
+            borderColor: 'rgba(255,99,132,1)',
+            pointBackgroundColor: 'rgba(255,99,132,1)',
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: 'rgba(255,99,132,1)',
+            data: [activeDataCount[activeDataCount.length-2],inActiveDataCount[inActiveDataCount.length-2],bookingDataCount[bookingDataCount.length-2],userDataCount[bookingDataCount.length-2]]
+        }
+    ]
+}
+
+
+
 
 const [lightOptionss] = useState({
   plugins: {
@@ -277,6 +353,12 @@ const [lightOptionss] = useState({
   }
 });
 
+const statusBodyTemplate = (rowData) => {
+      
+    return <span className={`product-badge status-${rowData.status}`}>{rowData.status}</span>;
+}
+
+
   return(
     <Context.Consumer>
         {value=>{
@@ -294,8 +376,9 @@ const [lightOptionss] = useState({
         <Card className='card' title='Users'>
             <div className='card-description-container'>
             <CiUser className='icon-card user' />
+         
             <div>
-        <h3 className=" card-title" > {userCount}</h3>
+        <h3 className=" card-title" > {totalUser}</h3>
         <p className='card-subtitle'><span className='subtitle'>12%</span> increase</p>
         </div>
         </div>
@@ -305,7 +388,7 @@ const [lightOptionss] = useState({
         <div className='card-description-container'>
             <MdOutlineFlight className='icon-card booking' />
             <div>
-        <h3 className=" card-title" > 350</h3>
+        <h3 className=" card-title" > {totalBooking}</h3>
         <p className='card-subtitle'><span className='subtitle'>5%</span> increase</p>
         </div>
         </div>
@@ -316,7 +399,7 @@ const [lightOptionss] = useState({
         <div className='card-description-container'>
             <BsCurrencyDollar className='icon-card revenue' />
             <div>
-        <h3 className=" card-title" >$45,105</h3>
+        <h3 className=" card-title" >${totalRevenue}</h3>
         <p className='card-subtitle'><span className='subtitle'>27%</span> increase</p>
         </div>
         </div>
@@ -324,11 +407,19 @@ const [lightOptionss] = useState({
         </div>
          <div className="card-charts-dashboard">
             <h3  className='card-main-heading'>Month Wise Data</h3>
-            <Chart className='charts' type="line" data={lineStylesData} options={basicOptions} />
+            <Chart className='charts' type="line" data={newStylesData} options={basicOptions} />
             </div>
 <div className='static-table-cotainer'>
     <h3 className='card-main-heading'>User Details</h3>
-<table className="table">
+    <div className="cardss">
+                <DataTable className="table" value={tableUserData} responsiveLayout="scroll">
+                    <Column field="userId" header="user-id"></Column>
+                    <Column field="username" header="Name"></Column>
+                    <Column field="email" header="Email"></Column>
+                    <Column field="status" header="Status"  body={statusBodyTemplate}></Column>
+                </DataTable>
+            </div>
+{/* <table className="table">
   <thead>
     <tr>
       <th scope="col">Id</th>
@@ -357,7 +448,7 @@ const [lightOptionss] = useState({
       <td>@twitter</td>
     </tr>
   </tbody>
-</table>
+</table> */}
 </div>
 <div className="static-table-cotainer">
 <h3 className='card-main-heading'>User Status</h3>
@@ -368,13 +459,13 @@ const [lightOptionss] = useState({
         <div className="card-pie-dashboard">
         <h3 className='card-main-heading'>Overall Performance</h3>
      <div className='position-container'>
-    <CChart className='pie-dashboard' type="polarArea" data={chartData} />
+    <CChart className='pie-dashboard' type="polarArea" data={polarData} />
     </div>
     </div>
     <div className="card-radar-dashboard">
-    <h3 className='card-main-heading'>Past Month</h3>
+    <h3 className='card-main-heading'>Last Two Month</h3>
      <div className='position-container'>
-        <CChart className='radar-dashboard' type="radar" data={chartDatas}   />
+        <CChart className='radar-dashboard' type="radar" data={radarData}   />
         </div>
     </div>
     <div className='card-chrono-dashboard'>

@@ -45,7 +45,6 @@ function App() {
         <Route exact path ='/booking-status' element={<Protected ><BookingStatus /> </Protected>}></Route>
         <Route exact path ='/cab-service' element={<Protected ><CabService /> </Protected>}></Route>
         <Route path='*' element={<NotFound />}></Route>
-       
         </Routes>
         </Suspense>
       </Router>
