@@ -348,7 +348,7 @@ const DataTables = (props) => {
                 <DataTable   className="dark-bg" ref={dt} value={products} selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)}
                     dataKey="_id" paginator rows={5} rowsPerPageOptions={[5, 10, 25]}
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
                     globalFilter={globalFilter} header={header} responsiveLayout="scroll" >
                         
                     { <Column   className="dark-bg" selectionMode="multiple" headerStyle={{ width: '3rem' }} exportable={false}></Column> }
@@ -362,7 +362,7 @@ const DataTables = (props) => {
                 </DataTable>
             </div>
 
-            <Dialog   visible={productDialog} style={{ width: '450px' }} header="Product Details" modal className="p-fluid dark-bg" footer={productDialogFooter} onHide={hideDialog}>
+            <Dialog   visible={productDialog} style={{ width: '450px' }} header="User Details" modal className="p-fluid dark-bg" footer={productDialogFooter} onHide={hideDialog}>
                 <div className="field ">
                     <label htmlFor="username">Name</label>
                     <InputText id="username" value={product.username} onChange={(e) => onInputChange(e, 'username')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.username })} />

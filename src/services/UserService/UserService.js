@@ -10,6 +10,7 @@ export const UserService=async(details)=>{
 }
 
 export const GetUserDetailsApi=async()=>{
+  console.log("asdf")
   return await axios.get('http://localhost:5000/user/api/userRegister',)
 }
 

@@ -26,7 +26,7 @@ const User = () =>{
   <Context.Consumer>
     {value=>{
       const {sidebar, isDark}=value
-      console.log(sidebar)
+     
       return(
 
    

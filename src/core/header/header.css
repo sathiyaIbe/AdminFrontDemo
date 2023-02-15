@@ -193,6 +193,7 @@
 }
 
 
+
 .admin-link:hover{
  text-decoration: none;
 
@@ -379,4 +380,17 @@ bar-offcanvas
   .search-container{
     margin-left: 0px;
   }
+}
+
+.nav-item{
+  list-style-type: none;
+}
+
+.nav-content{
+  list-style-type: none;
+}
+
+.list-items{
+  width: 200px;
+  font-size: 18px !important;
 }

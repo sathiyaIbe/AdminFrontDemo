@@ -13,7 +13,7 @@ const BookingStatus =lazy(()=>import('./components/BookingStatus/BookingStatus')
 const CabService =lazy(()=>import('./components/CabService/CabService')) 
 const User=lazy(()=>import('./components/User/User'))
 
-
+const CabUser=lazy(()=>import('./components/CabService/CabUser'))
 const  ECommerce =lazy(()=> import('./components/ECommerce/ECommerce'))
 
 
@@ -44,6 +44,7 @@ function App() {
         <Route exact path ='/user' element={<Protected ><User /> </Protected>}></Route>
         <Route exact path ='/booking-status' element={<Protected ><BookingStatus /> </Protected>}></Route>
         <Route exact path ='/cab-service' element={<Protected ><CabService /> </Protected>}></Route>
+        <Route exact path ='/cab-service/cab-user' element={<Protected ><CabUser /> </Protected>}></Route>
         <Route path='*' element={<NotFound />}></Route>
         </Routes>
         </Suspense>

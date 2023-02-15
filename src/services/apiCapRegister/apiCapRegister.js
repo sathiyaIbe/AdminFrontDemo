@@ -5,18 +5,32 @@ import axios from 'axios';
 export  const ApiCapRegister =  async (details) =>{
     console.log(details)
     return await axios.post('http://localhost:5000/cab/api/cabRegister', details )
-  
+};
+
+export const ApiCapUser= async ()=>{
+    return await axios.get('http://localhost:8080/search/api/cabUserDetails')
 };
 
 
-export  const ApiCapGet =  async () =>{
+export const DeleteCabUserApi=async(id)=>{
+    return await axios.delete(`http://localhost:8080/search/api/cabUserDetails/${id}`)
+  }
   
-    return await axios.get('http://localhost:5000/cab/api/cabRegister',  )
   
-};
-
-
-
+  export const DeleteMultipleCabUserApi=async (data)=>{
+    return await axios.delete("http://localhost:8080/search/api/cabUserDetails" , {data})
+  }
+  
+  
+  export const UpdateCabUserApi=async(data)=>{
+    console.log(data)
+  
+    return await axios.put('http://localhost:8080/search/api/cabUserDetails', data)
+  }
+  export const CabService=async(data)=>{
+    return await axios.post('http://localhost:8080/search/api/cabRegister', data)
+  }
+  
 
 ApiCapRegister.propTypes = {};
 

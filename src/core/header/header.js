@@ -13,8 +13,9 @@ import 'primereact/resources/primereact.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {AiOutlineUser} from 'react-icons/ai';
 import {RiHotelFill} from 'react-icons/ri'
-import {AiOutlineCar ,AiOutlineSearch} from 'react-icons/ai';
+import {AiOutlineCar ,AiOutlineSearch, AiOutlineUsergroupAdd} from 'react-icons/ai';
 import {AiOutlineShoppingCart} from 'react-icons/ai';
+import {GiCarSeat} from 'react-icons/gi'
 import {BsGrid} from 'react-icons/bs'
 import { Button } from 'primereact/button';
 import { icons } from 'react-icons';
@@ -30,18 +31,12 @@ import {SlMenu} from 'react-icons/sl'
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { color } from '@mui/system';
-
-
-
-
+import Offcanvas from 'react-bootstrap/Offcanvas';
 
 const Header = props =>{
   
   const showNav=true
  const navigate=useNavigate()
-
-
-  
 
   const logoutHandler=()=>{
     localStorage.removeItem('token')
@@ -59,8 +54,10 @@ const Header = props =>{
   <div className={`header ${isDark&&"dark-header" }`}  data-testid="Header">  
      <div className={`header-container-new ${isDark&&"dark-header-container" }`}>
       <div className='container-new'>
-      <Link   style={{ textDecoration: 'none' }} to='/admin-dashboard'><button  className={`admin-link ${isDark&&"dark-admin-link" }`} type='button'  data-bs-toggle="offcanvas" onClick={()=>{sidebar&&changeSidebar(false)}}> Booking Admin </button></Link>
+      <Link   style={{ textDecoration: 'none' }} to='/admin-dashboard'><button  className={`admin-link ${isDark&&"dark-admin-link" }`} type='button'  onClick={()=>{sidebar&&changeSidebar(true)}}> Booking Admin </button></Link>
 <div className='search-container'>
+
+
 <button className=" menu" type="button" data-bs-toggle="offcanvas"  data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling" onClick={()=>changeSidebar(!sidebar)}><SlMenu className="menu-icon"/></button>
 <div className="search-bar">
       <form className="search-form d-flex align-items-center">
@@ -71,7 +68,6 @@ const Header = props =>{
     </div>
 
 </div>
-
 <div className='toogle-container'>
   {/* <div className='toogle-icon'>
 <ToggleButton  isDark={isDark} onChange={() => changeTheme()} />
@@ -89,23 +85,50 @@ const Header = props =>{
 
   </div>
      </div>
-    <div className= {`offcanvas offcanvas-start    sidebar-offcanvas ${isDark&&"bg-dark" }`} data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+   
       {/* <div className="offcanvas-header">
     
       <img src='https://cdn-icons-png.flaticon.com/512/1014/1014131.png' alt='logo' className='logo-img'/>
                 <button type="button" className={`btn-close ${isDark&&"bg-light" }`} data-bs-dismiss="offcanvas" aria-label="Close"   onClick={()=>changeSidebar(false)}></button>
       </div> */}
+       <Offcanvas show={sidebar} scroll={true} backdrop={false} className= {`offcanvas offcanvas-start offcanvas-show    sidebar-offcanvas ${isDark&&"bg-dark" }`}>
+       
+       
+        <div className='sidebar-items-container'>
+         <Link     to ='/admin-dashboard'  >  <button  className={`sidebar-link ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }><BsGrid className='sidebar-icons'/>Dashboard </button></Link>
+          <Link     to ='/user'  >  <button  className={`sidebar-link ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }><AiOutlineUser className='sidebar-icons'/>User </button></Link>
+          {/* <Link  to='/cab-service' > <button  className={`sidebar-link ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }><AiOutlineCar className='sidebar-icons'/> Cab Service Clients </button></Link>  */}
+          <Link  to  ='/e-commerce'> <button  className={`sidebar-link ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }> <AiOutlineShoppingCart className='sidebar-icons' /> E Commerce Clients </button></Link>  
+          <Link     to ='/booking-status'><button  className={`sidebar-link ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }> <RiHotelFill  className='sidebar-icons'/> Hotels Booking  </button></Link>
+          <li class="nav-item">
+        {/* <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a> */}
+        <button data-bs-target="#components-nav" data-bs-toggle="collapse" className={`d-flex sidebar-link ${isDark&&"dark-sidebar-link" }`}  type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }><AiOutlineCar className='sidebar-icons mt-1'/> Cab Service  <i class="bi bi-chevron-down ms-auto mt-1"></i></button>
+        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+           <Link  to  ='/cab-service/cab-user'> <button  className={`sidebar-link list-items ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }> <AiOutlineUsergroupAdd className='sidebar-icons' /> Cab User </button></Link>  
 
+          </li>
+          {/* <li>
+          <Link  to  ='/e-commerce'> <button  className={`sidebar-link list-items ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }> <GiCarSeat className='sidebar-icons' /> Cab Details </button></Link>  
+
+          </li> */}
+          
+        </ul>
+      </li>
+          </div>
+       
+      </Offcanvas>
+{/* 
       <div className='sidebar-items-container'>
          <Link     to ='/admin-dashboard'  >  <button  className={`sidebar-link ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(false)  }><BsGrid className='sidebar-icons'/>Dashboard </button></Link>
           <Link     to ='/user'  >  <button  className={`sidebar-link ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(false)  }><AiOutlineUser className='sidebar-icons'/>User </button></Link>
           <Link  to='/cab-service' > <button  className={`sidebar-link ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(false)  }><AiOutlineCar className='sidebar-icons'/> Cab Service Clients </button></Link> 
           <Link  to  ='/e-commerce'> <button  className={`sidebar-link ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(false)  }> <AiOutlineShoppingCart className='sidebar-icons' /> E Commerce Clients </button></Link>  
           <Link     to ='/booking-status'><button  className={`sidebar-link ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(false)  }> <RiHotelFill  className='sidebar-icons'/> Hotels Booking  </button></Link>
-          </div>
-        
-    </div> 
-      
+          </div> */}
+  
  </div>
  
 );

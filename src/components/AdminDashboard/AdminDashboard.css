@@ -63,7 +63,7 @@ Admin body */
 }
 
 .sidebar-card-main-container {
-    max-width: 82vw;
+    max-width: 84vw;
 }
 
 @media screen and (max-width:768px) {
