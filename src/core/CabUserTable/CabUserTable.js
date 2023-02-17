@@ -58,7 +58,7 @@ const CabUserTable = (props) => {
 
     const [products, setProducts] = useState(null);
     const [cabDatas, setcabDatas]=useState(null)
-    const [load, setLoad] = useState(false)
+    const [loads, setLoad] = useState(false)
     const [productDialog, setProductDialog] = useState(false);
     const [deleteProductDialog, setDeleteProductDialog] = useState(false);
     const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
@@ -514,7 +514,7 @@ const CabUserTable = (props) => {
             {value => {
                 const { sidebar } = value
                 return (
-                    load &&
+                    loads &&
                     <div className="datatable-cab-crud-demo" data-testid="CabUserTable">
                         <div className={`cards ${sidebar ? 'sidebar-table' : ''}`}>
                             <Toolbar className="mb-4 dark-bg " left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
