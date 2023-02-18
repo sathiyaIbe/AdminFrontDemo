@@ -84,7 +84,8 @@ const CabUserTable = (props) => {
            
             const data = res.data.cabUserData
             const cabData=res.data.cabData
-             setProducts(data)
+            const userData=data.reverse()
+             setProducts(userData)
              setcabDatas(cabData)
         })
         setLoad(true)
@@ -219,6 +220,7 @@ const CabUserTable = (props) => {
 
            
             UpdateCabUserApi(data).then(res => {
+                console.log(data)
                 setcabDatas(_cabDatas)
                 setProducts(_products)
                 setEachCabDetail(emptyData)
