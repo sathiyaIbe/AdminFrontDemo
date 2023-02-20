@@ -40,8 +40,6 @@ const CabUserTable = (props) => {
         status: null,
         mobileNo:'',
         gender:null,
-       
-       
     };
     let emptyData= {
         carModel:'',
@@ -157,6 +155,7 @@ const CabUserTable = (props) => {
                 mobileNo:product.mobileNo,
                 gender:product.gender,
             }
+            
             const cabDetails={
                 carModel:eachCabDetail.carModel,
                 carType: eachCabDetail.carType,
@@ -180,8 +179,8 @@ const CabUserTable = (props) => {
             CabService(data).then(res => {
                 const data1 = res.data.userDataStore
                 const data2=res.data.cabDataStore
-                 _products.push({ ...data1 });
-                 _cabDatas.push({...data2});
+                 _products.unshift({ ...data1 });
+                 _cabDatas.unshift({...data2});
                 setcabDatas(_cabDatas)
                 setProducts(_products)
                 setEachCabDetail(emptyData)
@@ -216,11 +215,15 @@ const CabUserTable = (props) => {
                 personalDetails: personalDetails,
                 cabDetails: cabDetails
             }
+            console.log(fromLocationList)
           
 
            
             UpdateCabUserApi(data).then(res => {
-                console.log(data)
+               
+                 const index=  findIndexByIdCab(eachCabDetail.driverId)
+                 _cabDatas[index]=eachCabDetail
+                 console.log(_cabDatas[index])
                 setcabDatas(_cabDatas)
                 setProducts(_products)
                 setEachCabDetail(emptyData)
