@@ -24,7 +24,7 @@ function App() {
       
         setSidebar(val)
       }
-      function changeTheme(){
+      function changesTheme(){
         setIsDark(!isDark)
       }
 
@@ -34,7 +34,7 @@ function App() {
     
     <div className="App">
       <Context.Provider 
-      value={{sidebar, changeSidebar:changeSidebar, isDark, changeTheme:changeTheme}}>
+      value={{sidebar, changeSidebar:changeSidebar, isDark, changeTheme:changesTheme}}>
       <Router>
       <Suspense fallback={<CSpinner color='primary'/>}>
       <Routes>
