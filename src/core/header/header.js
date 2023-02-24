@@ -101,9 +101,7 @@ const Header = props =>{
           <Link  to  ='/e-commerce'> <button  className={`sidebar-link ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }> <AiOutlineShoppingCart className='sidebar-icons' /> E Commerce Clients </button></Link>  
           <Link     to ='/booking-status'><button  className={`sidebar-link ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }> <RiHotelFill  className='sidebar-icons'/> Hotels Booking  </button></Link>
           <li class="nav-item">
-        {/* <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a> */}
+       
         <button data-bs-target="#components-nav" data-bs-toggle="collapse" className={`d-flex sidebar-link ${isDark&&"dark-sidebar-link" }`}  type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }><AiOutlineCar className='sidebar-icons mt-1'/> Cab Service  <i class="bi bi-chevron-down ms-auto mt-1"></i></button>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
@@ -117,6 +115,20 @@ const Header = props =>{
           
         </ul>
       </li>
+      <li class="nav-item">
+       
+       <button data-bs-target="#components-navs" data-bs-toggle="collapse" className={`d-flex sidebar-link ${isDark&&"dark-sidebar-link" }`}  type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }><AiOutlineCar className='sidebar-icons mt-1'/> Hotel Service  <i class="bi bi-chevron-down ms-auto mt-1"></i></button>
+       <ul id="components-navs" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+         <li>
+         <Link     to ='/booking-status'><button  className={`sidebar-link ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }> <RiHotelFill  className='sidebar-icons'/> Hotels User  </button></Link>
+         </li>
+         {/* <li>
+         <Link  to  ='/e-commerce'> <button  className={`sidebar-link list-items ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }> <GiCarSeat className='sidebar-icons' /> Cab Details </button></Link>  
+
+         </li> */}
+         
+       </ul>
+     </li>
           </div>
        
       </Offcanvas>

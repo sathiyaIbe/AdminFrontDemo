@@ -740,10 +740,6 @@ const CabUserTable = (props) => {
     );
 
 }
-//   <div className="CabUserTable" data-testid="CabUserTable">
-//     CabUserTable Component
-//   </div>
-// );
 
 CabUserTable.propTypes = {};
 
