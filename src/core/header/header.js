@@ -17,6 +17,7 @@ import {AiOutlineCar ,AiOutlineSearch, AiOutlineUsergroupAdd} from 'react-icons/
 import {AiOutlineShoppingCart} from 'react-icons/ai';
 import {GiCarSeat} from 'react-icons/gi'
 import {BsGrid} from 'react-icons/bs'
+import {TbBrandBooking} from 'react-icons/tb'
 import { Button } from 'primereact/button';
 import { icons } from 'react-icons';
 import { Link } from 'react-router-dom';
@@ -98,8 +99,7 @@ const Header = props =>{
          <Link     to ='/admin-dashboard'  >  <button  className={`sidebar-link ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }><BsGrid className='sidebar-icons'/>Dashboard </button></Link>
           <Link     to ='/user'  >  <button  className={`sidebar-link ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }><AiOutlineUser className='sidebar-icons'/>User </button></Link>
           {/* <Link  to='/cab-service' > <button  className={`sidebar-link ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }><AiOutlineCar className='sidebar-icons'/> Cab Service Clients </button></Link>  */}
-          <Link  to  ='/e-commerce'> <button  className={`sidebar-link ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }> <AiOutlineShoppingCart className='sidebar-icons' /> E Commerce Clients </button></Link>  
-          <Link     to ='/booking-status'><button  className={`sidebar-link ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }> <RiHotelFill  className='sidebar-icons'/> Hotels Booking  </button></Link>
+          {/* <Link  to  ='/e-commerce'> <button  className={`sidebar-link ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }> <AiOutlineShoppingCart className='sidebar-icons' /> E Commerce Clients </button></Link>   */}
           <li class="nav-item">
        
         <button data-bs-target="#components-nav" data-bs-toggle="collapse" className={`d-flex sidebar-link ${isDark&&"dark-sidebar-link" }`}  type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }><AiOutlineCar className='sidebar-icons mt-1'/> Cab Service  <i class="bi bi-chevron-down ms-auto mt-1"></i></button>
@@ -108,19 +108,28 @@ const Header = props =>{
            <Link  to  ='/cab-service/cab-user'> <button  className={`sidebar-link list-items ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }> <AiOutlineUsergroupAdd className='sidebar-icons' /> Cab User </button></Link>  
 
           </li>
-          {/* <li>
-          <Link  to  ='/e-commerce'> <button  className={`sidebar-link list-items ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }> <GiCarSeat className='sidebar-icons' /> Cab Details </button></Link>  
-
-          </li> */}
-          
+        
         </ul>
+        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+           <Link  to  ='/cab-service/cab-booking'> <button  className={`sidebar-link list-items ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }> <TbBrandBooking className='sidebar-icons' /> Cab Booking </button></Link>  
+
+          </li>
+        
+        </ul>
+
       </li>
       <li class="nav-item">
        
-       <button data-bs-target="#components-navs" data-bs-toggle="collapse" className={`d-flex sidebar-link ${isDark&&"dark-sidebar-link" }`}  type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }><AiOutlineCar className='sidebar-icons mt-1'/> Hotel Service  <i class="bi bi-chevron-down ms-auto mt-1"></i></button>
+       <button data-bs-target="#components-navs" data-bs-toggle="collapse" className={`d-flex sidebar-link ${isDark&&"dark-sidebar-link" }`}  type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }><RiHotelFill className='sidebar-icons mt-1'/> Hotel Service  <i class="bi bi-chevron-down ms-auto mt-1"></i></button>
        <ul id="components-navs" class="nav-content collapse " data-bs-parent="#sidebar-nav">
          <li>
-         <Link     to ='/booking-status'><button  className={`sidebar-link ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }> <RiHotelFill  className='sidebar-icons'/> Hotels User  </button></Link>
+       
+         <Link     to ='/booking-status'><button  className={`sidebar-link list-items ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }> <AiOutlineUsergroupAdd  className='sidebar-icons'/> Hotel User  </button></Link>
+         </li>
+         <li>
+         <Link     to ='/hotel/hotelbookings'><button  className={`sidebar-link list-items   ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }> <TbBrandBooking  className='sidebar-icons'/> Hotel Bookings  </button></Link>
+
          </li>
          {/* <li>
          <Link  to  ='/e-commerce'> <button  className={`sidebar-link list-items ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(true)  }> <GiCarSeat className='sidebar-icons' /> Cab Details </button></Link>  

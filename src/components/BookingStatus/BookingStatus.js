@@ -754,6 +754,7 @@ import { AiOutlineMenu } from 'react-icons/ai'
 import {RxCross1} from 'react-icons/rx'
 import DataTables from '../../core/DataTables/DataTables';
 import Context from '../../services/Context/Context';
+import HotelUserTable from '../../core/hotelUserTable/hotelUserTable';
 
 const BookingStatus = () => {
   const [sidebar, setSidebar]=useState(false)
@@ -766,17 +767,23 @@ const BookingStatus = () => {
       {value=>{
         const {sidebar}=value
         return(
-
-       
   <div className="BookingStatus" data-testid="BookingStatus">
-    <div>
-    <Header sidebar={sidebar} />
+    <div className='header-hotel-container'>
+    <Header  />
+    </div>
+    <div className= {`header-body-cabs-container ${sidebar ?'navbar-cabs-user' :''}`} >
+       <h1 className='cabs-user-heading'>Hotel Users</h1>
+       <div className= {`table-cabs-user ${sidebar ?'sidebar-cabs-user' :''}`}>
+       <HotelUserTable val={true} />
+       </div>
+       </div>
+
     <div className={`booking-status-body-container ${sidebar ?'sidebar-booking-status' :''}`}>
 
-   <h1>Booking Status page</h1>
+   <HotelUserTable val={true}/>
  
    
-   </div>
+   
    </div>
    
   
