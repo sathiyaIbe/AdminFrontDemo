@@ -141,14 +141,7 @@ const Header = props =>{
           </div>
        
       </Offcanvas>
-{/* 
-      <div className='sidebar-items-container'>
-         <Link     to ='/admin-dashboard'  >  <button  className={`sidebar-link ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(false)  }><BsGrid className='sidebar-icons'/>Dashboard </button></Link>
-          <Link     to ='/user'  >  <button  className={`sidebar-link ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(false)  }><AiOutlineUser className='sidebar-icons'/>User </button></Link>
-          <Link  to='/cab-service' > <button  className={`sidebar-link ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(false)  }><AiOutlineCar className='sidebar-icons'/> Cab Service Clients </button></Link> 
-          <Link  to  ='/e-commerce'> <button  className={`sidebar-link ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(false)  }> <AiOutlineShoppingCart className='sidebar-icons' /> E Commerce Clients </button></Link>  
-          <Link     to ='/booking-status'><button  className={`sidebar-link ${isDark&&"dark-sidebar-link" }`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={()=>changeSidebar(false)  }> <RiHotelFill  className='sidebar-icons'/> Hotels Booking  </button></Link>
-          </div> */}
+
   
  </div>
  

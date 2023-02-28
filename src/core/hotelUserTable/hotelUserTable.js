@@ -28,32 +28,39 @@ import { UpdateUserApi } from '../../services/UserService/UserService';
 import { elementAcceptingRef } from '@mui/utils';
 import Context from '../../services/Context/Context';
 import { getHotelDetails } from '../../services/Api.Hotel.Service/Api.Hotel.Service';
+import { registerHotel } from '../../services/Api.Hotel.Service/Api.Hotel.Service';
+import { updateHotelDetails } from '../../services/Api.Hotel.Service/Api.Hotel.Service';
+import { deleteHotel } from '../../services/Api.Hotel.Service/Api.Hotel.Service';
+
 import axios from 'axios';
-const HotelUserTable = () =>{
-   let emptyProduct = {
+const HotelUserTable = () => {
+    let emptyProduct = {
         _id: '',
         name: '',
         email: '',
         status: null,
-        mobileNo:'',
-        gender:null,
+        mobileNo: '',
+        gender: null,
     };
-    let emptyData= {
-        hotelName:'',
-        location:'',
-        hotelNumber:'',
-        ammentiesList:[],
-        roomsList:[],
-
+    let emptyData = {
+        hotelName: '',
+        location: '',
+        hotelNumber: '',
+        amenitiesList: [],
+        roomsList: [],
     };
+    const amenitiesData = [
+        "Free Wifi", "Attached Bathroon", "Breakfast", "Power Backup", "TV", "AC", "CCTV Cameras", "Parking Facilty", 'Swimming Pool', "Spa", "Lift", "Restaurant", "Bar", 'Indoor Games', "Outdoor Sports",
+        'Terrace', 'Room Service'
+    ]
     const [products, setProducts] = useState(null);
-    const [cabDatas, setcabDatas]=useState(null)
+    const [hotelDatas, sethotelDatas] = useState(null)
     const [loads, setLoad] = useState(false)
     const [productDialog, setProductDialog] = useState(false);
     const [deleteProductDialog, setDeleteProductDialog] = useState(false);
     const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
     const [product, setProduct] = useState(emptyProduct);
-    const [eachCabDetail, setEachCabDetail]=useState(emptyData)
+    const [eachHotelDetail, setEachHotelDetail] = useState(emptyData)
     const [selectedProducts, setSelectedProducts] = useState(null);
     const [submitted, setSubmitted] = useState(false);
     const [globalFilter, setGlobalFilter] = useState(null);
@@ -68,43 +75,68 @@ const HotelUserTable = () =>{
     const [ACfromlocation, setACfromlocation] = useState([]);
     const [ACtolocation, setACtolocation] = useState([]);
     const [showAcCharges, setShowAcCharges] = useState(false)
+    const [amenitiesList, setamenitiesList] = useState([])
+    const [amenities, setamenities] = useState((null))
+    const [location, setLocation] = useState((null))
+    const [deluxeRooms, setDeluxeRooms] = useState(null)
+    const [nonDeluxeRooms, setNonDeluxeRooms] = useState(null)
+    const [familyRooms, setFamilyRooms] = useState()
+    const [tripleRooms, setTripleRooms] = useState()
+    const [suiteRooms, setSuiteRooms] = useState()
+    const [pricePerDayDeluxe, setPricePerDayDeluxe] = useState((null))
+    const [adultDeluxe, setAdultDeluxe] = useState((null))
+    const [childDeluxe, setChildDeluxe] = useState((null))
+    const [sqftDeluxe, setSqftDeluxe] = useState((null))
+    const [pricePerDayNonDeluxe, setPricePerDayNonDeluxe] = useState((null))
+    const [adultNonDeluxe, setAdultNonDeluxe] = useState((null))
+    const [childNonDeluxe, setChildNonDeluxe] = useState((null))
+    const [sqftNonDeluxe, setSqftNonDeluxe] = useState((null))
+    const [pricePerDaySuite, setPricePerDaySuite] = useState((null))
+    const [adultSuite, setAdultSuite] = useState((null))
+    const [childSuite, setChildSuite] = useState((null))
+    const [sqftSuite, setSqftSuite] = useState((null))
+    const [pricePerDayFamily, setPricePerDayFamily] = useState((null))
+    const [adultFamily, setAdultFamily] = useState((null))
+    const [childFamily, setChildFamily] = useState((null))
+    const [sqftFamily, setSqftFamily] = useState((null))
+    const [pricePerDayTriple, setPricePerDayTriple] = useState((null))
+    const [adultTriple, setAdultTriple] = useState((null))
+    const [childTriple, setChildTriple] = useState((null))
+    const [sqftTriple, setSqftTriple] = useState((null))
 
+  
     useEffect(() => {
-      getHotelDetails().then(res => {
-        console.log(res)
+        getHotelDetails().then(res => {
+          
             const data = res.data.hotelUserData
-            const cabData=res.data.hotelData
-            const userData=data.reverse()
-             setProducts(userData)
-             setcabDatas(cabData)
+            const hotelData = res.data.hotelData
+            const userData = data.reverse()
+            setProducts(userData)
+            sethotelDatas(hotelData)
         })
         setLoad(true)
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
-    console.log(cabDatas)
     const fromvalue = async (data) => {
         setFromlocation(data)
         const request = await axios.get('https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=' + fromlocation + '&+category=&outFields=*&forStorage=false&f=pjson')
         setACfromlocation(request.data.candidates)
         setshow_from_address(true);
-      }
-      const getFromlocation = (data) => {
-        if (fromLocationList.length < 3)
-       // product[fromLocationList]=([...fromLocationList, data.address])
-         setFromLocationList([...fromLocationList, data.address])
-        setshow_from_address(false);
-        setFromlocation('')
-      }
+    }
+    const getFromlocation = (data) => {
+        
+        setamenitiesList([...amenitiesList, data])
+    }
     const formatCurrency = (value) => {
-        return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        return value.toLocaleString('en-IN', { style: 'currency', currency: 'INR' });
     }
     const openNew = () => {
         setProduct(emptyProduct);
-        setEachCabDetail(emptyData)
-        setToLocationList([])
-        setFromLocationList([])
+        setEachHotelDetail(emptyData)
+        setamenitiesList([])
         setSubmitted(false);
         setProductDialog(true);
         setShowAcCharges(false)
+        setLocation('')
     }
     const hideDialog = () => {
         setSubmitted(false);
@@ -116,55 +148,59 @@ const HotelUserTable = () =>{
     const hideDeleteProductsDialog = () => {
         setDeleteProductsDialog(false);
     }
-
-
     const saveProduct = () => {
-        setSubmitted(true);
+        // setSubmitted(true);
         let _products = [...products];
-        let _cabDatas=[...cabDatas]
+        let _hotelDatas = [...hotelDatas]
         let _product = { ...product };
-        let _eachCabDetail={...eachCabDetail}
+        let _eachHotelDetail = { ...eachHotelDetail }
         const index = findIndexById(product.hotelId);
-        const cabIndex=findIndexByIdCab(eachCabDetail.hotelId)
-        _products[index] = _product;
-        _cabDatas[cabIndex]=_eachCabDetail
+        const cabIndex = findIndexByIdCab(eachHotelDetail.hotelId)
+        // _products[index] = _product;
+        // _hotelDatas[cabIndex] = _eachHotelDetail
         const isUpdated = products.filter(each => each._id === _product._id)
-        const isUpdatedCab=cabDatas.filter(each=>each._id===eachCabDetail._id)
-        if (isUpdated.length === 0 || isUpdatedCab.length===0) {
+        const isUpdatedCab = hotelDatas.filter(each => each._id === eachHotelDetail._id)
+
+        
+        if (isUpdated.length === 0 || isUpdatedCab.length === 0) {
             const personalDetails = {
                 name: product.name,
                 email: product.email,
                 availableStatus: product.availableStatus,
-                mobileNo:product.mobileNo,
-                gender:product.gender,
+                mobileNo: product.mobileNo,
+                gender: product.gender,
             }
-            const cabDetails={
-                carModel:eachCabDetail.carModel,
-                carType: eachCabDetail.carType,
-                type: eachCabDetail.type,
-                availableStatus:eachCabDetail.availableStatus,
-                fuelType:eachCabDetail.fuelType,
-                seats: eachCabDetail.seats,
-                fromLocationList:fromLocationList,
-                toLocationList:toLocationList,
-                pricePerKm:eachCabDetail.pricePerKm,
-                acPrice:eachCabDetail.acPrice,
-                extraKmCharges:eachCabDetail.extraKmCharges,
+            const roomsList = {
+                deluxeRooms: { rooms: deluxeRooms, price: pricePerDayDeluxe, adult: adultDeluxe, child: childDeluxe, type: 'Deluxe Room', sqftDeluxe },
+                nonDeluxeRooms: { rooms: nonDeluxeRooms, price: pricePerDayNonDeluxe, adult: adultNonDeluxe, child: childNonDeluxe, type: 'Non-Deluxe Room', sqftNonDeluxe },
+                suiteRooms: { rooms: suiteRooms, price: pricePerDaySuite, adult: adultSuite, child: childSuite, type: 'Suite Room', sqftSuite },
+                familyRooms: { rooms: familyRooms, price: pricePerDayFamily, adult: adultFamily, child: childFamily, type: 'Family Room', sqftFamily },
+                tripleRooms: { rooms: tripleRooms, price: pricePerDayTriple, adult: adultTriple, child: childTriple, type: 'Triple Room', sqftTriple }
+            }
+            const hotelDetails = {
+                amenitiesList: amenitiesList,
+                hotelName: eachHotelDetail.hotelName,
+                hotelNumber: eachHotelDetail.hotelNumber,
+                location: location,
+                roomsList:roomsList,
                 availableStatus:product.availableStatus
             }
             const data = {
                 personalDetails: personalDetails,
-                cabDetails: cabDetails
+                hotelDetails: hotelDetails
             }
-           // console.log(data)
-            CabService(data).then(res => {
+           
+            registerHotel(data).then(res => {
+                console.log(res.data)
                 const data1 = res.data.userDataStore
-                const data2=res.data.cabDataStore
-                 _products.unshift({ ...data1 });
-                 _cabDatas.unshift({...data2});
-                setcabDatas(_cabDatas)
+                const data2 = res.data.hotelDatastore
+                console.log(data1)
+                _products.unshift({ ...data1 });
+                _hotelDatas.unshift({ ...data2 });
+               
+                sethotelDatas(_hotelDatas)
                 setProducts(_products)
-                setEachCabDetail(emptyData)
+                setEachHotelDetail(emptyData)
                 setProduct(emptyProduct);
             })
             toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000, });
@@ -174,37 +210,50 @@ const HotelUserTable = () =>{
                 name: product.name,
                 email: product.email,
                 availableStatus: product.availableStatus,
-                mobileNo:product.mobileNo,
-                gender:product.gender,
-                _id:product._id
+                mobileNo: product.mobileNo,
+                gender: product.gender,
+                hotelId:product.hotelId
             }
-            const cabDetails={
-                carModel:eachCabDetail.carModel,
-                carType: eachCabDetail.carType,
-                type: eachCabDetail.type,
-                availableStatus:eachCabDetail.availableStatus,
-                fuelType:eachCabDetail.fuelType,
-                seats: eachCabDetail.seats,
-                fromLocationList:fromLocationList,
-                toLocationList:toLocationList,
-                pricePerKm:eachCabDetail.pricePerKm,
-                acPrice:eachCabDetail.acPrice,
-                extraKmCharges:eachCabDetail.extraKmCharges,
-                _id:eachCabDetail._id
+            function check(a,b){
+                console.log(a)
+             if(a===null) {
+                return b
+             } 
+             return a
+            }
+
+
+
+            const roomsList = {
+                deluxeRooms: { rooms:check(deluxeRooms,eachHotelDetail.roomsList.deluxeRooms.rooms ), price:  check(pricePerDayDeluxe,eachHotelDetail.roomsList.deluxeRooms.price ), adult:   check(adultDeluxe,eachHotelDetail.roomsList.deluxeRooms.adult ), child:   check(childDeluxe,eachHotelDetail.roomsList.deluxeRooms.child ), type: 'Deluxe Room', sqftDeluxe: check(sqftDeluxe,eachHotelDetail.roomsList.deluxeRooms.sqftDeluxe ) },
+                nonDeluxeRooms: { rooms: check(nonDeluxeRooms,eachHotelDetail.roomsList.nonDeluxeRooms.rooms ), price:   check(pricePerDayNonDeluxe,eachHotelDetail.roomsList.nonDeluxeRooms.price ), adult:   check(adultNonDeluxe,eachHotelDetail.roomsList.nonDeluxeRooms.adult ), child:   check(childNonDeluxe,eachHotelDetail.roomsList.nonDeluxeRooms.child ), type: 'Non-Deluxe Room', sqftNonDeluxe: check(sqftNonDeluxe,eachHotelDetail.roomsList.nonDeluxeRooms.sqftNonDeluxe ) },
+                suiteRooms: { rooms: check(suiteRooms,eachHotelDetail.roomsList.suiteRooms.rooms ), price:  check(pricePerDaySuite,eachHotelDetail.roomsList.suiteRooms.price ), adult:  check(adultSuite,eachHotelDetail.roomsList.suiteRooms.adultSuite ), child:  check(childSuite,eachHotelDetail.roomsList.suiteRooms.child ), type: 'Suite Room', sqftSuite:check(sqftSuite,eachHotelDetail.roomsList.suiteRooms.sqftSuite ) },
+                familyRooms: { rooms: check(familyRooms,eachHotelDetail.roomsList.familyRooms.rooms ), price:  check(pricePerDayFamily,eachHotelDetail.roomsList.familyRooms.price ), adult:   check(adultFamily,eachHotelDetail.roomsList.familyRooms.adult ), child:   check(childFamily,eachHotelDetail.roomsList.familyRooms.child ) , type: 'Family Room', sqftFamily:check(sqftFamily,eachHotelDetail.roomsList.familyRooms.sqftFamily )},
+                tripleRooms: { rooms: check(deluxeRooms,eachHotelDetail.roomsList.tripleRooms.rooms ), price:   check(pricePerDayTriple,eachHotelDetail.roomsList.tripleRooms.price ), adult :  check(adultTriple,eachHotelDetail.roomsList.tripleRooms.adult ), child:  check(childTriple,eachHotelDetail.roomsList.tripleRooms.child ), type: 'Triple Room', sqftTriple:check(sqftTriple,eachHotelDetail.roomsList.tripleRooms.sqftTriple ) }
+            }
+            const hotelDetails = {
+                amenitiesList:  check(amenitiesList, eachHotelDetail.amenitiesList),
+                hotelName: eachHotelDetail.hotelName,
+                hotelNumber: eachHotelDetail.hotelNumber,
+                location: check(location, eachHotelDetail.location),
+                roomsList:roomsList,
+                availableStatus:product.availableStatus,
+                hotelId:product.hotelId
             }
             const data = {
                 personalDetails: personalDetails,
-                cabDetails: cabDetails
+                hotelDetails: hotelDetails
             }
-            console.log(fromLocationList)
-            UpdateCabUserApi(data).then(res => {
-                 const index=  findIndexByIdCab(eachCabDetail.driverId)
-                 _cabDatas[index]=eachCabDetail
-                 console.log(_cabDatas[index])
-                setcabDatas(_cabDatas)
+            console.log(data)
+            updateHotelDetails(data).then(res => {
+                const index = findIndexByIdCab(eachHotelDetail.driverId)
+                _hotelDatas[index] = eachHotelDetail
+               
+                sethotelDatas(_hotelDatas)
                 setProducts(_products)
-                setEachCabDetail(emptyData)
+                setEachHotelDetail(emptyData)
                 setProduct(emptyProduct);
+
             }).catch(err => {
                 console.log(err)
             })
@@ -214,31 +263,27 @@ const HotelUserTable = () =>{
         setFromLocationList([])
         setToLocationList([])
     }
-   // console.log(products)
+    
     const editProduct = (id) => {
-        const data=products.filter(each=>(
-            each.driverId===id
+        const data = products.filter(each => (
+            each.hotelId === id
         ))
-        const cData=cabDatas.filter(each=>(
-            each.driverId===id
+        const hData = hotelDatas.filter(each => (
+            each.hotelId === id
         ))
-           setFromLocationList(cData[0].fromLocationList)
-          setToLocationList(cData[0].toLocationList)
-          if (cData[0].type==="Ac"){
-            setShowAcCharges(true)
-          }else{
-            setShowAcCharges(false)
-          }
-          setProduct(...data);
-          setEachCabDetail(...cData);
-          setProductDialog(true);
+      
+        setamenitiesList(hData[0].amenitiesList)
+        setLocation(hData[0].location)
+        setProduct(...data);
+        setEachHotelDetail(...hData);
+        setProductDialog(true);
     }
     const confirmDeleteProduct = (product) => {
         setProduct(product);
         setDeleteProductDialog(true);
     }
     const deleteProduct = () => {
-        DeleteCabUserApi(product.driverId).then(res => {
+        deleteHotel(product.hotelId).then(res => {
             let _products = products.filter(val => val._id !== product._id);
             setProducts(_products);
             setDeleteProductDialog(false);
@@ -258,8 +303,8 @@ const HotelUserTable = () =>{
     }
     const findIndexByIdCab = (id) => {
         let index = -1;
-        for (let i = 0; i < cabDatas.length; i++) {
-            if (cabDatas[i].driverId === id) {
+        for (let i = 0; i < hotelDatas.length; i++) {
+            if (hotelDatas[i].driverId === id) {
                 index = i;
                 break;
             }
@@ -335,39 +380,39 @@ const HotelUserTable = () =>{
     const onInputChange = (e, username) => {
         const val = (e.target && e.target.value) || '';
         let _product = { ...product };
-        let _data={...eachCabDetail}
-       if(_product[username]===undefined){
-            _data[username]=val
-       }else{
-        _product[username] = val;
-       }
-        if(username==="type"){
-            if(val==='Ac'){
+        let _data = { ...eachHotelDetail }
+        if (_product[username] === undefined) {
+            _data[username] = val
+        } else {
+            _product[username] = val;
+        }
+        if (username === "type") {
+            if (val === 'Ac') {
                 setShowAcCharges(true)
-            }else{
+            } else {
                 setShowAcCharges(false)
             }
         }
-        setEachCabDetail(_data)
+        setEachHotelDetail(_data)
         setProduct(_product);
     }
     const onInputNumberChange = (e, name) => {
         let _product = { ...product };
-        let _data={...eachCabDetail}
+        let _data = { ...eachHotelDetail }
         const val = e.value || 0;
-        if(_product[name]===undefined){
-            _data[name]=val
-       }else{
-        _product[name] = val;
-       }
-       setEachCabDetail(_data)
+        if (_product[name] === undefined) {
+            _data[name] = val
+        } else {
+            _product[name] = val;
+        }
+        setEachHotelDetail(_data)
         setProduct(_product);
     }
     const leftToolbarTemplate = () => {
         return (
             <React.Fragment>
                 <Button label="New" icon="pi pi-plus" className="p-button-success mr-2" onClick={openNew} />
-                <Button label="Delete" icon="pi pi-trash" className="p-button-danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} />
+                
             </React.Fragment>
         )
     }
@@ -385,7 +430,7 @@ const HotelUserTable = () =>{
     const actionBodyTemplate = (rowData) => {
         return (
             <React.Fragment>
-                <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2" onClick={() => editProduct(rowData.driverId)} />
+                <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2" onClick={() => editProduct(rowData.hotelId)} />
                 <Button icon="pi pi-trash" className="p-button-rounded p-button-warning" onClick={() => confirmDeleteProduct(rowData)} />
             </React.Fragment>
         );
@@ -418,43 +463,44 @@ const HotelUserTable = () =>{
         </React.Fragment>
     );
     function removeFrom(index) {
-       setFromLocationList(fromLocationList.filter((el, i) => i !== index))
-      }
-      const toValue = async (data) => {
-        setToLocation(data)
-        const request = await axios.get('https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=' + data + '&+category=&outFields=*&forStorage=false&f=pjson')
+        setamenitiesList(amenitiesList.filter((el, i) => i !== index))
+    }
+    const toValue = async (data) => {
+        setLocation(data)
+        const request = await axios.get('https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?sourceCountry=IN&SingleLine=' + data + '&+category=&outFields=*&forStorage=false&f=pjson')
         setshow_to_address(true);
+      
         setACtolocation(request.data.candidates)
-      }
-      const getTolocation = (data) => {
-        if (toLocationList.length < 5)
-          setToLocationList([...toLocationList, data.address])
+    }
+    const getTolocation = (data) => {
+       
+        setLocation(data.address)
         setshow_to_address(false);
-        setToLocation('')
-      }
-      function removeTo(index) {
+    }
+    function removeTo(index) {
         setToLocationList(toLocationList.filter((el, i) => i !== index))
-      }
-      function fromLocationTags() {
+    }
+    function fromLocationTags() {
         return product.cabData.fromLocationList
-      }
-  return (
-    <Context.Consumer>
+    }
+   
+    return (
+        <Context.Consumer>
             {value => {
                 const { sidebar } = value
                 return (
                     loads &&
-  <div className="datatable-cab-crud-demo" data-testid="HotelUserTable">
-  <div className={`cards ${sidebar ? 'sidebar-table' : ''}`}>
+                    <div className="datatable-cab-crud-demo" data-testid="HotelUserTable">
+                        <div className={`cards ${sidebar ? 'sidebar-table' : ''}`}>
                             <Toolbar className="mb-4 dark-bg " left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
                             <Toast ref={toast} />
                             <DataTable className="dark-bg" ref={dt} value={products} selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)}
                                 dataKey="_id" paginator rows={5} rowsPerPageOptions={[5, 10, 25]}
                                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Cab User"
+                                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Hotel User"
                                 globalFilter={globalFilter} header={header} responsiveLayout="scroll" >
-                                {<Column className="dark-bg" selectionMode="multiple" headerStyle={{ width: '3rem' }} exportable={false}></Column>}
-                                <Column className="dark-bg" field="hotelId" header="Driver Id" sortable style={{ minWidth: '12rem' }}></Column>
+                               
+                                <Column className="dark-bg" field="hotelId" header="Hotel Id" sortable style={{ minWidth: '12rem' }}></Column>
                                 {/* //<Column field="createdAt" header="Date Created" sortable style={{ minWidth: '12rem' }}></Column> */}
                                 <Column className="dark-bg" field="name" header="Name" sortable style={{ minWidth: '16rem' }}></Column>
                                 <Column className="dark-bg" field="email" header="Email" sortable style={{ minWidth: '10rem' }}></Column>
@@ -465,172 +511,185 @@ const HotelUserTable = () =>{
                         <Dialog visible={productDialog} style={{ width: '450px' }} header="Cab User Details" modal className="p-fluid dark-bg" footer={productDialogFooter} onHide={hideDialog}>
                             <div className="field ">
                                 <label htmlFor="username">Name</label>
-                                <InputText id="username" value={product.name} onChange={(e) => onInputChange(e, 'name')} required autoFocus style={{height:'40px'}} className={classNames({ 'p-invalid': submitted && !product.name })} />
+                                <InputText id="username" value={product.name} onChange={(e) => onInputChange(e, 'name')} required autoFocus style={{ height: '40px' }} className={classNames({ 'p-invalid': submitted && !product.name })} />
                                 {submitted && !product.name && <small className="p-error">Name is required.</small>}
                             </div>
                             <div className="field">
                                 <label htmlFor="email">Email</label>
-                                <InputText id="email" style={{height:'40px'}} value={product.email} onChange={(e) => onInputChange(e, 'email')} required />
+                                <InputText id="email" style={{ height: '40px' }} value={product.email} onChange={(e) => onInputChange(e, 'email')} required />
                             </div>
                             <div className="field">
                                 <label htmlFor="mobileNo">Mobile Number</label>
-                                <InputText id="mobileNo" style={{height:'40px'}} value={product.mobileNo} onChange={(e) => onInputChange(e, 'mobileNo')} required />
+                                <InputText id="mobileNo" style={{ height: '40px' }} value={product.mobileNo} onChange={(e) => onInputChange(e, 'mobileNo')} required />
                             </div>
-                            <div className="row">                             
+                            <div className="row">
                                 <div className="row">
-                                <label htmlFor='status' className='col-4 mt-2'>Status</label>
+                                    <label htmlFor='status' className='col-4 mt-2'>Status</label>
                                     <div className="field-radiobutton col-4 mt-2">
                                         <RadioButton className='mb-1' inputId="category1" name="status" value="active" onChange={onCategoryChange} checked={product.availableStatus === 'active'} />
                                         <label className='mb-1 ml-2' htmlFor="category1">Active</label>
                                     </div>
                                     <div className="field-radiobutton col-4 mt-2">
-                                        <RadioButton className='mb-1'  inputId="category2" name="status" value="inactive" onChange={onCategoryChange} checked={product.availableStatus === 'inactive'} />
+                                        <RadioButton className='mb-1' inputId="category2" name="status" value="inactive" onChange={onCategoryChange} checked={product.availableStatus === 'inactive'} />
                                         <label className='mb-1 ml-2' htmlFor="category2">In Active</label>
                                     </div>
                                 </div>
                             </div>
-                            <div className="row">                             
+                            <div className="row">
                                 <div className="row">
-                                <label htmlFor='gender' className='col-4 mt-2'>Gender</label>
+                                    <label htmlFor='gender' className='col-4 mt-2'>Gender</label>
                                     <div className="field-radiobutton col-4 mt-2">
                                         <RadioButton className='mb-1' inputId="category1" name="gender" value="male" onChange={onGenderChange} checked={product.gender === 'male'} />
                                         <label className='mb-1 ml-2' htmlFor="category1">Male</label>
                                     </div>
                                     <div className="field-radiobutton col-4 mt-2">
-                                        <RadioButton className='mb-1'  inputId="category2" name="gender" value="female" onChange={onGenderChange} checked={product.gender === 'female'} />
+                                        <RadioButton className='mb-1' inputId="category2" name="gender" value="female" onChange={onGenderChange} checked={product.gender === 'female'} />
                                         <label className='mb-1 ml-2' htmlFor="category2">Female</label>
                                     </div>
                                 </div>
                             </div>
                             <div className="field">
-                                <label htmlFor="carModel">Car Model</label>
-                                <InputText  style={{height:'40px'}} value={eachCabDetail.carModel} onChange={(e) => onInputChange(e, 'carModel')} required />
+                                <label htmlFor="hotelName">Hotel Name</label>
+                                <InputText style={{ height: '40px' }} value={eachHotelDetail.hotelName} onChange={(e) => onInputChange(e, 'hotelName')} required />
                             </div>
                             <div className="field">
-                                <label htmlFor="carType">Car Type</label>
-                                <div className="formgrid grid">
-                                    <select className="form-select" aria-label="Default select example"   onChange={(e) => onInputChange(e, 'carType')}>
-                                        <option >Select Car type</option>
-                                        <option selected={eachCabDetail.carType==="SUV"} value="SUV"  >SUV</option>
-                                        <option selected={eachCabDetail.carType==="MUV"}value="MUV">MUV</option>
-                                        <option selected={eachCabDetail.carType==="XUV"} value="XUV">XUV</option>
-                                        <option selected={eachCabDetail.carType==="Other"} value="Other">Other</option>
-                                    </select>
-                                </div>
+                                <label htmlFor="hotelName" className='mt-1'>Hotel No</label>
+                                <InputText style={{ height: '40px' }} value={eachHotelDetail.hotelNumber} onChange={(e) => onInputChange(e, 'hotelNumber')} required />
                             </div>
                             <div className="field">
-                                <label htmlFor='fuelType'>Fuel Type</label>
-                                <div className="formgrid grid">
-                                    <select className="form-select" aria-label="Default select example" onChange={(e) => onInputChange(e, 'fuelType')}>
-                                        <option selected >Select Fuel type</option>
-                                        <option selected={eachCabDetail.fuelType==="Petrol"} value="Petrol"  >Petrol</option>
-                                        <option selected={eachCabDetail.fuelType==="Diesel"} value="Diesel">Diesel</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="field">
-                            <label htmlFor='type'>Type</label>
-                            <div className="formGrid">
-                              <select className="form-select" aria-label="Default select example" onChange={(e) => onInputChange(e, 'type')}>
-                                <option selected >Select Type</option>
-                                <option selected={eachCabDetail.type==="Ac"} value="Ac"  >AC</option>
-                                <option selected={eachCabDetail.type==="NonAc"} value="NonAc">Non AC</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div className="field">
-                            <label htmlFor='seats'>No Seats</label>
-                            <div className="formGrid">
-                              <select className="form-select" aria-label="Default select example" onChange={(e) =>  onInputChange(e, 'seats')}>
-                                <option selected >Select No. of seats</option>
-                                <option selected={eachCabDetail.seats==="4"} value="4">4</option>
-                                <option selected={eachCabDetail.seats==="5"} value="5">5</option>
-                                <option  selected={eachCabDetail.seats==="6"} value="6">6</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div className="field">
-                          <label htmlFor="pickupLocation" >Pickup Location</label>
-                              {fromLocationList.map((tag, index) => (
-                                <div className="tag-item" key={index}>
-                                  <span className="text">{tag}</span>
-                                  <span className="close" style={{ cursor: "pointer" }} onClick={() => removeFrom(index)}>&times;</span>
-                                </div>
-                              ))}
+                                <label htmlFor="pickupLocation" className='mt-1' >Select amenities</label>
+                                {amenitiesList.map((tag, index) => (
+                                    <div className="tag-item" key={index}>
+                                        <span className="text">{tag}</span>
+                                        <span className="close" style={{ cursor: "pointer" }} onClick={() => removeFrom(index)}>&times;</span>
+                                    </div>
+                                ))}
                                 <div className="formGrid">
-                              <InputText type="text" className="form-control" autoComplete="off" placeholder="Select Max 3  From Locations" name='fromlocation' value={fromlocation} onChange={(event) => fromvalue(event.target.value)} />
-                              {show_from_address === true ? ACfromlocation.length !== 0 ?
-                                <>
-                                  <div className='card py-2 my-height position-relative z-3'>
-                                    <ul className='list-unstyled  text-sm-start  mb-0'>
-                                      {ACfromlocation.map((data, index) => (
-                                        <li type='button' className='px-1 py-1 fs-6 select' key={index} onClick={() => { getFromlocation(data) }}>{data.address}</li>
-                                      ))
-                                      }
-                                    </ul>
-                                  </div>
-                                </> : <>
-                                  <div className='card py-2 w-100 position-relative z-3'>
-                                    <p className=' mb-0 fs-6'>
-                                      Not Founded
-                                    </p>
-                                  </div>
-                                </> : <></>
-                              }
-                            </div>
-                          </div>
-                          <div className="filed">
-                            <label  htmlFor="toLocations">Drop Location</label>
-                            <div className="formGrid">
-                              {toLocationList.map((tag, index) => (
-                                <div className="tag-item" key={index}>
-                                  <span className="text">{tag}</span>
-                                  <span className="close" style={{ cursor: "pointer" }} onClick={() => removeTo(index)}>&times;</span>
+                                    <InputText type="text" className="form-control" autoComplete="off" placeholder="Select Amenities" name='fromlocation' value={amenities} onClick={() => setshow_from_address(true)} />
+                                    {show_from_address === true &&
+                                        <>
+                                            <div className='card py-2 my-height position-relative z-3'>
+                                                <ul className='list-unstyled  text-sm-start  mb-0'>
+                                                    <span className="close m-2" style={{ cursor: "pointer" }} onClick={() => setshow_from_address(false)}>&times;</span>
+                                                    {amenitiesData.map((data, index) => (
+                                                        <li type='button' className='px-1 py-1 fs-6 select' key={index} onClick={() => { getFromlocation(data) }}>{data}</li>
+                                                    ))
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </>
+                                    }
                                 </div>
-                              ))}
-                              <InputText type="text" className="form-control" autoComplete="off" placeholder="Select Max 5  To Locations" name='Tolocation' value={toLocation} onChange={(event) => toValue(event.target.value)} />
-                              {show_to_address === true ? ACtolocation.length !== 0 ?
-                                <>
-                                  <div className='card py-2 my-height position-relative z-3'>
-                                    <ul className='list-unstyled mb-0'>
-                                      {ACtolocation.map((data, index) => (
-                                        <li type='button' className='px-2 py-1 fs-6 select' key={index} onClick={() => { getTolocation(data) }}>{data.address}</li>
-                                      ))
-                                      }
-                                    </ul>
-                                  </div>
-                                </> : <>
-                                  <div className='card py-2 w-100 position-relative z-3'>
-                                    <p className='fs-6 mb-0'>
-                                      Not Founded
-                                    </p>
-                                  </div>
-                                </> : <></>
-                              }
                             </div>
-                          </div>
-                          <div className="field">
+                            <div className="filed">
+                                <label className='mt-1' htmlFor="toLocations ">Location</label>
+                                <div className="formGrid ">
+                                    <InputText type="text" className="form-control" autoComplete="off" placeholder="Location" name='Tolocation' value={location} onChange={(event) => toValue(event.target.value)} />
+                                    {show_to_address === true ? ACtolocation.length !== 0 ?
+                                        <>
+                                            <div className='card py-2 my-height position-relative z-3'>
+                                                <ul className='list-unstyled mb-0'>
+                                                    {ACtolocation.map((data, index) => (
+                                                        <li type='button' className='px-2 py-1 fs-6 select' key={index} onClick={() => { getTolocation(data) }}>{data.address}</li>
+                                                    ))
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </> : <>
+                                            <div className='card py-2 w-100 position-relative z-3'>
+                                                <p className='fs-6 mb-0'>
+                                                    Not Founded
+                                                </p>
+                                            </div>
+                                        </> : <></>
+                                    }
+                                </div>
+                            </div>
+                            {/* <div className="field">
                             <label  htmlFor="priceKm" >Price Per Km</label>
                             <div className="formGrid">
-                              <InputNumber style={{height:'40px'}} value={eachCabDetail.pricePerKm} placeholder='In Rupees' onChange={(e) => onInputNumberChange(e, 'pricePerKm')} />
+                              <InputNumber style={{height:'40px'}} value={eachHotelDetail.pricePerKm} placeholder='In Rupees' onChange={(e) => onInputNumberChange(e, 'pricePerKm')} />
                             </div>
-                          </div>
-                          {/* For Ac Charges */}
-                          {showAcCharges &&
+                          </div> */}
+                            {/* Rooms Types */}
                             <div className="field">
-                              <label  htmlFor="acCharges" >AC Charges</label>
-                              <div className="formGrid">
-                                <InputNumber  style={{height:'40px'}} value={eachCabDetail.acPrice} placeholder='In Rupees' onChange={(e) => onInputNumberChange(e, 'acPrice')} />
-                              </div>
+                                <label htmlFor="hotelName" className='mt-1'>Rooms Types</label>
+                                <div className="field">
+                                    <h5 className='text-center mb-3 mt-2'>Deluxe Rooms</h5>
+                                    <div className='col-12'>
+                                        <label htmlFor="hotelName " className='mt-1 col-6'>No Of Rooms</label>
+                                        <InputNumber className='col-6 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.deluxeRooms?.rooms} onChange={(e) => setDeluxeRooms(e.value)} required />
+                                        <label htmlFor="hotelName" className='mt-1 col-6'>No Of Adults</label>
+                                        <InputNumber className='mb-2 col-6' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.deluxeRooms?.adult} onChange={(e) => setAdultDeluxe(e.value)} required />
+                                        <label htmlFor="hotelName" className='mt-1 col-6'>No Of Child</label>
+                                        <InputNumber className='col-6 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.deluxeRooms?.child} onChange={(e) => setChildDeluxe(e.value)} required />
+                                        <label htmlFor="hotelName" className='mt-1 col-6'>No Of Sqft</label>
+                                        <InputText className='col-5 ms-3 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.deluxeRooms?.sqftDeluxe} onChange={(e) => setSqftDeluxe(e.target.value)} required />
+                                        <label htmlFor="hotelName" className='mt-1 col-6'>Price Per Night in Rs</label>
+                                        <InputNumber className='col-6 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.deluxeRooms?.price} onChange={(e) => setPricePerDayDeluxe(e.value)} required />
+                                    </div>
+                                </div>
+                                <div className="field">
+                                    <h5 className='text-center mb-3 mt-2'>Non-Deluxe Rooms</h5>
+                                    <div className='col-12'>
+                                        <label htmlFor="hotelName " className='mt-1 col-6'>No Of Rooms</label>
+                                        <InputNumber className='col-6 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.nonDeluxeRooms?.rooms} onChange={(e) => setNonDeluxeRooms(e.value)} required />
+                                        <label htmlFor="hotelName" className='mt-1 col-6'>No Of Adults</label>
+                                        <InputNumber className='mb-2 col-6' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.nonDeluxeRooms?.adult} onChange={(e) => setAdultNonDeluxe(e.value)} required />
+                                        <label htmlFor="hotelName" className='mt-1 col-6'>No Of Child</label>
+                                        <InputNumber className='col-6 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.nonDeluxeRooms?.child} onChange={(e) => setChildNonDeluxe(e.value)} required />
+                                        <label htmlFor="hotelName" className='mt-1 col-6'>No Of Sqft</label>
+                                        <InputText className='col-5 ms-3 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.nonDeluxeRooms?.sqftNonDeluxe} onChange={(e) => setSqftNonDeluxe(e.target.value)} required />
+                                        <label htmlFor="hotelName" className='mt-1 col-6'>Price Per Night in Rs</label>
+                                        <InputNumber className='col-6 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.nonDeluxeRooms?.price} onChange={(e) => setPricePerDayNonDeluxe(e.value)} required />
+                                    </div>
+                                </div>
+                                <div className="field">
+                                    <h5 className='text-center mb-3 mt-2'>Suite Rooms</h5>
+                                    <div className='col-12'>
+                                        <label htmlFor="hotelName " className='mt-1 col-6'>No Of Rooms</label>
+                                        <InputNumber className='col-6 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.suiteRooms?.rooms} onChange={(e) => setSuiteRooms(e.value)} required />
+                                        <label htmlFor="hotelName" className='mt-1 col-6'>No Of Adults</label>
+                                        <InputNumber className='mb-2 col-6' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.suiteRooms?.adult} onChange={(e) => setAdultSuite(e.value)} required />
+                                        <label htmlFor="hotelName" className='mt-1 col-6'>No Of Child</label>
+                                        <InputNumber className='col-6 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.suiteRooms?.child} onChange={(e) => setChildSuite(e.value)} required />
+                                        <label htmlFor="hotelName" className='mt-1 col-6'>No Of Sqft</label>
+                                        <InputText className='col-5 ms-3 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.suiteRooms?.sqftSuite} onChange={(e) => setSqftSuite(e.target.value)} required />
+                                        <label htmlFor="hotelName" className='mt-1 col-6'>Price Per Night in Rs</label>
+                                        <InputNumber className='col-6 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.suiteRooms?.price} onChange={(e) => setPricePerDaySuite(e.value)} required />
+                                    </div>
+                                </div>
+                                <div className="field">
+                                    <h5 className='text-center mb-3 mt-2'>Family Rooms</h5>
+                                    <div className='col-12'>
+                                        <label htmlFor="hotelName " className='mt-1 col-6'>No Of Rooms</label>
+                                        <InputNumber className='col-6 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.familyRooms?.rooms} onChange={(e) => setFamilyRooms(e.value)} required />
+                                        <label htmlFor="hotelName" className='mt-1 col-6'>No Of Adults</label>
+                                        <InputNumber className='mb-2 col-6' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.familyRooms?.adult} onChange={(e) => setAdultFamily(e.value)} required />
+                                        <label htmlFor="hotelName" className='mt-1 col-6'>No Of Child</label>
+                                        <InputNumber className='col-6 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.familyRooms?.child} onChange={(e) => setChildFamily(e.value)} required />
+                                        <label htmlFor="hotelName" className='mt-1 col-6'>No Of Sqft</label>
+                                        <InputText className='col-5 ms-3 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.familyRooms?.sqftFamily} onChange={(e) => setSqftFamily(e.value)} required />
+                                        <label htmlFor="hotelName" className='mt-1 col-6'>Price Per Night in Rs</label>
+                                        <InputNumber className='col-6 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.familyRooms?.price} onChange={(e) => setPricePerDayFamily(e.value)} required />
+                                    </div>
+                                </div>
+                                <div className="field">
+                                    <h5 className='text-center mb-3 mt-2'>Triple Rooms</h5>
+                                    <div className='col-12'>
+                                        <label htmlFor="hotelName " className='mt-1 col-6'>No Of Rooms</label>
+                                        <InputNumber className='col-6 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.tripleRooms?.rooms} onChange={(e) => setTripleRooms(e.value)} required />
+                                        <label htmlFor="hotelName" className='mt-1 col-6'>No Of Adults</label>
+                                        <InputNumber className='mb-2 col-6' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.tripleRooms?.adult} onChange={(e) => setAdultTriple(e.value)} required />
+                                        <label htmlFor="hotelName" className='mt-1 col-6'>No Of Child</label>
+                                        <InputNumber className='col-6 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.tripleRooms?.child} onChange={(e) => setChildTriple(e.value)} required />
+                                        <label htmlFor="hotelName" className='mt-1 col-6'>No Of Sqft</label>
+                                        <InputText className='col-5 ms-3 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.tripleRooms?.sqftTriple} onChange={(e) => setSqftTriple(e.value)} required />
+                                        <label htmlFor="hotelName" className='mt-1 col-6'>Price Per Night in Rs</label>
+                                        <InputNumber className='col-6 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.tripleRooms?.price} onChange={(e) => setPricePerDayTriple(e.value)} required />
+                                    </div>
+                                </div>
                             </div>
-                          }
-                          {/* Additional Charges */}
-                          <div className="field">
-                            <label htmlFor="extraKm" >Extra Km Charges</label>
-                            <div className="form-grid">
-                              <InputNumber style={{height:'40px'}} value={eachCabDetail.extraKmCharges} placeholder='In Rupees' onChange={(e) => onInputNumberChange(e, 'extraKmCharges')} />
-                            </div>
-                          </div>
                         </Dialog>
                         <Dialog dark-bg visible={deleteProductDialog} style={{ width: '450px' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
                             <div className="confirmation-content">
@@ -648,7 +707,7 @@ const HotelUserTable = () =>{
                 )
             }}
         </Context.Consumer>
-);
+    );
 }
 HotelUserTable.propTypes = {};
 HotelUserTable.defaultProps = {};

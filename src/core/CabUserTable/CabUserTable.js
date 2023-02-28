@@ -215,7 +215,7 @@ const CabUserTable = (props) => {
                 personalDetails: personalDetails,
                 cabDetails: cabDetails
             }
-            console.log(fromLocationList)
+            
           
 
            
