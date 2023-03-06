@@ -290,11 +290,13 @@ return (
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
                 globalFilter={globalFilter} header={header} responsiveLayout="scroll" >
-                <Column  className="dark-bg" field="customer_id" header="User Id" sortable style={{ minWidth: '12rem' }}></Column>
+                <Column  className="dark-bg" field="customer_id" header="User Id" sortable style={{ minWidth: '10rem' }}></Column>
                 {/* //<Column field="createdAt" header="Date Created" sortable style={{ minWidth: '12rem' }}></Column> */}
-                <Column  className="dark-bg" field="customer_name" header="Name" sortable style={{ minWidth: '16rem' }}></Column>
+                <Column  className="dark-bg" field="customer_name" header="Name" sortable style={{ minWidth: '10rem' }}></Column>
+              
                 <Column className="dark-bg" field="Email" header="Email" sortable style={{ minWidth: '10rem' }}></Column>
-                <Column className="dark-bg" field="status" header="Status" body={statusBodyTemplate} sortable style={{ minWidth: '12rem' }} ></Column>
+                <Column className="dark-bg" field="razorpay_payment_id" header="Payement Id" sortable style={{ minWidth: '10rem' }}></Column>
+                <Column className="dark-bg" field="status" header="Status" body={statusBodyTemplate} sortable style={{ minWidth: '10rem' }} ></Column>
                 <Column className="dark-bg" body={actionBodyTemplate} exportable={false} style={{ minWidth: '8rem' }}></Column>
             </DataTable>
         </div>
@@ -327,7 +329,7 @@ return (
                                </div>
                                <div className='col-12 d-flex'>
                                    <h5 className='col-6 fs-6'> From Location:</h5>
-                                   <p className='col-6'>{product.to_location}</p>
+                                   <p className='col-6'>{product.from_location}</p>
                                </div>
                                <div className='col-12 d-flex'>
                                    <h5 className='col-6 fs-6'>To Location:</h5>
@@ -336,6 +338,10 @@ return (
                                <div className='col-12 d-flex'>
                                    <h5 className='col-6 fs-6'> Status:</h5>
                                    <p className='col-6'>{product.status}</p>
+                               </div>
+                               <div className='col-12 d-flex'>
+                                   <h5 className='col-6 fs-6'> Payment Id:</h5>
+                                   <p className='col-6'>{product.razorpay_payment_id}</p>
                                </div>
                            </div>
                        </div>

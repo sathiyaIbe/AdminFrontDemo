@@ -21,6 +21,8 @@
     "env-var": "^7.3.0",
     "mdb-react-ui-kit": "^5.1.0",
     "mdbreact": "^5.2.0",
+    "papaparse": "^5.4.0",
+    "parse": "^4.0.1",
     "primeicons": "^6.0.1",
     "primereact": "^8.7.3",
     "react": "^18.2.0",

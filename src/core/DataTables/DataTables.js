@@ -2,7 +2,7 @@
 import PropTypes from 'prop-types';
 import './DataTables.css'
  
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState,ChangeEvent, useEffect, useRef } from 'react';
 import { classNames } from 'primereact/utils';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
@@ -26,7 +26,10 @@ import { DeleteMultipleUserApi } from '../../services/UserService/UserService';
 import { UpdateUserApi } from '../../services/UserService/UserService';
 import { elementAcceptingRef } from '@mui/utils';
 import Context from '../../services/Context/Context';
+import {Papa} from 'papaparse'
+import { parse } from 'papaparse';
 
+import { importUser } from '../../services/UserService/UserService';
 const DataTables = (props) => {
     let emptyProduct = {
         _id:'',
@@ -46,15 +49,18 @@ const DataTables = (props) => {
     const [globalFilter, setGlobalFilter] = useState(null);
     const toast = useRef(null);
     const dt = useRef(null);
+    const [filess, setFile]=useState()
+
+
     useEffect(() => {
       GetUserDetailsApi().then(res=>{
        
         const data=res.data
-      const datas=  data.map(each=>{
+        const datas=  data.map(each=>{
             const id= Number(data.indexOf(each))+1
             return {...each,id}
         })
-        console.log(datas)
+      
         setProducts(datas)
       })
 
@@ -190,37 +196,66 @@ const DataTables = (props) => {
         return id;
     }
 
-    const importCSV = (e) => {
-        const file = e.files[0];
+    const importCSV = () => {
         const reader = new FileReader();
-        reader.onload = (e) => {
-            const csv = e.target.result;
-            const data = csv.split('\n');
+         
+        // Event listener on reader when the file
+        // loads, we parse it and set the data.
+        reader.onload = async ({ target }) => {
+            console.log(parse(target.result))
+           const csv = parse(target.result, { header: true });
+            const parsedData = csv?.data;
+            const columns = Object.keys(parsedData[0]);
+           const data=parsedData.slice(0,-1)
+            // const filterData=data.map(each=>{
+            //     const arrayList=each.status.split(',')
+                
+            //     return {...each, status:arrayList }
+            // })
+            // console.log(filterData)
+            
+            importUser(parsedData.slice(0,-1)).then(res=>{
+                console.log(res.data)
+                const _products = [...products, ...res.data];
+                setProducts(_products);
+            })
+         };
+        reader.readAsText(filess);
+    
+       
+        // const reader = new FileReader();
+        // reader.onload = (e) => {
+        //     const csv = e.target.result;
+        //     const data = csv.split('\n');
+           
+        //     // Prepare DataTable
+        //     const cols = data[0].replace(/['"]+/g, '').split(',');
+        //     data.shift();
 
-            // Prepare DataTable
-            const cols = data[0].replace(/['"]+/g, '').split(',');
-            data.shift();
+        //     const importedData = data.map(d => {
+        //         d = d.split(',');
+        //         const processedData = cols.reduce((obj, c, i) => {
+        //             c = c === 'Status' ? 'inventoryStatus' : (c === 'Reviews' ? 'rating' : c.toLowerCase());
+        //             obj[c] = d[i].replace(/['"]+/g, '');
+        //             (c === 'price' || c === 'rating') && (obj[c] = parseFloat(obj[c]));
+        //             return obj;
+        //         }, {});
 
-            const importedData = data.map(d => {
-                d = d.split(',');
-                const processedData = cols.reduce((obj, c, i) => {
-                    c = c === 'Status' ? 'inventoryStatus' : (c === 'Reviews' ? 'rating' : c.toLowerCase());
-                    obj[c] = d[i].replace(/['"]+/g, '');
-                    (c === 'price' || c === 'rating') && (obj[c] = parseFloat(obj[c]));
-                    return obj;
-                }, {});
+        //         processedData['id'] = createId();
+                
+        //         return processedData;
+        //     });
+        //     console.log(importedData)
 
-                processedData['id'] = createId();
-                return processedData;
-            });
+        //     const _products = [...products, ...importedData];
 
-            const _products = [...products, ...importedData];
+        //     setProducts(_products);
+        // };
 
-            setProducts(_products);
-        };
-
-        reader.readAsText(file, 'UTF-8');
+        // reader.readAsText(file, 'UTF-8');
     }
+
+    
 
     const exportCSV = () => {
         dt.current.exportCSV();
@@ -284,11 +319,19 @@ const DataTables = (props) => {
             </React.Fragment>
         )
     }
+     function handleChange(event){
+      
+       setFile(event.target.files[0])
+        
+      
+     }
 
     const rightToolbarTemplate = () => {
         return (
             <React.Fragment  >
-                <FileUpload mode="basic" name="demo[]" auto url="https://primefaces.org/primereact/showcase/upload.php" accept=".csv" chooseLabel="Import" className="mr-2 inline-block" onUpload={importCSV} />
+                {/* <FileUpload mode="basic" name="demo[]" auto url={"/api/upload"} accept=".csv" chooseLabel="Import" className="mr-2 inline-block" onUpload={importCSV} /> */}
+                <input type="file"  accept=".csv"  onChange={handleChange}/>
+                <button className='btn' onClick={importCSV} >Upload</button>
                 <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />
             </React.Fragment>
         )

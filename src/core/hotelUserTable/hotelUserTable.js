@@ -148,6 +148,8 @@ const HotelUserTable = () => {
     const hideDeleteProductsDialog = () => {
         setDeleteProductsDialog(false);
     }
+
+   
     const saveProduct = () => {
         // setSubmitted(true);
         let _products = [...products];
@@ -171,11 +173,11 @@ const HotelUserTable = () => {
                 gender: product.gender,
             }
             const roomsList = {
-                deluxeRooms: { rooms: deluxeRooms, price: pricePerDayDeluxe, adult: adultDeluxe, child: childDeluxe, type: 'Deluxe Room', sqftDeluxe },
-                nonDeluxeRooms: { rooms: nonDeluxeRooms, price: pricePerDayNonDeluxe, adult: adultNonDeluxe, child: childNonDeluxe, type: 'Non-Deluxe Room', sqftNonDeluxe },
-                suiteRooms: { rooms: suiteRooms, price: pricePerDaySuite, adult: adultSuite, child: childSuite, type: 'Suite Room', sqftSuite },
-                familyRooms: { rooms: familyRooms, price: pricePerDayFamily, adult: adultFamily, child: childFamily, type: 'Family Room', sqftFamily },
-                tripleRooms: { rooms: tripleRooms, price: pricePerDayTriple, adult: adultTriple, child: childTriple, type: 'Triple Room', sqftTriple }
+                deluxeRooms: { rooms: deluxeRooms, price: pricePerDayDeluxe, adult: adultDeluxe, child: childDeluxe, type: 'Deluxe Room', sqft:sqftDeluxe },
+                nonDeluxeRooms: { rooms: nonDeluxeRooms, price: pricePerDayNonDeluxe, adult: adultNonDeluxe, child: childNonDeluxe, type: 'Non-Deluxe Room', sqft:sqftNonDeluxe },
+                suiteRooms: { rooms: suiteRooms, price: pricePerDaySuite, adult: adultSuite, child: childSuite, type: 'Suite Room', sqft:sqftSuite },
+                familyRooms: { rooms: familyRooms, price: pricePerDayFamily, adult: adultFamily, child: childFamily, type: 'Family Room',sqft:sqftFamily },
+                tripleRooms: { rooms: tripleRooms, price: pricePerDayTriple, adult: adultTriple, child: childTriple, type: 'Triple Room', sqft:sqftTriple }
             }
             const hotelDetails = {
                 amenitiesList: amenitiesList,
@@ -215,21 +217,22 @@ const HotelUserTable = () => {
                 hotelId:product.hotelId
             }
             function check(a,b){
-                console.log(a)
+                console.log(    )
              if(a===null) {
                 return b
              } 
+             
              return a
             }
 
 
 
             const roomsList = {
-                deluxeRooms: { rooms:check(deluxeRooms,eachHotelDetail.roomsList.deluxeRooms.rooms ), price:  check(pricePerDayDeluxe,eachHotelDetail.roomsList.deluxeRooms.price ), adult:   check(adultDeluxe,eachHotelDetail.roomsList.deluxeRooms.adult ), child:   check(childDeluxe,eachHotelDetail.roomsList.deluxeRooms.child ), type: 'Deluxe Room', sqftDeluxe: check(sqftDeluxe,eachHotelDetail.roomsList.deluxeRooms.sqftDeluxe ) },
-                nonDeluxeRooms: { rooms: check(nonDeluxeRooms,eachHotelDetail.roomsList.nonDeluxeRooms.rooms ), price:   check(pricePerDayNonDeluxe,eachHotelDetail.roomsList.nonDeluxeRooms.price ), adult:   check(adultNonDeluxe,eachHotelDetail.roomsList.nonDeluxeRooms.adult ), child:   check(childNonDeluxe,eachHotelDetail.roomsList.nonDeluxeRooms.child ), type: 'Non-Deluxe Room', sqftNonDeluxe: check(sqftNonDeluxe,eachHotelDetail.roomsList.nonDeluxeRooms.sqftNonDeluxe ) },
-                suiteRooms: { rooms: check(suiteRooms,eachHotelDetail.roomsList.suiteRooms.rooms ), price:  check(pricePerDaySuite,eachHotelDetail.roomsList.suiteRooms.price ), adult:  check(adultSuite,eachHotelDetail.roomsList.suiteRooms.adultSuite ), child:  check(childSuite,eachHotelDetail.roomsList.suiteRooms.child ), type: 'Suite Room', sqftSuite:check(sqftSuite,eachHotelDetail.roomsList.suiteRooms.sqftSuite ) },
-                familyRooms: { rooms: check(familyRooms,eachHotelDetail.roomsList.familyRooms.rooms ), price:  check(pricePerDayFamily,eachHotelDetail.roomsList.familyRooms.price ), adult:   check(adultFamily,eachHotelDetail.roomsList.familyRooms.adult ), child:   check(childFamily,eachHotelDetail.roomsList.familyRooms.child ) , type: 'Family Room', sqftFamily:check(sqftFamily,eachHotelDetail.roomsList.familyRooms.sqftFamily )},
-                tripleRooms: { rooms: check(deluxeRooms,eachHotelDetail.roomsList.tripleRooms.rooms ), price:   check(pricePerDayTriple,eachHotelDetail.roomsList.tripleRooms.price ), adult :  check(adultTriple,eachHotelDetail.roomsList.tripleRooms.adult ), child:  check(childTriple,eachHotelDetail.roomsList.tripleRooms.child ), type: 'Triple Room', sqftTriple:check(sqftTriple,eachHotelDetail.roomsList.tripleRooms.sqftTriple ) }
+                deluxeRooms: { rooms:check(deluxeRooms,eachHotelDetail.roomsList.deluxeRooms.rooms ), price:  check(pricePerDayDeluxe,eachHotelDetail.roomsList.deluxeRooms.price ), adult:   check(adultDeluxe,eachHotelDetail.roomsList.deluxeRooms.adult ), child:   check(childDeluxe,eachHotelDetail.roomsList.deluxeRooms.child ), type: 'Deluxe Room', sqft: check(sqftDeluxe,eachHotelDetail.roomsList.deluxeRooms.sqft ) },
+                nonDeluxeRooms: { rooms: check(nonDeluxeRooms,eachHotelDetail.roomsList.nonDeluxeRooms.rooms ), price:   check(pricePerDayNonDeluxe,eachHotelDetail.roomsList.nonDeluxeRooms.price ), adult:   check(adultNonDeluxe,eachHotelDetail.roomsList.nonDeluxeRooms.adult ), child:   check(childNonDeluxe,eachHotelDetail.roomsList.nonDeluxeRooms.child ), type: 'Non-Deluxe Room', sqft: check(sqftNonDeluxe,eachHotelDetail.roomsList.nonDeluxeRooms.sqft ) },
+                suiteRooms: { rooms: check(suiteRooms,eachHotelDetail.roomsList.suiteRooms.rooms ), price:  check(pricePerDaySuite,eachHotelDetail.roomsList.suiteRooms.price ), adult:  check(adultSuite,eachHotelDetail.roomsList.suiteRooms.adultSuite ), child:  check(childSuite,eachHotelDetail.roomsList.suiteRooms.child ), type: 'Suite Room', sqft:check(sqftSuite,eachHotelDetail.roomsList.suiteRooms.sqft ) },
+                familyRooms: { rooms: check(familyRooms,eachHotelDetail.roomsList.familyRooms.rooms ), price:  check(pricePerDayFamily,eachHotelDetail.roomsList.familyRooms.price ), adult:   check(adultFamily,eachHotelDetail.roomsList.familyRooms.adult ), child:   check(childFamily,eachHotelDetail.roomsList.familyRooms.child ) , type: 'Family Room', sqft:check(sqftFamily,eachHotelDetail.roomsList.familyRooms.sqft )},
+                tripleRooms: { rooms: check(deluxeRooms,eachHotelDetail.roomsList.tripleRooms.rooms ), price:   check(pricePerDayTriple,eachHotelDetail.roomsList.tripleRooms.price ), adult :  check(adultTriple,eachHotelDetail.roomsList.tripleRooms.adult ), child:  check(childTriple,eachHotelDetail.roomsList.tripleRooms.child ), type: 'Triple Room', sqft:check(sqftTriple,eachHotelDetail.roomsList.tripleRooms.sqft ) }
             }
             const hotelDetails = {
                 amenitiesList:  check(amenitiesList, eachHotelDetail.amenitiesList),
@@ -271,13 +274,16 @@ const HotelUserTable = () => {
         const hData = hotelDatas.filter(each => (
             each.hotelId === id
         ))
-      
+
+       
         setamenitiesList(hData[0].amenitiesList)
         setLocation(hData[0].location)
         setProduct(...data);
         setEachHotelDetail(...hData);
         setProductDialog(true);
     }
+    console.log(eachHotelDetail?.roomsList?.suiteRooms?.rooms)
+
     const confirmDeleteProduct = (product) => {
         setProduct(product);
         setDeleteProductDialog(true);
@@ -624,7 +630,7 @@ const HotelUserTable = () => {
                                         <label htmlFor="hotelName" className='mt-1 col-6'>No Of Child</label>
                                         <InputNumber className='col-6 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.deluxeRooms?.child} onChange={(e) => setChildDeluxe(e.value)} required />
                                         <label htmlFor="hotelName" className='mt-1 col-6'>No Of Sqft</label>
-                                        <InputText className='col-5 ms-3 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.deluxeRooms?.sqftDeluxe} onChange={(e) => setSqftDeluxe(e.target.value)} required />
+                                        <InputText className='col-5 ms-3 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.deluxeRooms?.sqft} onChange={(e) => setSqftDeluxe(e.target.value)} required />
                                         <label htmlFor="hotelName" className='mt-1 col-6'>Price Per Night in Rs</label>
                                         <InputNumber className='col-6 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.deluxeRooms?.price} onChange={(e) => setPricePerDayDeluxe(e.value)} required />
                                     </div>
@@ -639,7 +645,7 @@ const HotelUserTable = () => {
                                         <label htmlFor="hotelName" className='mt-1 col-6'>No Of Child</label>
                                         <InputNumber className='col-6 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.nonDeluxeRooms?.child} onChange={(e) => setChildNonDeluxe(e.value)} required />
                                         <label htmlFor="hotelName" className='mt-1 col-6'>No Of Sqft</label>
-                                        <InputText className='col-5 ms-3 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.nonDeluxeRooms?.sqftNonDeluxe} onChange={(e) => setSqftNonDeluxe(e.target.value)} required />
+                                        <InputText className='col-5 ms-3 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.nonDeluxeRooms?.sqft} onChange={(e) => setSqftNonDeluxe(e.target.value)} required />
                                         <label htmlFor="hotelName" className='mt-1 col-6'>Price Per Night in Rs</label>
                                         <InputNumber className='col-6 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.nonDeluxeRooms?.price} onChange={(e) => setPricePerDayNonDeluxe(e.value)} required />
                                     </div>
@@ -654,7 +660,7 @@ const HotelUserTable = () => {
                                         <label htmlFor="hotelName" className='mt-1 col-6'>No Of Child</label>
                                         <InputNumber className='col-6 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.suiteRooms?.child} onChange={(e) => setChildSuite(e.value)} required />
                                         <label htmlFor="hotelName" className='mt-1 col-6'>No Of Sqft</label>
-                                        <InputText className='col-5 ms-3 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.suiteRooms?.sqftSuite} onChange={(e) => setSqftSuite(e.target.value)} required />
+                                        <InputText className='col-5 ms-3 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.suiteRooms?.sqft} onChange={(e) => setSqftSuite(e.target.value)} required />
                                         <label htmlFor="hotelName" className='mt-1 col-6'>Price Per Night in Rs</label>
                                         <InputNumber className='col-6 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.suiteRooms?.price} onChange={(e) => setPricePerDaySuite(e.value)} required />
                                     </div>
@@ -669,7 +675,7 @@ const HotelUserTable = () => {
                                         <label htmlFor="hotelName" className='mt-1 col-6'>No Of Child</label>
                                         <InputNumber className='col-6 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.familyRooms?.child} onChange={(e) => setChildFamily(e.value)} required />
                                         <label htmlFor="hotelName" className='mt-1 col-6'>No Of Sqft</label>
-                                        <InputText className='col-5 ms-3 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.familyRooms?.sqftFamily} onChange={(e) => setSqftFamily(e.value)} required />
+                                        <InputText className='col-5 ms-3 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.familyRooms?.sqft} onChange={(e) => setSqftFamily(e.value)} required />
                                         <label htmlFor="hotelName" className='mt-1 col-6'>Price Per Night in Rs</label>
                                         <InputNumber className='col-6 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.familyRooms?.price} onChange={(e) => setPricePerDayFamily(e.value)} required />
                                     </div>
@@ -684,7 +690,7 @@ const HotelUserTable = () => {
                                         <label htmlFor="hotelName" className='mt-1 col-6'>No Of Child</label>
                                         <InputNumber className='col-6 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.tripleRooms?.child} onChange={(e) => setChildTriple(e.value)} required />
                                         <label htmlFor="hotelName" className='mt-1 col-6'>No Of Sqft</label>
-                                        <InputText className='col-5 ms-3 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.tripleRooms?.sqftTriple} onChange={(e) => setSqftTriple(e.value)} required />
+                                        <InputText className='col-5 ms-3 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.tripleRooms?.sqft} onChange={(e) => setSqftTriple(e.value)} required />
                                         <label htmlFor="hotelName" className='mt-1 col-6'>Price Per Night in Rs</label>
                                         <InputNumber className='col-6 mb-2 ' style={{ height: '40px' }} value={eachHotelDetail.roomsList?.tripleRooms?.price} onChange={(e) => setPricePerDayTriple(e.value)} required />
                                     </div>

@@ -31,6 +31,11 @@ import { elementAcceptingRef } from '@mui/utils';
 import Context from '../../services/Context/Context';
 import axios from 'axios';
 
+import { parse } from 'papaparse';
+
+import { ImportCabUser } from '../../services/apiCapRegister/apiCapRegister';
+import { ImportCabDetail } from '../../services/apiCapRegister/apiCapRegister';
+
 
 const CabUserTable = (props) => {
     let emptyProduct = {
@@ -76,6 +81,9 @@ const CabUserTable = (props) => {
     const [ACfromlocation, setACfromlocation] = useState([]);
     const [ACtolocation, setACtolocation] = useState([]);
     const [showAcCharges, setShowAcCharges] = useState(false)
+    const [cabUserFile, setCabUserFile]=useState()
+    const [cabDetailsFile, setCabDetailsFile]=useState()
+
 
     useEffect(() => {
         ApiCapUser().then(res => {
@@ -340,6 +348,61 @@ const CabUserTable = (props) => {
         reader.readAsText(file, 'UTF-8');
     }
 
+
+
+    function handleChangeCabDetails(e){
+        console.log("adsa")
+        setCabDetailsFile(e.target.files[0])
+
+    }
+
+
+    function importCSVCabDetail(){
+        const reader=new FileReader()
+
+        reader.onload=async({target})=>{
+            const csv=parse(target.result,{header:true})
+            const parsedData=csv?.data
+            const data=parsedData.slice(0,-1)
+            const filterData=data.map(each=>{
+                
+                const from=each.fromLocationList.split(';')
+                const to=each.toLocationList.split(';')
+                return {...each, fromLocationList: from,toLocationList:to}
+            })
+            ImportCabDetail(filterData).then(res=>{
+                console.log(res.data)
+            })
+            
+
+        }
+        
+        reader.readAsText(cabDetailsFile);
+    }
+    
+    function importCSVCabUser(){
+        const reader= new FileReader()
+
+        reader.onload=async({target})=>{
+            const csv=parse(target.result, {header: true})
+            const parsedData=csv?.data
+            const data=parsedData.slice(0,-1)
+            ImportCabUser(parsedData).then(res=>{
+                console.log(res.data)
+            })
+        }
+
+        reader.readAsText(cabUserFile)
+    }
+
+    
+    function handleChangeCabUser(e){
+        setCabUserFile(e.target.files[0])
+
+    }
+
+
+
     const exportCSV = () => {
         dt.current.exportCSV();
     }
@@ -443,7 +506,15 @@ const CabUserTable = (props) => {
     const rightToolbarTemplate = () => {
         return (
             <React.Fragment  >
-                <FileUpload mode="basic" name="demo[]" auto url="https://primefaces.org/primereact/showcase/upload.php" accept=".csv" chooseLabel="Import" className="mr-2 inline-block" onUpload={importCSV} />
+                 {/* <FileUpload mode="basic" name="demo[]" auto url={"/api/upload"} accept=".csv" chooseLabel="Import" className="mr-2 inline-block" onUpload={importCSV} /> */}
+                <div className='d-flex flex-column'>
+                 <input type="file"  accept=".csv"  onChange={handleChangeCabDetails}/>
+                <Button className='btn me-5 p-button-success mr-2' onClick={importCSVCabDetail}  label='Upload Cab Details'/>
+                </div>
+                <div className='d-flex flex-column' >
+                <input type="file" className=''  accept=".csv"  onChange={handleChangeCabUser}/>
+                <Button className='btn me-5 p-button-success mr-2' onClick={importCSVCabUser} label='Upload Cab User'/>
+                </div>
                 <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />
             </React.Fragment>
         )

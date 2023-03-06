@@ -30,6 +30,13 @@ export const DeleteCabUserApi=async(id)=>{
   export const CabService=async(data)=>{
     return await axios.post('http://localhost:8080/search/api/cabRegister', data)
   }
+
+  export const ImportCabUser=async(data)=>{
+    return await axios.post('http://localhost:8080/search/api/cabRegister/importCabUser', data)
+  }
+  export const ImportCabDetail=async(data)=>{
+    return await axios.post('http://localhost:8080/search/api/cabRegister/importCabDetail', data)
+  }
   
   export const CabBooking=async()=>{
     return await axios.get('http://localhost:8080/booking/api/cabbookingdetailsall')
