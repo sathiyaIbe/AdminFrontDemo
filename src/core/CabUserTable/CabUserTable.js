@@ -316,37 +316,7 @@ const CabUserTable = (props) => {
         return id;
     }
 
-    const importCSV = (e) => {
-        const file = e.files[0];
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const csv = e.target.result;
-            const data = csv.split('\n');
 
-            // Prepare DataTable
-            const cols = data[0].replace(/['"]+/g, '').split(',');
-            data.shift();
-
-            const importedData = data.map(d => {
-                d = d.split(',');
-                const processedData = cols.reduce((obj, c, i) => {
-                    c = c === 'Status' ? 'inventoryStatus' : (c === 'Reviews' ? 'rating' : c.toLowerCase());
-                    obj[c] = d[i].replace(/['"]+/g, '');
-                    (c === 'price' || c === 'rating') && (obj[c] = parseFloat(obj[c]));
-                    return obj;
-                }, {});
-
-                processedData['id'] = createId();
-                return processedData;
-            });
-
-            const _products = [...products, ...importedData];
-
-            setProducts(_products);
-        };
-
-        reader.readAsText(file, 'UTF-8');
-    }
 
 
 
@@ -358,20 +328,40 @@ const CabUserTable = (props) => {
 
 
     function importCSVCabDetail(){
+        
         const reader=new FileReader()
 
         reader.onload=async({target})=>{
             const csv=parse(target.result,{header:true})
             const parsedData=csv?.data
             const data=parsedData.slice(0,-1)
-            const filterData=data.map(each=>{
+            const CabDetailsDatas=data.map(each=>{
                 
                 const from=each.fromLocationList.split(';')
                 const to=each.toLocationList.split(';')
-                return {...each, fromLocationList: from,toLocationList:to}
+                // const cdata=[each.driverId,each.availableStatus,each.fromLocationList,each.toLocationList,each.acPrice,each.carModel,each.carType,each.extraKmCharges,each.fuelType,
+                // each.pricePerKm,each.type,each.seats]
+                return {driverId:each.driverId, availableStatus: each.availableStatus, acPrice: each.acPrice, carModel: each.carModel, carType: each.carType, extraKmCharges: each.extraKmCharges, fuelType: each.fuelType,
+                    pricePerKm: each.pricePerKm, type: each.type, seats:each.seats, fromLocationList: from,toLocationList:to}
             })
-            ImportCabDetail(filterData).then(res=>{
+            const CabUserDatas=data.map(each=>{
+                // const cudata=[each.driverId, each.email,each.availableStatus,each.mobileNo,each.gender, each.name]
+                return{ driverId: each.driverId, email: each.email, availableStatus: each.availableStatus,  mobileNo: each.mobileNo, gender: each.gender, name: each.name}
+            })
+            console.log(CabDetailsDatas)
+            console.log(CabUserDatas)
+            const uploadData={CabDetailsDatas,CabUserDatas}
+            ImportCabDetail(uploadData).then(res=>{
                 console.log(res.data)
+                const userDataImport=res.data.importCabUser
+                const cabDataImport=res.data.importDetails
+
+                const _products = [...userDataImport,...products ];
+                
+                const _cabDatas = [ ...cabDataImport, ...cabDatas ];
+                setProducts(_products)
+                setcabDatas(_cabDatas)
+                
             })
             
 
@@ -379,27 +369,7 @@ const CabUserTable = (props) => {
         
         reader.readAsText(cabDetailsFile);
     }
-    
-    function importCSVCabUser(){
-        const reader= new FileReader()
 
-        reader.onload=async({target})=>{
-            const csv=parse(target.result, {header: true})
-            const parsedData=csv?.data
-            const data=parsedData.slice(0,-1)
-            ImportCabUser(parsedData).then(res=>{
-                console.log(res.data)
-            })
-        }
-
-        reader.readAsText(cabUserFile)
-    }
-
-    
-    function handleChangeCabUser(e){
-        setCabUserFile(e.target.files[0])
-
-    }
 
 
 
@@ -509,12 +479,9 @@ const CabUserTable = (props) => {
                  {/* <FileUpload mode="basic" name="demo[]" auto url={"/api/upload"} accept=".csv" chooseLabel="Import" className="mr-2 inline-block" onUpload={importCSV} /> */}
                 <div className='d-flex flex-column'>
                  <input type="file"  accept=".csv"  onChange={handleChangeCabDetails}/>
-                <Button className='btn me-5 p-button-success mr-2' onClick={importCSVCabDetail}  label='Upload Cab Details'/>
+                <Button className='btn me-5 p-button-success ' icon="pi pi-download"  onClick={importCSVCabDetail}  label='Import '/>
                 </div>
-                <div className='d-flex flex-column' >
-                <input type="file" className=''  accept=".csv"  onChange={handleChangeCabUser}/>
-                <Button className='btn me-5 p-button-success mr-2' onClick={importCSVCabUser} label='Upload Cab User'/>
-                </div>
+              
                 <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />
             </React.Fragment>
         )
