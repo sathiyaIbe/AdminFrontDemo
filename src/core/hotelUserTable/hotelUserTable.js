@@ -31,7 +31,6 @@ import { getHotelDetails } from '../../services/Api.Hotel.Service/Api.Hotel.Serv
 import { registerHotel } from '../../services/Api.Hotel.Service/Api.Hotel.Service';
 import { updateHotelDetails } from '../../services/Api.Hotel.Service/Api.Hotel.Service';
 import { deleteHotel } from '../../services/Api.Hotel.Service/Api.Hotel.Service';
-
 import axios from 'axios';
 const HotelUserTable = () => {
     let emptyProduct = {
@@ -103,11 +102,8 @@ const HotelUserTable = () => {
     const [adultTriple, setAdultTriple] = useState((null))
     const [childTriple, setChildTriple] = useState((null))
     const [sqftTriple, setSqftTriple] = useState((null))
-
-  
     useEffect(() => {
         getHotelDetails().then(res => {
-          
             const data = res.data.hotelUserData
             const hotelData = res.data.hotelData
             const userData = data.reverse()
@@ -123,7 +119,6 @@ const HotelUserTable = () => {
         setshow_from_address(true);
     }
     const getFromlocation = (data) => {
-        
         setamenitiesList([...amenitiesList, data])
     }
     const formatCurrency = (value) => {
@@ -148,8 +143,6 @@ const HotelUserTable = () => {
     const hideDeleteProductsDialog = () => {
         setDeleteProductsDialog(false);
     }
-
-   
     const saveProduct = () => {
         // setSubmitted(true);
         let _products = [...products];
@@ -162,8 +155,6 @@ const HotelUserTable = () => {
         // _hotelDatas[cabIndex] = _eachHotelDetail
         const isUpdated = products.filter(each => each._id === _product._id)
         const isUpdatedCab = hotelDatas.filter(each => each._id === eachHotelDetail._id)
-
-        
         if (isUpdated.length === 0 || isUpdatedCab.length === 0) {
             const personalDetails = {
                 name: product.name,
@@ -173,25 +164,24 @@ const HotelUserTable = () => {
                 gender: product.gender,
             }
             const roomsList = {
-                deluxeRooms: { rooms: deluxeRooms, price: pricePerDayDeluxe, adult: adultDeluxe, child: childDeluxe, type: 'Deluxe Room', sqft:sqftDeluxe },
-                nonDeluxeRooms: { rooms: nonDeluxeRooms, price: pricePerDayNonDeluxe, adult: adultNonDeluxe, child: childNonDeluxe, type: 'Non-Deluxe Room', sqft:sqftNonDeluxe },
-                suiteRooms: { rooms: suiteRooms, price: pricePerDaySuite, adult: adultSuite, child: childSuite, type: 'Suite Room', sqft:sqftSuite },
-                familyRooms: { rooms: familyRooms, price: pricePerDayFamily, adult: adultFamily, child: childFamily, type: 'Family Room',sqft:sqftFamily },
-                tripleRooms: { rooms: tripleRooms, price: pricePerDayTriple, adult: adultTriple, child: childTriple, type: 'Triple Room', sqft:sqftTriple }
+                deluxeRooms: { rooms: deluxeRooms, price: pricePerDayDeluxe, adult: adultDeluxe, child: childDeluxe, type: 'Deluxe Room', sqft: sqftDeluxe },
+                nonDeluxeRooms: { rooms: nonDeluxeRooms, price: pricePerDayNonDeluxe, adult: adultNonDeluxe, child: childNonDeluxe, type: 'Non-Deluxe Room', sqft: sqftNonDeluxe },
+                suiteRooms: { rooms: suiteRooms, price: pricePerDaySuite, adult: adultSuite, child: childSuite, type: 'Suite Room', sqft: sqftSuite },
+                familyRooms: { rooms: familyRooms, price: pricePerDayFamily, adult: adultFamily, child: childFamily, type: 'Family Room', sqft: sqftFamily },
+                tripleRooms: { rooms: tripleRooms, price: pricePerDayTriple, adult: adultTriple, child: childTriple, type: 'Triple Room', sqft: sqftTriple }
             }
             const hotelDetails = {
                 amenitiesList: amenitiesList,
                 hotelName: eachHotelDetail.hotelName,
                 hotelNumber: eachHotelDetail.hotelNumber,
                 location: location,
-                roomsList:roomsList,
-                availableStatus:product.availableStatus
+                roomsList: roomsList,
+                availableStatus: product.availableStatus
             }
             const data = {
                 personalDetails: personalDetails,
                 hotelDetails: hotelDetails
             }
-           
             registerHotel(data).then(res => {
                 console.log(res.data)
                 const data1 = res.data.userDataStore
@@ -199,7 +189,6 @@ const HotelUserTable = () => {
                 console.log(data1)
                 _products.unshift({ ...data1 });
                 _hotelDatas.unshift({ ...data2 });
-               
                 sethotelDatas(_hotelDatas)
                 setProducts(_products)
                 setEachHotelDetail(emptyData)
@@ -214,34 +203,30 @@ const HotelUserTable = () => {
                 availableStatus: product.availableStatus,
                 mobileNo: product.mobileNo,
                 gender: product.gender,
-                hotelId:product.hotelId
+                hotelId: product.hotelId
             }
-            function check(a,b){
-                console.log(    )
-             if(a===null) {
-                return b
-             } 
-             
-             return a
+            function check(a, b) {
+                console.log()
+                if (a === null) {
+                    return b
+                }
+                return a
             }
-
-
-
             const roomsList = {
-                deluxeRooms: { rooms:check(deluxeRooms,eachHotelDetail.roomsList.deluxeRooms.rooms ), price:  check(pricePerDayDeluxe,eachHotelDetail.roomsList.deluxeRooms.price ), adult:   check(adultDeluxe,eachHotelDetail.roomsList.deluxeRooms.adult ), child:   check(childDeluxe,eachHotelDetail.roomsList.deluxeRooms.child ), type: 'Deluxe Room', sqft: check(sqftDeluxe,eachHotelDetail.roomsList.deluxeRooms.sqft ) },
-                nonDeluxeRooms: { rooms: check(nonDeluxeRooms,eachHotelDetail.roomsList.nonDeluxeRooms.rooms ), price:   check(pricePerDayNonDeluxe,eachHotelDetail.roomsList.nonDeluxeRooms.price ), adult:   check(adultNonDeluxe,eachHotelDetail.roomsList.nonDeluxeRooms.adult ), child:   check(childNonDeluxe,eachHotelDetail.roomsList.nonDeluxeRooms.child ), type: 'Non-Deluxe Room', sqft: check(sqftNonDeluxe,eachHotelDetail.roomsList.nonDeluxeRooms.sqft ) },
-                suiteRooms: { rooms: check(suiteRooms,eachHotelDetail.roomsList.suiteRooms.rooms ), price:  check(pricePerDaySuite,eachHotelDetail.roomsList.suiteRooms.price ), adult:  check(adultSuite,eachHotelDetail.roomsList.suiteRooms.adultSuite ), child:  check(childSuite,eachHotelDetail.roomsList.suiteRooms.child ), type: 'Suite Room', sqft:check(sqftSuite,eachHotelDetail.roomsList.suiteRooms.sqft ) },
-                familyRooms: { rooms: check(familyRooms,eachHotelDetail.roomsList.familyRooms.rooms ), price:  check(pricePerDayFamily,eachHotelDetail.roomsList.familyRooms.price ), adult:   check(adultFamily,eachHotelDetail.roomsList.familyRooms.adult ), child:   check(childFamily,eachHotelDetail.roomsList.familyRooms.child ) , type: 'Family Room', sqft:check(sqftFamily,eachHotelDetail.roomsList.familyRooms.sqft )},
-                tripleRooms: { rooms: check(deluxeRooms,eachHotelDetail.roomsList.tripleRooms.rooms ), price:   check(pricePerDayTriple,eachHotelDetail.roomsList.tripleRooms.price ), adult :  check(adultTriple,eachHotelDetail.roomsList.tripleRooms.adult ), child:  check(childTriple,eachHotelDetail.roomsList.tripleRooms.child ), type: 'Triple Room', sqft:check(sqftTriple,eachHotelDetail.roomsList.tripleRooms.sqft ) }
+                deluxeRooms: { rooms: check(deluxeRooms, eachHotelDetail.roomsList.deluxeRooms.rooms), price: check(pricePerDayDeluxe, eachHotelDetail.roomsList.deluxeRooms.price), adult: check(adultDeluxe, eachHotelDetail.roomsList.deluxeRooms.adult), child: check(childDeluxe, eachHotelDetail.roomsList.deluxeRooms.child), type: 'Deluxe Room', sqft: check(sqftDeluxe, eachHotelDetail.roomsList.deluxeRooms.sqft) },
+                nonDeluxeRooms: { rooms: check(nonDeluxeRooms, eachHotelDetail.roomsList.nonDeluxeRooms.rooms), price: check(pricePerDayNonDeluxe, eachHotelDetail.roomsList.nonDeluxeRooms.price), adult: check(adultNonDeluxe, eachHotelDetail.roomsList.nonDeluxeRooms.adult), child: check(childNonDeluxe, eachHotelDetail.roomsList.nonDeluxeRooms.child), type: 'Non-Deluxe Room', sqft: check(sqftNonDeluxe, eachHotelDetail.roomsList.nonDeluxeRooms.sqft) },
+                suiteRooms: { rooms: check(suiteRooms, eachHotelDetail.roomsList.suiteRooms.rooms), price: check(pricePerDaySuite, eachHotelDetail.roomsList.suiteRooms.price), adult: check(adultSuite, eachHotelDetail.roomsList.suiteRooms.adultSuite), child: check(childSuite, eachHotelDetail.roomsList.suiteRooms.child), type: 'Suite Room', sqft: check(sqftSuite, eachHotelDetail.roomsList.suiteRooms.sqft) },
+                familyRooms: { rooms: check(familyRooms, eachHotelDetail.roomsList.familyRooms.rooms), price: check(pricePerDayFamily, eachHotelDetail.roomsList.familyRooms.price), adult: check(adultFamily, eachHotelDetail.roomsList.familyRooms.adult), child: check(childFamily, eachHotelDetail.roomsList.familyRooms.child), type: 'Family Room', sqft: check(sqftFamily, eachHotelDetail.roomsList.familyRooms.sqft) },
+                tripleRooms: { rooms: check(deluxeRooms, eachHotelDetail.roomsList.tripleRooms.rooms), price: check(pricePerDayTriple, eachHotelDetail.roomsList.tripleRooms.price), adult: check(adultTriple, eachHotelDetail.roomsList.tripleRooms.adult), child: check(childTriple, eachHotelDetail.roomsList.tripleRooms.child), type: 'Triple Room', sqft: check(sqftTriple, eachHotelDetail.roomsList.tripleRooms.sqft) }
             }
             const hotelDetails = {
-                amenitiesList:  check(amenitiesList, eachHotelDetail.amenitiesList),
+                amenitiesList: check(amenitiesList, eachHotelDetail.amenitiesList),
                 hotelName: eachHotelDetail.hotelName,
                 hotelNumber: eachHotelDetail.hotelNumber,
                 location: check(location, eachHotelDetail.location),
-                roomsList:roomsList,
-                availableStatus:product.availableStatus,
-                hotelId:product.hotelId
+                roomsList: roomsList,
+                availableStatus: product.availableStatus,
+                hotelId: product.hotelId
             }
             const data = {
                 personalDetails: personalDetails,
@@ -251,12 +236,10 @@ const HotelUserTable = () => {
             updateHotelDetails(data).then(res => {
                 const index = findIndexByIdCab(eachHotelDetail.driverId)
                 _hotelDatas[index] = eachHotelDetail
-               
                 sethotelDatas(_hotelDatas)
                 setProducts(_products)
                 setEachHotelDetail(emptyData)
                 setProduct(emptyProduct);
-
             }).catch(err => {
                 console.log(err)
             })
@@ -266,7 +249,6 @@ const HotelUserTable = () => {
         setFromLocationList([])
         setToLocationList([])
     }
-    
     const editProduct = (id) => {
         const data = products.filter(each => (
             each.hotelId === id
@@ -274,8 +256,6 @@ const HotelUserTable = () => {
         const hData = hotelDatas.filter(each => (
             each.hotelId === id
         ))
-
-       
         setamenitiesList(hData[0].amenitiesList)
         setLocation(hData[0].location)
         setProduct(...data);
@@ -283,7 +263,6 @@ const HotelUserTable = () => {
         setProductDialog(true);
     }
     console.log(eachHotelDetail?.roomsList?.suiteRooms?.rooms)
-
     const confirmDeleteProduct = (product) => {
         setProduct(product);
         setDeleteProductDialog(true);
@@ -418,7 +397,6 @@ const HotelUserTable = () => {
         return (
             <React.Fragment>
                 <Button label="New" icon="pi pi-plus" className="p-button-success mr-2" onClick={openNew} />
-                
             </React.Fragment>
         )
     }
@@ -475,11 +453,9 @@ const HotelUserTable = () => {
         setLocation(data)
         const request = await axios.get('https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?sourceCountry=IN&SingleLine=' + data + '&+category=&outFields=*&forStorage=false&f=pjson')
         setshow_to_address(true);
-      
         setACtolocation(request.data.candidates)
     }
     const getTolocation = (data) => {
-       
         setLocation(data.address)
         setshow_to_address(false);
     }
@@ -489,7 +465,6 @@ const HotelUserTable = () => {
     function fromLocationTags() {
         return product.cabData.fromLocationList
     }
-   
     return (
         <Context.Consumer>
             {value => {
@@ -505,7 +480,6 @@ const HotelUserTable = () => {
                                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Hotel User"
                                 globalFilter={globalFilter} header={header} responsiveLayout="scroll" >
-                               
                                 <Column className="dark-bg" field="hotelId" header="Hotel Id" sortable style={{ minWidth: '12rem' }}></Column>
                                 {/* //<Column field="createdAt" header="Date Created" sortable style={{ minWidth: '12rem' }}></Column> */}
                                 <Column className="dark-bg" field="name" header="Name" sortable style={{ minWidth: '16rem' }}></Column>

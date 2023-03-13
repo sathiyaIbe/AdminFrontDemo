@@ -1,11 +1,9 @@
-
 import PropTypes from 'prop-types';
 import './CabUserTable.css';
 import React, { useState, useEffect, useRef } from 'react';
 import { classNames } from 'primereact/utils';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { FileUpload } from 'primereact/fileupload';
@@ -30,13 +28,9 @@ import { UpdateUserApi } from '../../services/UserService/UserService';
 import { elementAcceptingRef } from '@mui/utils';
 import Context from '../../services/Context/Context';
 import axios from 'axios';
-
 import { parse } from 'papaparse';
-
 import { ImportCabUser } from '../../services/apiCapRegister/apiCapRegister';
 import { ImportCabDetail } from '../../services/apiCapRegister/apiCapRegister';
-
-
 const CabUserTable = (props) => {
     let emptyProduct = {
         _id: '',
@@ -58,7 +52,6 @@ const CabUserTable = (props) => {
         fromLocationList:[],
         toLocationList:[],
     };
-
     const [products, setProducts] = useState(null);
     const [cabDatas, setcabDatas]=useState(null)
     const [loads, setLoad] = useState(false)
@@ -83,11 +76,8 @@ const CabUserTable = (props) => {
     const [showAcCharges, setShowAcCharges] = useState(false)
     const [cabUserFile, setCabUserFile]=useState()
     const [cabDetailsFile, setCabDetailsFile]=useState()
-
-
     useEffect(() => {
         ApiCapUser().then(res => {
-           
             const data = res.data.cabUserData
             const cabData=res.data.cabData
             const userData=data.reverse()
@@ -95,16 +85,13 @@ const CabUserTable = (props) => {
              setcabDatas(cabData)
         })
         setLoad(true)
-
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
-   
     const fromvalue = async (data) => {
         setFromlocation(data)
         const request = await axios.get('https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=' + fromlocation + '&+category=&outFields=*&forStorage=false&f=pjson')
         setACfromlocation(request.data.candidates)
         setshow_from_address(true);
       }
-      
       const getFromlocation = (data) => {
         if (fromLocationList.length < 3)
        // product[fromLocationList]=([...fromLocationList, data.address])
@@ -112,11 +99,9 @@ const CabUserTable = (props) => {
         setshow_from_address(false);
         setFromlocation('')
       }
- 
     const formatCurrency = (value) => {
         return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
     }
-
     const openNew = () => {
         setProduct(emptyProduct);
         setEachCabDetail(emptyData)
@@ -126,20 +111,16 @@ const CabUserTable = (props) => {
         setProductDialog(true);
         setShowAcCharges(false)
     }
-
     const hideDialog = () => {
         setSubmitted(false);
         setProductDialog(false);
     }
-
     const hideDeleteProductDialog = () => {
         setDeleteProductDialog(false);
     }
-
     const hideDeleteProductsDialog = () => {
         setDeleteProductsDialog(false);
     }
-
     const saveProduct = () => {
         setSubmitted(true);
         let _products = [...products];
@@ -148,13 +129,10 @@ const CabUserTable = (props) => {
         let _eachCabDetail={...eachCabDetail}
         const index = findIndexById(product.driverId);
         const cabIndex=findIndexByIdCab(eachCabDetail.driverId)
-       
         _products[index] = _product;
         _cabDatas[cabIndex]=_eachCabDetail
         const isUpdated = products.filter(each => each._id === _product._id)
         const isUpdatedCab=cabDatas.filter(each=>each._id===eachCabDetail._id)
-       
-
         if (isUpdated.length === 0 || isUpdatedCab.length===0) {
             const personalDetails = {
                 name: product.name,
@@ -163,7 +141,6 @@ const CabUserTable = (props) => {
                 mobileNo:product.mobileNo,
                 gender:product.gender,
             }
-            
             const cabDetails={
                 carModel:eachCabDetail.carModel,
                 carType: eachCabDetail.carType,
@@ -182,7 +159,6 @@ const CabUserTable = (props) => {
                 personalDetails: personalDetails,
                 cabDetails: cabDetails
             }
-           
            // console.log(data)
             CabService(data).then(res => {
                 const data1 = res.data.userDataStore
@@ -223,12 +199,7 @@ const CabUserTable = (props) => {
                 personalDetails: personalDetails,
                 cabDetails: cabDetails
             }
-            
-          
-
-           
             UpdateCabUserApi(data).then(res => {
-               
                  const index=  findIndexByIdCab(eachCabDetail.driverId)
                  _cabDatas[index]=eachCabDetail
                  console.log(_cabDatas[index])
@@ -247,14 +218,12 @@ const CabUserTable = (props) => {
     }
    // console.log(products)
     const editProduct = (id) => {
-       
         const data=products.filter(each=>(
             each.driverId===id
         ))
         const cData=cabDatas.filter(each=>(
             each.driverId===id
         ))
-       
            setFromLocationList(cData[0].fromLocationList)
           setToLocationList(cData[0].toLocationList)
           if (cData[0].type==="Ac"){
@@ -266,13 +235,10 @@ const CabUserTable = (props) => {
           setEachCabDetail(...cData);
           setProductDialog(true);
     }
- 
-
     const confirmDeleteProduct = (product) => {
         setProduct(product);
         setDeleteProductDialog(true);
     }
-
     const deleteProduct = () => {
         DeleteCabUserApi(product.driverId).then(res => {
             let _products = products.filter(val => val._id !== product._id);
@@ -281,9 +247,7 @@ const CabUserTable = (props) => {
             setProduct(emptyProduct);
             toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
         })
-
     }
-
     const findIndexById = (id) => {
         let index = -1;
         for (let i = 0; i < products.length; i++) {
@@ -292,7 +256,6 @@ const CabUserTable = (props) => {
                 break;
             }
         }
-
         return index;
     }
     const findIndexByIdCab = (id) => {
@@ -303,10 +266,8 @@ const CabUserTable = (props) => {
                 break;
             }
         }
-
         return index;
     }
-
     const createId = () => {
         let id = '';
         let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -315,28 +276,17 @@ const CabUserTable = (props) => {
         }
         return id;
     }
-
-
-
-
-
     function handleChangeCabDetails(e){
         console.log("adsa")
         setCabDetailsFile(e.target.files[0])
-
     }
-
-
     function importCSVCabDetail(){
-        
         const reader=new FileReader()
-
         reader.onload=async({target})=>{
             const csv=parse(target.result,{header:true})
             const parsedData=csv?.data
             const data=parsedData.slice(0,-1)
             const CabDetailsDatas=data.map(each=>{
-                
                 const from=each.fromLocationList.split(';')
                 const to=each.toLocationList.split(';')
                 // const cdata=[each.driverId,each.availableStatus,each.fromLocationList,each.toLocationList,each.acPrice,each.carModel,each.carType,each.extraKmCharges,each.fuelType,
@@ -355,45 +305,28 @@ const CabUserTable = (props) => {
                 console.log(res.data)
                 const userDataImport=res.data.importCabUser
                 const cabDataImport=res.data.importDetails
-
                 const _products = [...userDataImport,...products ];
-                
                 const _cabDatas = [ ...cabDataImport, ...cabDatas ];
                 setProducts(_products)
                 setcabDatas(_cabDatas)
-                
             })
-            
-
         }
-        
         reader.readAsText(cabDetailsFile);
     }
-
-
-
-
     const exportCSV = () => {
         dt.current.exportCSV();
     }
-
     const confirmDeleteSelected = () => {
         setDeleteProductsDialog(true);
     }
-
     const deleteSelectedProducts = () => {
-
         const data = {
             id: "asdf",
-
         }
         const ids = selectedProducts.map(each => {
             var data = { "_id": each._id }
             return data
         })
-
-
-
         DeleteMultipleUserApi(ids).then(res => {
             console.log('deleted multiple')
         })
@@ -403,38 +336,26 @@ const CabUserTable = (props) => {
         setSelectedProducts(null);
         toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
     }
-
-
     const onCategoryChange = (e) => {
         let _product = { ...product };
         _product['availableStatus'] = e.value;
         setProduct(_product);
     }
-
     const onGenderChange = (e) => {
         let _product = { ...product };
         _product['gender'] = e.value;
         setProduct(_product);
     }
-
     const onInputChange = (e, username) => {
-       
-
         const val = (e.target && e.target.value) || '';
-        
         let _product = { ...product };
         let _data={...eachCabDetail}
-       
- 
        if(_product[username]===undefined){
             _data[username]=val
        }else{
         _product[username] = val;
-
        }
-       
         if(username==="type"){
-           
             if(val==='Ac'){
                 setShowAcCharges(true)
             }else{
@@ -442,28 +363,20 @@ const CabUserTable = (props) => {
             }
         }
         setEachCabDetail(_data)
-
         setProduct(_product);
     }
-
     const onInputNumberChange = (e, name) => {
         let _product = { ...product };
         let _data={...eachCabDetail}
         const val = e.value || 0;
-       
         if(_product[name]===undefined){
             _data[name]=val
        }else{
         _product[name] = val;
-
        }
-       
        setEachCabDetail(_data)
-
-
         setProduct(_product);
     }
-
     const leftToolbarTemplate = () => {
         return (
             <React.Fragment>
@@ -472,7 +385,6 @@ const CabUserTable = (props) => {
             </React.Fragment>
         )
     }
-
     const rightToolbarTemplate = () => {
         return (
             <React.Fragment  >
@@ -481,7 +393,6 @@ const CabUserTable = (props) => {
                  <input type="file"  accept=".csv"  onChange={handleChangeCabDetails}/>
                 <Button className='btn me-5 p-button-success ' icon="pi pi-download"  onClick={importCSVCabDetail}  label='Import '/>
                 </div>
-              
                 <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />
             </React.Fragment>
         )
@@ -524,34 +435,27 @@ const CabUserTable = (props) => {
             <Button label="Yes" icon="pi pi-check" className="p-button-text" onClick={deleteSelectedProducts} />
         </React.Fragment>
     );
-
     function removeFrom(index) {
        setFromLocationList(fromLocationList.filter((el, i) => i !== index))
       }
-
       const toValue = async (data) => {
         setToLocation(data)
         const request = await axios.get('https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=' + data + '&+category=&outFields=*&forStorage=false&f=pjson')
         setshow_to_address(true);
         setACtolocation(request.data.candidates)
-    
       }
-    
       const getTolocation = (data) => {
         if (toLocationList.length < 5)
           setToLocationList([...toLocationList, data.address])
         setshow_to_address(false);
         setToLocation('')
       }
-    
       function removeTo(index) {
         setToLocationList(toLocationList.filter((el, i) => i !== index))
       }
-
       function fromLocationTags() {
         return product.cabData.fromLocationList
       }
-
     return (
         <Context.Consumer>
             {value => {
@@ -561,19 +465,15 @@ const CabUserTable = (props) => {
                     <div className="datatable-cab-crud-demo" data-testid="CabUserTable">
                         <div className={`cards ${sidebar ? 'sidebar-table' : ''}`}>
                             <Toolbar className="mb-4 dark-bg " left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
-
                             <Toast ref={toast} />
-
                             <DataTable className="dark-bg" ref={dt} value={products} selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)}
                                 dataKey="_id" paginator rows={5} rowsPerPageOptions={[5, 10, 25]}
                                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Cab User"
                                 globalFilter={globalFilter} header={header} responsiveLayout="scroll" >
-
                                 {<Column className="dark-bg" selectionMode="multiple" headerStyle={{ width: '3rem' }} exportable={false}></Column>}
                                 <Column className="dark-bg" field="driverId" header="Driver Id" sortable style={{ minWidth: '12rem' }}></Column>
                                 {/* //<Column field="createdAt" header="Date Created" sortable style={{ minWidth: '12rem' }}></Column> */}
-
                                 <Column className="dark-bg" field="name" header="Name" sortable style={{ minWidth: '16rem' }}></Column>
                                 <Column className="dark-bg" field="email" header="Email" sortable style={{ minWidth: '10rem' }}></Column>
                                 <Column className="dark-bg" field="availableStatus" header="Status" body={statusBodyTemplate} sortable style={{ minWidth: '12rem' }} ></Column>
@@ -605,7 +505,6 @@ const CabUserTable = (props) => {
                                         <RadioButton className='mb-1'  inputId="category2" name="status" value="inactive" onChange={onCategoryChange} checked={product.availableStatus === 'inactive'} />
                                         <label className='mb-1 ml-2' htmlFor="category2">In Active</label>
                                     </div>
-
                                 </div>
                             </div>
                             <div className="row">                             
@@ -627,7 +526,6 @@ const CabUserTable = (props) => {
                             </div>
                             <div className="field">
                                 <label htmlFor="carType">Car Type</label>
-
                                 <div className="formgrid grid">
                                     <select className="form-select" aria-label="Default select example"   onChange={(e) => onInputChange(e, 'carType')}>
                                         <option >Select Car type</option>
@@ -635,7 +533,6 @@ const CabUserTable = (props) => {
                                         <option selected={eachCabDetail.carType==="MUV"}value="MUV">MUV</option>
                                         <option selected={eachCabDetail.carType==="XUV"} value="XUV">XUV</option>
                                         <option selected={eachCabDetail.carType==="Other"} value="Other">Other</option>
-                                       
                                     </select>
                                 </div>
                             </div>
@@ -673,13 +570,11 @@ const CabUserTable = (props) => {
                           <div className="field">
                           <label htmlFor="pickupLocation" >Pickup Location</label>
                               {fromLocationList.map((tag, index) => (
-                                
                                 <div className="tag-item" key={index}>
                                   <span className="text">{tag}</span>
                                   <span className="close" style={{ cursor: "pointer" }} onClick={() => removeFrom(index)}>&times;</span>
                                 </div>
                               ))}
-                                  
                                 <div className="formGrid">
                               <InputText type="text" className="form-control" autoComplete="off" placeholder="Select Max 3  From Locations" name='fromlocation' value={fromlocation} onChange={(event) => fromvalue(event.target.value)} />
                               {show_from_address === true ? ACfromlocation.length !== 0 ?
@@ -711,7 +606,6 @@ const CabUserTable = (props) => {
                                   <span className="close" style={{ cursor: "pointer" }} onClick={() => removeTo(index)}>&times;</span>
                                 </div>
                               ))}
-
                               <InputText type="text" className="form-control" autoComplete="off" placeholder="Select Max 5  To Locations" name='Tolocation' value={toLocation} onChange={(event) => toValue(event.target.value)} />
                               {show_to_address === true ? ACtolocation.length !== 0 ?
                                 <>
@@ -769,18 +663,11 @@ const CabUserTable = (props) => {
                             </div>
                         </Dialog>
                     </div>
-
-
                 )
             }}
         </Context.Consumer>
-
     );
-
 }
-
 CabUserTable.propTypes = {};
-
 CabUserTable.defaultProps = {};
-
 export default CabUserTable;
