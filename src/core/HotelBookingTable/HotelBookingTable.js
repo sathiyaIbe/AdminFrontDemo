@@ -50,12 +50,11 @@ const dt = useRef(null);
 useEffect(() => {
   hotelBookingDetails().then(res=>{
     const data=res.data
-    console.log(res.data)
   const datas=  data.map(each=>{
         const id= Number(data.indexOf(each))+1
         return {...each,id}
     })
-    console.log(datas)
+
     setProducts(datas)
   })
   setLoad(true)
@@ -115,9 +114,8 @@ load &&
 <Column className="dark-bg" body={actionBodyTemplate} exportable={false} style={{ minWidth: '8rem' }}></Column>
             </DataTable>
         </div>
-                   <Dialog visible={productDialog} style={{ width: '450px' }} header="Booking Details" modal className="p-fluid dark-bg " onHide={hideDialog}>
-                       <div className="container">
-                           <div className='row'>
+                   <Dialog  visible={productDialog} style={{ width: '450px' }} header="Booking Details" modal className="p-fluid dialog " onHide={hideDialog}>
+                      
                                <div className='col-12 d-flex'>
                                    <h5 className='col-5 fs-6'>Booking Id</h5>
                                    <p className='col-7'>{product.booking_id}</p>
@@ -143,15 +141,10 @@ load &&
                                    <h5 className='col-5 fs-6'>Address:</h5>
                                    <p className='col-7'>{product.address}</p>
                                </div>
-                               {/* <div className='col-12 d-flex'>
-                                   <h5 className='col-6'>To Location:</h5>
-                                   <p className='col-6'>{product.to_location}</p>
-                               </div> */}
                                <div className='col-12 d-flex'>
                                    <h5 className='col-5'> Status:</h5>
                                    <p className='col-7'>{product.status}</p>
-                               </div>
-                           </div>
+                             
                        </div>
                    </Dialog>
                    </div>

@@ -1,8 +1,12 @@
 import React, { lazy, Suspense, useState } from 'react';
-import { Routes, Route ,   BrowserRouter as Router, } from 'react-router-dom'
+import { Routes, Route ,   BrowserRouter  } from 'react-router-dom'
 import './App.css';
 import Context from './services/Context/Context';
 import { CSpinner } from '@coreui/react'
+
+import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const  Login =lazy(()=>import('../src/components/Login/Login')) 
 const AdminDashboard =lazy(()=>import('./components/AdminDashboard/AdminDashboard')) 
@@ -37,7 +41,7 @@ function App() {
     <div className="App">
       <Context.Provider 
       value={{sidebar, changeSidebar:changeSidebar, isDark, changeTheme:changesTheme}}>
-      <Router>
+      <BrowserRouter>
       <Suspense fallback={<CSpinner color='primary'/>}>
       <Routes>
         <Route exact path='/' element={<Protected ><Login /> </Protected>}></Route>
@@ -45,14 +49,14 @@ function App() {
         <Route exact path ='/e-commerce' element={<Protected ><ECommerce /> </Protected>}></Route>
         <Route exact path ='/user' element={<Protected ><User /> </Protected>}></Route>
         <Route exact path ='/booking-status' element={<Protected ><BookingStatus /> </Protected>}></Route>
-        <Route exact path ='/cab-service' element={<Protected ><CabService /> </Protected>}></Route>
-        <Route exact path ='/cab-service/cab-user' element={<Protected ><CabUser /> </Protected>}></Route>
+       
+        <Route exact path ='/cab-service/cab-user' element={<Protected ><CabService /> </Protected>}></Route>
         <Route exact path='/cab-service/cab-booking' element={<Protected ><CabBookingTable /> </Protected>}></Route>
         <Route exact path='/hotel/hotelbookings' element={<Protected><HotelBooking /> </Protected>}></Route>
         <Route path='*' element={<NotFound />}></Route>
         </Routes>
         </Suspense>
-      </Router>
+      </BrowserRouter>
     
       </Context.Provider>
     </div>

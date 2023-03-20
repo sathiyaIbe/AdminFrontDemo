@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import ApiHotelService from './ApiHotelService';
+import ApiHotelService from './Api.Hotel.Service';
 
 describe('<ApiHotelService />', () => {
   test('it should mount', () => {

@@ -75,33 +75,33 @@ const HotelUserTable = () => {
     const [ACtolocation, setACtolocation] = useState([]);
     const [showAcCharges, setShowAcCharges] = useState(false)
     const [amenitiesList, setamenitiesList] = useState([])
-    const [amenities, setamenities] = useState((null))
-    const [location, setLocation] = useState((null))
-    const [deluxeRooms, setDeluxeRooms] = useState(null)
-    const [nonDeluxeRooms, setNonDeluxeRooms] = useState(null)
+    const [amenities, setamenities] = useState((""))
+    const [location, setLocation] = useState((""))
+    const [deluxeRooms, setDeluxeRooms] = useState("")
+    const [nonDeluxeRooms, setNonDeluxeRooms] = useState("")
     const [familyRooms, setFamilyRooms] = useState()
     const [tripleRooms, setTripleRooms] = useState()
     const [suiteRooms, setSuiteRooms] = useState()
-    const [pricePerDayDeluxe, setPricePerDayDeluxe] = useState((null))
-    const [adultDeluxe, setAdultDeluxe] = useState((null))
-    const [childDeluxe, setChildDeluxe] = useState((null))
-    const [sqftDeluxe, setSqftDeluxe] = useState((null))
-    const [pricePerDayNonDeluxe, setPricePerDayNonDeluxe] = useState((null))
-    const [adultNonDeluxe, setAdultNonDeluxe] = useState((null))
-    const [childNonDeluxe, setChildNonDeluxe] = useState((null))
-    const [sqftNonDeluxe, setSqftNonDeluxe] = useState((null))
-    const [pricePerDaySuite, setPricePerDaySuite] = useState((null))
-    const [adultSuite, setAdultSuite] = useState((null))
-    const [childSuite, setChildSuite] = useState((null))
-    const [sqftSuite, setSqftSuite] = useState((null))
-    const [pricePerDayFamily, setPricePerDayFamily] = useState((null))
-    const [adultFamily, setAdultFamily] = useState((null))
-    const [childFamily, setChildFamily] = useState((null))
-    const [sqftFamily, setSqftFamily] = useState((null))
-    const [pricePerDayTriple, setPricePerDayTriple] = useState((null))
-    const [adultTriple, setAdultTriple] = useState((null))
-    const [childTriple, setChildTriple] = useState((null))
-    const [sqftTriple, setSqftTriple] = useState((null))
+    const [pricePerDayDeluxe, setPricePerDayDeluxe] = useState((""))
+    const [adultDeluxe, setAdultDeluxe] = useState((""))
+    const [childDeluxe, setChildDeluxe] = useState((""))
+    const [sqftDeluxe, setSqftDeluxe] = useState((""))
+    const [pricePerDayNonDeluxe, setPricePerDayNonDeluxe] = useState((""))
+    const [adultNonDeluxe, setAdultNonDeluxe] = useState((""))
+    const [childNonDeluxe, setChildNonDeluxe] = useState((""))
+    const [sqftNonDeluxe, setSqftNonDeluxe] = useState((""))
+    const [pricePerDaySuite, setPricePerDaySuite] = useState((""))
+    const [adultSuite, setAdultSuite] = useState((""))
+    const [childSuite, setChildSuite] = useState((""))
+    const [sqftSuite, setSqftSuite] = useState((""))
+    const [pricePerDayFamily, setPricePerDayFamily] = useState((""))
+    const [adultFamily, setAdultFamily] = useState((""))
+    const [childFamily, setChildFamily] = useState((""))
+    const [sqftFamily, setSqftFamily] = useState((""))
+    const [pricePerDayTriple, setPricePerDayTriple] = useState((""))
+    const [adultTriple, setAdultTriple] = useState((""))
+    const [childTriple, setChildTriple] = useState((""))
+    const [sqftTriple, setSqftTriple] = useState((""))
     useEffect(() => {
         getHotelDetails().then(res => {
             const data = res.data.hotelUserData
@@ -183,10 +183,8 @@ const HotelUserTable = () => {
                 hotelDetails: hotelDetails
             }
             registerHotel(data).then(res => {
-                console.log(res.data)
                 const data1 = res.data.userDataStore
                 const data2 = res.data.hotelDatastore
-                console.log(data1)
                 _products.unshift({ ...data1 });
                 _hotelDatas.unshift({ ...data2 });
                 sethotelDatas(_hotelDatas)
@@ -206,7 +204,6 @@ const HotelUserTable = () => {
                 hotelId: product.hotelId
             }
             function check(a, b) {
-                console.log()
                 if (a === null) {
                     return b
                 }
@@ -232,7 +229,7 @@ const HotelUserTable = () => {
                 personalDetails: personalDetails,
                 hotelDetails: hotelDetails
             }
-            console.log(data)
+
             updateHotelDetails(data).then(res => {
                 const index = findIndexByIdCab(eachHotelDetail.driverId)
                 _hotelDatas[index] = eachHotelDetail
@@ -241,7 +238,7 @@ const HotelUserTable = () => {
                 setEachHotelDetail(emptyData)
                 setProduct(emptyProduct);
             }).catch(err => {
-                console.log(err)
+
             })
             toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
         }
@@ -262,7 +259,7 @@ const HotelUserTable = () => {
         setEachHotelDetail(...hData);
         setProductDialog(true);
     }
-    console.log(eachHotelDetail?.roomsList?.suiteRooms?.rooms)
+
     const confirmDeleteProduct = (product) => {
         setProduct(product);
         setDeleteProductDialog(true);
@@ -344,7 +341,7 @@ const HotelUserTable = () => {
             return data
         })
         DeleteMultipleUserApi(ids).then(res => {
-            console.log('deleted multiple')
+
         })
         let _products = products.filter(val => !selectedProducts.includes(val));
         setProducts(_products);
@@ -488,7 +485,7 @@ const HotelUserTable = () => {
                                 <Column className="dark-bg" body={actionBodyTemplate} exportable={false} style={{ minWidth: '8rem' }}></Column>
                             </DataTable>
                         </div>
-                        <Dialog visible={productDialog} style={{ width: '450px' }} header="Cab User Details" modal className="p-fluid dark-bg" footer={productDialogFooter} onHide={hideDialog}>
+                        <Dialog visible={productDialog}  style={{ width: '450px' }} header="Cab User Details" modal className="p-fluid dark-bg " footer={productDialogFooter} onHide={hideDialog}>
                             <div className="field ">
                                 <label htmlFor="username">Name</label>
                                 <InputText id="username" value={product.name} onChange={(e) => onInputChange(e, 'name')} required autoFocus style={{ height: '40px' }} className={classNames({ 'p-invalid': submitted && !product.name })} />
@@ -671,7 +668,7 @@ const HotelUserTable = () => {
                                 </div>
                             </div>
                         </Dialog>
-                        <Dialog dark-bg visible={deleteProductDialog} style={{ width: '450px' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
+                        <Dialog dark-bg visible={deleteProductDialog} style={{ width: '450px' }} className='dialog' header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
                             <div className="confirmation-content">
                                 <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
                                 {product && <span>Are you sure you want to delete <b>{product.name}</b>?</span>}

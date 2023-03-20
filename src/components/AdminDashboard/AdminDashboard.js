@@ -268,7 +268,6 @@ const AdminDashboard = () => {
             }
         }
     };
-    console.log(activeDataCount[activeDataCount.length - 1])
     const radarData = {
         labels: ['Active', 'InActive', 'Booking', 'User',],
         datasets: [
@@ -398,8 +397,8 @@ const AdminDashboard = () => {
                                             <div style={{ width: "90%", height: "745px" }}>
                                                 <h3 className='card-main-heading side'>Recent Activity</h3>
                                                 <Chrono classNames='chrono' items={chronoData} mode="VERTICAL_ALTERNATING" >
-                                                    {chronoData.map(each => (
-                                                        <p>{each.contentText}</p>
+                                                    {chronoData.map((each,index) => (
+                                                        <p key={index}>{each.contentText}</p>
                                                     ))}
                                                 </Chrono>
                                             </div>

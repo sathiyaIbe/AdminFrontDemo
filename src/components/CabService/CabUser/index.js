@@ -14,7 +14,7 @@ const CabUser = () => {
     <Context.Consumer>
       {value => {
         const { sidebar, isDark } = value
-        console.log(sidebar)
+       
         return (
           <div className="Cabs" data-testid="User">
             <div className='header-cabs-container'>

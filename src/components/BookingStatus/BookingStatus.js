@@ -39,7 +39,7 @@ const BookingStatus = () => {
 
     <div className={`booking-status-body-container ${sidebar ?'sidebar-booking-status' :''}`}>
 
-   <HotelUserTable val={true}/>
+
  
    
    

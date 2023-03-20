@@ -17,7 +17,7 @@ const HotelBooking = () =>{
 <Context.Consumer>
 {value=>{
   const {sidebar, isDark}=value
-  console.log(sidebar)
+
   return(
   <div className="HotelBooking" data-testid="HotelBooking">
    <div className='header-cabs-container'>

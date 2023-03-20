@@ -87,7 +87,6 @@ const DataTables = (props) => {
                 email: product.email,
                 status: product.status,
             }
-            console.log(details)
             UserService(details).then(res => {
                 const data = res.data
                 const id = products.length + 1
@@ -110,14 +109,11 @@ const DataTables = (props) => {
                         return each._id
                     }
                 })
-                console.log(res.data)
                 const sId = (products[id].id)
                 products[id] = { ...res.data, id: sId }
-                console.log(products)
                 setProducts(products)
                 setProduct(emptyProduct);
             }).catch(err => {
-                console.log(err)
             })
             toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
         }
@@ -163,13 +159,11 @@ const DataTables = (props) => {
         // Event listener on reader when the file
         // loads, we parse it and set the data.
         reader.onload = async ({ target }) => {
-            console.log(parse(target.result))
             const csv = parse(target.result, { header: true });
             const parsedData = csv?.data;
             const columns = Object.keys(parsedData[0]);
             const data = parsedData.slice(0, -1)
             importUser(parsedData.slice(0, -1)).then(res => {
-                console.log(res.data)
                 const _products = [...products, ...res.data];
                 setProducts(_products);
             })
@@ -191,7 +185,6 @@ const DataTables = (props) => {
             return data
         })
         DeleteMultipleUserApi(ids).then(res => {
-            console.log('deleted multiple')
         })
         let _products = products.filter(val => !selectedProducts.includes(val));
         setProducts(_products);
@@ -229,12 +222,14 @@ const DataTables = (props) => {
     }
     const rightToolbarTemplate = () => {
         return (
-            <React.Fragment  >
+            <>
                 {/* <FileUpload mode="basic" name="demo[]" auto url={"/api/upload"} accept=".csv" chooseLabel="Import" className="mr-2 inline-block" onUpload={importCSV} /> */}
-                <input type="file" accept=".csv" onChange={handleChange} />
-                <button className='btn' onClick={importCSV} >Upload</button>
+                <div className='flex'>
+                <input className='ms-0' type="file" accept=".csv" onChange={handleChange} />
+                <Button className=' mt-3 me-3 ms-0 p-button-success ' icon="pi pi-download" onClick={importCSV}  label="Import" />
                 <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />
-            </React.Fragment>
+                </div>
+            </>
         )
     }
     const statusBodyTemplate = (rowData) => {
@@ -281,7 +276,7 @@ const DataTables = (props) => {
                 const { sidebar } = value
                 return (
                     load &&
-                    <div className="datatable-crud-demo " data-testid="DataTable">
+                    <div className="datatable-crud-demo " data-testid="DataTables">
                         <div className={`cards ${sidebar ? 'sidebar-table' : ''}`}>
                             <Toolbar className="mb-4 dark-bg " left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
                             <Toast ref={toast} />

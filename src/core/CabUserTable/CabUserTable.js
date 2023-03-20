@@ -159,7 +159,7 @@ const CabUserTable = (props) => {
                 personalDetails: personalDetails,
                 cabDetails: cabDetails
             }
-           // console.log(data)
+         
             CabService(data).then(res => {
                 const data1 = res.data.userDataStore
                 const data2=res.data.cabDataStore
@@ -202,13 +202,13 @@ const CabUserTable = (props) => {
             UpdateCabUserApi(data).then(res => {
                  const index=  findIndexByIdCab(eachCabDetail.driverId)
                  _cabDatas[index]=eachCabDetail
-                 console.log(_cabDatas[index])
+                 
                 setcabDatas(_cabDatas)
                 setProducts(_products)
                 setEachCabDetail(emptyData)
                 setProduct(emptyProduct);
             }).catch(err => {
-                console.log(err)
+               
             })
             toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
         }
@@ -216,7 +216,7 @@ const CabUserTable = (props) => {
         setFromLocationList([])
         setToLocationList([])
     }
-   // console.log(products)
+   
     const editProduct = (id) => {
         const data=products.filter(each=>(
             each.driverId===id
@@ -277,7 +277,7 @@ const CabUserTable = (props) => {
         return id;
     }
     function handleChangeCabDetails(e){
-        console.log("adsa")
+       
         setCabDetailsFile(e.target.files[0])
     }
     function importCSVCabDetail(){
@@ -298,11 +298,10 @@ const CabUserTable = (props) => {
                 // const cudata=[each.driverId, each.email,each.availableStatus,each.mobileNo,each.gender, each.name]
                 return{ driverId: each.driverId, email: each.email, availableStatus: each.availableStatus,  mobileNo: each.mobileNo, gender: each.gender, name: each.name}
             })
-            console.log(CabDetailsDatas)
-            console.log(CabUserDatas)
+           
             const uploadData={CabDetailsDatas,CabUserDatas}
             ImportCabDetail(uploadData).then(res=>{
-                console.log(res.data)
+              
                 const userDataImport=res.data.importCabUser
                 const cabDataImport=res.data.importDetails
                 const _products = [...userDataImport,...products ];
@@ -328,7 +327,7 @@ const CabUserTable = (props) => {
             return data
         })
         DeleteMultipleUserApi(ids).then(res => {
-            console.log('deleted multiple')
+           
         })
         let _products = products.filter(val => !selectedProducts.includes(val));
         setProducts(_products);
@@ -389,11 +388,11 @@ const CabUserTable = (props) => {
         return (
             <React.Fragment  >
                  {/* <FileUpload mode="basic" name="demo[]" auto url={"/api/upload"} accept=".csv" chooseLabel="Import" className="mr-2 inline-block" onUpload={importCSV} /> */}
-                <div className='d-flex flex-column'>
+                <div className='flex mt-3 '>
                  <input type="file"  accept=".csv"  onChange={handleChangeCabDetails}/>
-                <Button className='btn me-5 p-button-success ' icon="pi pi-download"  onClick={importCSVCabDetail}  label='Import '/>
+                <Button className=' mt-3 me-3 ms-0 p-button-success ' icon="pi pi-download"  onClick={importCSVCabDetail}  label='Import '/> 
+                <Button label="Export" icon="pi pi-upload" className="p-button-help ms-0" onClick={exportCSV} />
                 </div>
-                <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />
             </React.Fragment>
         )
     }
@@ -480,7 +479,7 @@ const CabUserTable = (props) => {
                                 <Column className="dark-bg" body={actionBodyTemplate} exportable={false} style={{ minWidth: '8rem' }}></Column>
                             </DataTable>
                         </div>
-                        <Dialog visible={productDialog} style={{ width: '450px' }} header="Cab User Details" modal className="p-fluid dark-bg" footer={productDialogFooter} onHide={hideDialog}>
+                        <Dialog  visible={productDialog}  header="Cab User Details" modal className="p-fluid dark-bg " footer={productDialogFooter} onHide={hideDialog}>
                             <div className="field ">
                                 <label htmlFor="username">Name</label>
                                 <InputText id="username" value={product.name} onChange={(e) => onInputChange(e, 'name')} required autoFocus style={{height:'40px'}} className={classNames({ 'p-invalid': submitted && !product.name })} />
@@ -526,23 +525,23 @@ const CabUserTable = (props) => {
                             </div>
                             <div className="field">
                                 <label htmlFor="carType">Car Type</label>
-                                <div className="formgrid grid">
+                                {/* <div className="formgrid grid">
                                     <select className="form-select" aria-label="Default select example"   onChange={(e) => onInputChange(e, 'carType')}>
-                                        <option >Select Car type</option>
+                                        <option defaultChecked>Select Car type</option>
                                         <option selected={eachCabDetail.carType==="SUV"} value="SUV"  >SUV</option>
                                         <option selected={eachCabDetail.carType==="MUV"}value="MUV">MUV</option>
                                         <option selected={eachCabDetail.carType==="XUV"} value="XUV">XUV</option>
                                         <option selected={eachCabDetail.carType==="Other"} value="Other">Other</option>
                                     </select>
-                                </div>
+                                </div> */}
                             </div>
                             <div className="field">
                                 <label htmlFor='fuelType'>Fuel Type</label>
                                 <div className="formgrid grid">
                                     <select className="form-select" aria-label="Default select example" onChange={(e) => onInputChange(e, 'fuelType')}>
-                                        <option selected >Select Fuel type</option>
-                                        <option selected={eachCabDetail.fuelType==="Petrol"} value="Petrol"  >Petrol</option>
-                                        <option selected={eachCabDetail.fuelType==="Diesel"} value="Diesel">Diesel</option>
+                                        <option  defaultValue={eachCabDetail.fuelType===""}>Select Fuel type</option>
+                                        <option defaultValue={eachCabDetail.fuelType==="Petrol"} value="Petrol"  >Petrol</option>
+                                        <option defaultValue={eachCabDetail.fuelType==="Diesel"} value="Diesel">Diesel</option>
                                     </select>
                                 </div>
                             </div>
@@ -550,9 +549,9 @@ const CabUserTable = (props) => {
                             <label htmlFor='type'>Type</label>
                             <div className="formGrid">
                               <select className="form-select" aria-label="Default select example" onChange={(e) => onInputChange(e, 'type')}>
-                                <option selected >Select Type</option>
-                                <option selected={eachCabDetail.type==="Ac"} value="Ac"  >AC</option>
-                                <option selected={eachCabDetail.type==="NonAc"} value="NonAc">Non AC</option>
+                                <option defaultValue={eachCabDetail.type===""} >Select Type</option>
+                                <option defaultValue={eachCabDetail.type==="Ac"} value="Ac"  >AC</option>
+                                <option defaultValue={eachCabDetail.type==="NonAc"} value="NonAc">Non AC</option>
                               </select>
                             </div>
                           </div>
@@ -560,10 +559,10 @@ const CabUserTable = (props) => {
                             <label htmlFor='seats'>No Seats</label>
                             <div className="formGrid">
                               <select className="form-select" aria-label="Default select example" onChange={(e) =>  onInputChange(e, 'seats')}>
-                                <option selected >Select No. of seats</option>
-                                <option selected={eachCabDetail.seats==="4"} value="4">4</option>
-                                <option selected={eachCabDetail.seats==="5"} value="5">5</option>
-                                <option  selected={eachCabDetail.seats==="6"} value="6">6</option>
+                                <option defaultValue={eachCabDetail.seats===""} >Select No. of seats</option>
+                                <option defaultValue={eachCabDetail.seats==="4"} value="4">4</option>
+                                <option defaultValue={eachCabDetail.seats==="5"} value="5">5</option>
+                                <option  defaultValue={eachCabDetail.seats==="6"} value="6">6</option>
                               </select>
                             </div>
                           </div>
