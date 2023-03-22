@@ -18,4 +18,7 @@ export const deleteHotel=async(id)=>{
     return await axios.delete(`http://localhost:8080/hotel/api/hoteldetails/${id}`)
 }
 
+export const importHotel=async(data)=>{
+    return await axios.post('http://localhost:8080/hotel/api/hotelRegister/import', data)
+}
 

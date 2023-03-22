@@ -27,11 +27,15 @@ import { DeleteMultipleUserApi } from '../../services/UserService/UserService';
 import { UpdateUserApi } from '../../services/UserService/UserService';
 import { elementAcceptingRef } from '@mui/utils';
 import Context from '../../services/Context/Context';
-import { getHotelDetails } from '../../services/Api.Hotel.Service/Api.Hotel.Service';
+import { getHotelDetails, importHotel } from '../../services/Api.Hotel.Service/Api.Hotel.Service';
 import { registerHotel } from '../../services/Api.Hotel.Service/Api.Hotel.Service';
 import { updateHotelDetails } from '../../services/Api.Hotel.Service/Api.Hotel.Service';
 import { deleteHotel } from '../../services/Api.Hotel.Service/Api.Hotel.Service';
 import axios from 'axios';
+import { parse } from 'papaparse';
+
+
+
 const HotelUserTable = () => {
     let emptyProduct = {
         _id: '',
@@ -102,6 +106,7 @@ const HotelUserTable = () => {
     const [adultTriple, setAdultTriple] = useState((""))
     const [childTriple, setChildTriple] = useState((""))
     const [sqftTriple, setSqftTriple] = useState((""))
+    const [hotelDetailsFile, setHotelDetailsFile]=useState()
     useEffect(() => {
         getHotelDetails().then(res => {
             const data = res.data.hotelUserData
@@ -301,6 +306,10 @@ const HotelUserTable = () => {
         }
         return id;
     }
+    function handleChangeHotelDetails(e){
+       
+        setHotelDetailsFile(e.target.files[0])
+    }
     const importCSV = (e) => {
         const file = e.files[0];
         const reader = new FileReader();
@@ -326,6 +335,46 @@ const HotelUserTable = () => {
         };
         reader.readAsText(file, 'UTF-8');
     }
+
+    const importCSVHotelDetail=()=>{
+        const reader= new FileReader()
+        reader.onload=async({target})=>{
+            const csv=parse(target.result,{header:true})
+            const parsedData=csv?.data
+            const data=parsedData.slice(0,-1)
+            console.log(data)
+            const hotelDetailsData=data.map(each=>{
+                const amenitiesList=each.amenitiesList.split(';')
+                const roomsList={deluxeRooms:{rooms:each.deluxeRooms,price: each.pricePerDayDeluxe, adult: each.adultDeluxe, child: each.childDeluxe, type:'Deluxe Room',sqft: each.sqftDeluxe }, 
+                nonDeluxeRooms:{rooms: each.nonDeluxeRooms ,price: each.pricePerDayNonDeluxe , adult:each.adultNonDeluxe, child:each.childNonDeluxe, type:'Non-Deluxe Room', sqft:each.sqftNonDeluxe}, 
+                suiteRooms:{rooms: each.suiteRooms, price: each.pricePerDaySuite,  adult:each.adultSuite, child:childSuite, type:'Suite Room', sqftSuite},
+                 familyRooms:{rooms:each.familyRooms, price:each.pricePerDayFamily,  adult:each.adultFamily, child:each.childFamily, type:'Family Room',sqft: each.sqftFamily},
+                  tripleRooms:{rooms :each.tripleRooms,price:each.pricePerDayTriple,  adult:each.adultTriple, child:each.childTriple, type:'Triple Room', sqft: each.sqftTriple}
+                }
+                return {hotelId:each.hotelId, hotelName:each.hotelName, availableStatus:each.availableStatus, roomsList:roomsList, amenitiesList:amenitiesList, location:each.location}
+            })
+            const hotelUserData=data.map(each=>{
+               
+                return {hotelId:each.hotelId, email:each.email, name:each.name, gender:each.gender,availableStatus:each.availableStatus,mobileNo:each.mobileNo}
+            })
+            const uploadData={hotelDetailsData, hotelUserData}
+            console.log(uploadData)
+           const importBackend= await importHotel(uploadData)
+           console.log(importBackend)
+           
+           const userDataImport=importBackend.data.importUser
+           const hotelDataImport=importBackend.data.importHotelDetails
+           const _products = [...userDataImport,...products ];
+           const _hotelDatas = [ ...hotelDataImport, ...hotelDatas ];
+           setProducts(_products)
+           sethotelDatas(_hotelDatas)
+        }
+
+
+        reader.readAsText(hotelDetailsFile)
+    }
+
+
     const exportCSV = () => {
         dt.current.exportCSV();
     }
@@ -400,8 +449,11 @@ const HotelUserTable = () => {
     const rightToolbarTemplate = () => {
         return (
             <React.Fragment  >
-                <FileUpload mode="basic" name="demo[]" auto url="https://primefaces.org/primereact/showcase/upload.php" accept=".csv" chooseLabel="Import" className="mr-2 inline-block" onUpload={importCSV} />
-                <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />
+               <div className='flex mt-3 '>
+                 <input type="file"  accept=".csv"  onChange={handleChangeHotelDetails}/>
+                <Button className=' mt-3 me-3 ms-0 p-button-success ' icon="pi pi-download"  onClick={importCSVHotelDetail}  label='Import '/> 
+                <Button label="Export" icon="pi pi-upload" className="p-button-help ms-0" onClick={exportCSV} />
+                </div>
             </React.Fragment>
         )
     }

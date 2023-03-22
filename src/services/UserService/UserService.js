@@ -47,6 +47,11 @@ export const importUser=async(data)=>{
 }
 
 
+export const GetUser=async()=>{
+  return await axios.get('http://localhost:8080/authentication/api/getuser')
+}
+
+
 
 
 

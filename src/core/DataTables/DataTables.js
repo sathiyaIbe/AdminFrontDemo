@@ -15,7 +15,7 @@ import { RadioButton } from 'primereact/radiobutton';
 import { InputNumber } from 'primereact/inputnumber';
 import { Dialog } from 'primereact/dialog';
 import { ApiCapGet } from '../../services/apiCapRegister/apiCapRegister';
-import { GetUserDetailsApi } from '../../services/UserService/UserService';
+import { GetUser, GetUserDetailsApi } from '../../services/UserService/UserService';
 import { DeleteUserApi } from '../../services/UserService/UserService';
 import { UserService } from '../../services/UserService/UserService';
 import 'primeicons/primeicons.css';
@@ -46,13 +46,10 @@ const DataTables = (props) => {
     const dt = useRef(null);
     const [filess, setFile] = useState()
     useEffect(() => {
-        GetUserDetailsApi().then(res => {
+        GetUser().then(res => {
             const data = res.data
-            const datas = data.map(each => {
-                const id = Number(data.indexOf(each)) + 1
-                return { ...each, id }
-            })
-            setProducts(datas)
+           console.log(data)
+            setProducts(data)
         })
         setLoad(true)
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -233,7 +230,8 @@ const DataTables = (props) => {
         )
     }
     const statusBodyTemplate = (rowData) => {
-        return <span className={`product-badge status-${rowData.status}`}>{rowData.status}</span>;
+       
+        return <span className={`product-badge status-${rowData.otp_status}`}>{rowData.otp_status}</span>;
     }
     const actionBodyTemplate = (rowData) => {
         return (
@@ -288,32 +286,49 @@ const DataTables = (props) => {
                                 {<Column className="dark-bg" selectionMode="multiple" headerStyle={{ width: '3rem' }} exportable={false}></Column>}
                                 <Column className="dark-bg" field="userId" header="User Id" sortable style={{ minWidth: '12rem' }}></Column>
                                 {/* //<Column field="createdAt" header="Date Created" sortable style={{ minWidth: '12rem' }}></Column> */}
-                                <Column className="dark-bg" field="username" header="Name" sortable style={{ minWidth: '16rem' }}></Column>
-                                <Column className="dark-bg" field="email" header="Email" sortable style={{ minWidth: '10rem' }}></Column>
-                                <Column className="dark-bg" field="status" header="Status" body={statusBodyTemplate} sortable style={{ minWidth: '12rem' }} ></Column>
+                                <Column className="dark-bg" field="Name" header="Name" sortable style={{ minWidth: '16rem' }}></Column>
+                                <Column className="dark-bg" field="Email" header="Email" sortable style={{ minWidth: '10rem' }}></Column>
+                                <Column className="dark-bg" field="otp_status" header="Status" body={statusBodyTemplate} sortable style={{ minWidth: '12rem' }} ></Column>
                                 <Column className="dark-bg" body={actionBodyTemplate} exportable={false} style={{ minWidth: '8rem' }}></Column>
                             </DataTable>
                         </div>
                         <Dialog visible={productDialog} style={{ width: '450px' }} header="User Details" modal className="p-fluid dark-bg" footer={productDialogFooter} onHide={hideDialog}>
                             <div className="field ">
                                 <label htmlFor="username">Name</label>
-                                <InputText id="username" value={product.username} onChange={(e) => onInputChange(e, 'username')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.username })} />
-                                {submitted && !product.username && <small className="p-error">Name is required.</small>}
+                                <InputText id="username" value={product.Name} onChange={(e) => onInputChange(e, 'username')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.username })} />
+                                {submitted && !product.Name && <small className="p-error">Name is required.</small>}
                             </div>
                             <div className="field">
                                 <label htmlFor="email">Email</label>
-                                <InputText id="email" value={product.email} onChange={(e) => onInputChange(e, 'email')} required />
+                                <InputText id="email" value={product.Email} onChange={(e) => onInputChange(e, 'email')} required />
+                            </div>
+                            <div className="field">
+                                <label htmlFor="email">Phone Number</label>
+                                <InputText id="phoneNumber" value={product.Phonenumber} onChange={(e) => onInputChange(e, 'Phonenumber')} required />
                             </div>
                             <div className="field">
                                 <label className="mb-3">Status</label>
                                 <div className="formgrid grid">
                                     <div className="field-radiobutton col-6">
-                                        <RadioButton inputId="category1" name="status" value="active" onChange={onCategoryChange} checked={product.status === 'active'} />
-                                        <label htmlFor="category1">Active</label>
+                                        <RadioButton inputId="category1" name="status" value="verifed" onChange={onCategoryChange} checked={product.otp_status === 'verified'} />
+                                        <label htmlFor="category1">Verified</label>
                                     </div>
                                     <div className="field-radiobutton col-6">
-                                        <RadioButton inputId="category2" name="status" value="inactive" onChange={onCategoryChange} checked={product.status === 'inactive'} />
-                                        <label htmlFor="category2">In Active</label>
+                                        <RadioButton inputId="category2" name="status" value="not_verified" onChange={onCategoryChange} checked={product.otp_status === 'Not_verifeid'} />
+                                        <label htmlFor="category2">Not Verified</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="field">
+                                <label className="mb-3">Gender</label>
+                                <div className="formgrid grid">
+                                    <div className="field-radiobutton col-6">
+                                        <RadioButton inputId="category1" name="Gender" value="male" onChange={onCategoryChange} checked={product.Gender === 'Male'} />
+                                        <label htmlFor="category1">Male</label>
+                                    </div>
+                                    <div className="field-radiobutton col-6">
+                                        <RadioButton inputId="category2" name="Gender" value="female" onChange={onCategoryChange} checked={product.Gender === 'Female'} />
+                                        <label htmlFor="category2">Female</label>
                                     </div>
                                 </div>
                             </div>

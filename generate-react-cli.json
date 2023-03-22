@@ -14,7 +14,7 @@
     "service": {
       "path": "./src/services/",
       "withStyle": false,
-      "withTest": true,
+      "withTest": false,
       "withStory": false,
       "withLazy": false
     },

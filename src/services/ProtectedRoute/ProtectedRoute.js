@@ -2,19 +2,19 @@ import {useEffect} from 'react';
 
 import PropTypes from 'prop-types';
 
-
 import {useNavigate} from "react-router-dom"
 
 
 
 const Protected = ({children}) => {
+   const navigate=useNavigate()
   const token=localStorage.getItem('token')
-  const navigate=useNavigate()
+  
 
  const checkToken=token===null
   useEffect(() => {
     if (checkToken){
-       return navigate("/");
+        navigate("/", {replace:true});
     }
  },[checkToken]);
 

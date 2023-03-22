@@ -8,13 +8,13 @@ import { RiHotelFill } from 'react-icons/ri'
 import { AiOutlineCar, AiOutlineUsergroupAdd } from 'react-icons/ai';
 import { BsGrid } from 'react-icons/bs'
 import { TbBrandBooking } from 'react-icons/tb'
-export function Sidebar({
+const Sidebar=({
   sidebar,
   isDark,
   changeSidebar
-})
+})=>
 {
-  return <Offcanvas show={sidebar} scroll={true} backdrop={false} className={`offcanvas offcanvas-start offcanvas-show    sidebar-offcanvas ${isDark && "bg-dark"}`}>
+  return <Offcanvas show={sidebar} scroll={true} backdrop={false} data-testid="Sidebar" className={`offcanvas offcanvas-start offcanvas-show     sidebar-offcanvas ${isDark && "bg-dark"}`}>
     <div className='sidebar-items-container'>
       <Link to='/admin-dashboard'>  <button className={`sidebar-link ${isDark && "dark-sidebar-link"}`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={() => changeSidebar(true)}><BsGrid className='sidebar-icons' />Dashboard </button></Link>
       <Link to='/user'>  <button className={`sidebar-link ${isDark && "dark-sidebar-link"}`} type='button' data-bs-dismiss="offcanvas" aria-label="Close" onClick={() => changeSidebar(true)}><AiOutlineUser className='sidebar-icons' />User </button></Link>
@@ -45,3 +45,5 @@ export function Sidebar({
     </div>
   </Offcanvas>;
 }
+
+export default Sidebar

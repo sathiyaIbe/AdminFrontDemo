@@ -17,10 +17,10 @@ const BookingStatus =lazy(()=>import('./components/BookingStatus/BookingStatus')
 const CabService =lazy(()=>import('./components/CabService/CabService')) 
 const User=lazy(()=>import('./components/User/User'))
 
-const CabUser=lazy(()=>import('./components/CabService/CabUser'))
+
 const  ECommerce =lazy(()=> import('./components/ECommerce/ECommerce'))
 const CabBookingTable=lazy(()=>import('./components/CabService/CabBookingTable/CabBookingTable'))
-const HotelBookingTable =lazy(()=>import('./core/HotelBookingTable/HotelBookingTable'))
+
 const HotelBooking =lazy(()=>import('./components/BookingStatus/HotelBooking/HotelBooking'))
 
 function App() {
@@ -36,9 +36,10 @@ function App() {
 
 
 
+
   return (
     
-    <div className="App">
+    <div className="App" data-testid="app">
       <Context.Provider 
       value={{sidebar, changeSidebar:changeSidebar, isDark, changeTheme:changesTheme}}>
       <BrowserRouter>
