@@ -4,13 +4,9 @@ import { Chart } from 'primereact/chart';
 import './AdminDashboard.css';
 import { useNavigate } from 'react-router-dom'
 import Header from '../../core/header/header';
-import { MDBContainer } from "mdbreact";
-import { Doughnut } from "react-chartjs-2";
-import { AiOutlineMenu } from 'react-icons/ai'
 import { BsCurrencyDollar } from 'react-icons/bs'
 import { MdOutlineFlight } from 'react-icons/md'
 import { CiUser } from 'react-icons/ci'
-import { RxCross1 } from 'react-icons/rx'
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import { Card } from 'primereact/card';
@@ -28,7 +24,6 @@ import { ChartDataApi } from '../../services/UserService/UserService';
 import { TotalAdminData } from '../../services/UserService/UserService';
 import { GetUserDetailsApi } from '../../services/UserService/UserService';
 const AdminDashboard = () => {
-    const [sidebar, setSidebar] = useState(true)
     const [userCount, setUserCount] = useState('')
     const [totalRevenue, setTotalRevene] = useState('')
     const [totalBooking, setTotalBooking] = useState('')
@@ -90,10 +85,7 @@ const AdminDashboard = () => {
     const inActiveDataCount = inActiveNewData()
     
     const navigate = useNavigate()
-    const logoutHandler = () => {
-        localStorage.removeItem('token')
-        navigate('/')
-    }
+
     const chronoData = [
         {
             title: "25 May 2020",
@@ -193,33 +185,8 @@ const AdminDashboard = () => {
             }
         ]
     }
-    const [chartData] = useState({
-        labels: ['New User', 'Bookings', 'Revenue'],
-        datasets: [
-            {
-                data: [300, 50, 100],
-                backgroundColor: [
-                    "#42A5F5",
-                    "#66BB6A",
-                    "#FFA726"
-                ],
-                hoverBackgroundColor: [
-                    "#64B5F6",
-                    "#81C784",
-                    "#FFB74D"
-                ]
-            }
-        ]
-    });
-    const [lightOptions] = useState({
-        plugins: {
-            legend: {
-                labels: {
-                    color: '#495057'
-                }
-            }
-        }
-    });
+
+
     let newStylesData = {
         labels: ['January', 'February', 'March', 'April', 'May', 'June',],
         datasets: [
@@ -293,28 +260,7 @@ const AdminDashboard = () => {
             }
         ]
     }
-    const [lightOptionss] = useState({
-        plugins: {
-            legend: {
-                labels: {
-                    color: '#495057'
-                }
-            }
-        },
-        scales: {
-            r: {
-                pointLabels: {
-                    color: '#495057',
-                },
-                grid: {
-                    color: '#ebedef',
-                },
-                angleLines: {
-                    color: '#ebedef'
-                }
-            }
-        }
-    });
+
     const statusBodyTemplate = (rowData) => {
         return <span className={`product-badge status-${rowData.status}`}>{rowData.status}</span>;
     }
@@ -335,7 +281,7 @@ const AdminDashboard = () => {
                                                 <div className='card-description-container'>
                                                     <CiUser className='icon-card user' />
                                                     <div>
-                                                        <h3 className=" card-title" > {totalUser}</h3>
+                                                        <h5 className=" card-title" > {totalUser}</h5>
                                                         <p className='card-subtitle'><span className='subtitle'>12%</span> increase</p>
                                                     </div>
                                                 </div>

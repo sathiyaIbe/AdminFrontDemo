@@ -8,7 +8,7 @@ import { RiHotelFill } from 'react-icons/ri'
 import { AiOutlineCar, AiOutlineUsergroupAdd } from 'react-icons/ai';
 import { BsGrid } from 'react-icons/bs'
 import { TbBrandBooking } from 'react-icons/tb'
-const Sidebar=({
+export  const Sidebar=({
   sidebar,
   isDark,
   changeSidebar
@@ -46,4 +46,4 @@ const Sidebar=({
   </Offcanvas>;
 }
 
-export default Sidebar
+

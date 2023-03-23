@@ -6,16 +6,11 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
-import { FileUpload } from 'primereact/fileupload';
-import { Rating } from 'primereact/rating';
 import { Toolbar } from 'primereact/toolbar';
-import { InputTextarea } from 'primereact/inputtextarea';
 import { InputText } from 'primereact/inputtext';
 import { RadioButton } from 'primereact/radiobutton';
-import { InputNumber } from 'primereact/inputnumber';
 import { Dialog } from 'primereact/dialog';
-import { ApiCapGet } from '../../services/apiCapRegister/apiCapRegister';
-import { GetUser, GetUserDetailsApi } from '../../services/UserService/UserService';
+import { GetUser } from '../../services/UserService/UserService';
 import { DeleteUserApi } from '../../services/UserService/UserService';
 import { UserService } from '../../services/UserService/UserService';
 import 'primeicons/primeicons.css';
@@ -23,7 +18,6 @@ import { DeleteMultipleUserApi } from '../../services/UserService/UserService';
 import { UpdateUserApi } from '../../services/UserService/UserService';
 import { elementAcceptingRef } from '@mui/utils';
 import Context from '../../services/Context/Context';
-import { Papa } from 'papaparse'
 import { parse } from 'papaparse';
 import { importUser } from '../../services/UserService/UserService';
 const DataTables = (props) => {
@@ -314,7 +308,7 @@ const DataTables = (props) => {
                                         <label htmlFor="category1">Verified</label>
                                     </div>
                                     <div className="field-radiobutton col-6">
-                                        <RadioButton inputId="category2" name="status" value="not_verified" onChange={onCategoryChange} checked={product.otp_status === 'Not_verifeid'} />
+                                        <RadioButton inputId="category2" name="status" value="not verified" onChange={onCategoryChange} checked={product.otp_status === 'not verified'} />
                                         <label htmlFor="category2">Not Verified</label>
                                     </div>
                                 </div>
